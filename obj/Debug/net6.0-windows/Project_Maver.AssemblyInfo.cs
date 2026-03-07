@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Project_Maver")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be8ae3f3c397651862bf9d8dec63dbe6d7a352a0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Project_Maver")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Project_Maver")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
