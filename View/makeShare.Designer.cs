@@ -33,11 +33,13 @@
             label1 = new Label();
             _panel = new Panel();
             label2 = new Label();
-            textBox1 = new TextBox();
-            listView1 = new ListView();
+            txtShareUser = new TextBox();
+            lvShareUser = new ListView();
             contextMenuStripDelete = new ContextMenuStrip(components);
             제거ToolStripMenuItem = new ToolStripMenuItem();
-            button1 = new Button();
+            btnUserPlus = new Button();
+            rbColor = new Project_Maver.Common.RoundButton();
+            btnSharePlus = new Button();
             contextMenuStripDelete.SuspendLayout();
             SuspendLayout();
             // 
@@ -80,22 +82,22 @@
             label2.TabIndex = 1;
             label2.Text = "유저 추가";
             // 
-            // textBox1
+            // txtShareUser
             // 
-            textBox1.Location = new Point(127, 179);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(183, 23);
-            textBox1.TabIndex = 3;
+            txtShareUser.Location = new Point(127, 179);
+            txtShareUser.Name = "txtShareUser";
+            txtShareUser.Size = new Size(308, 23);
+            txtShareUser.TabIndex = 3;
             // 
-            // listView1
+            // lvShareUser
             // 
-            listView1.ContextMenuStrip = contextMenuStripDelete;
-            listView1.Location = new Point(354, 179);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(154, 106);
-            listView1.TabIndex = 4;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = System.Windows.Forms.View.Details;
+            lvShareUser.ContextMenuStrip = contextMenuStripDelete;
+            lvShareUser.Location = new Point(127, 208);
+            lvShareUser.Name = "lvShareUser";
+            lvShareUser.Size = new Size(308, 60);
+            lvShareUser.TabIndex = 4;
+            lvShareUser.UseCompatibleStateImageBehavior = false;
+            lvShareUser.View = System.Windows.Forms.View.Details;
             // 
             // contextMenuStripDelete
             // 
@@ -109,16 +111,45 @@
             제거ToolStripMenuItem.Size = new Size(98, 22);
             제거ToolStripMenuItem.Text = "제거";
             // 
-            // button1
+            // btnUserPlus
             // 
-            button1.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(316, 179);
-            button1.Name = "button1";
-            button1.Size = new Size(20, 25);
-            button1.TabIndex = 5;
-            button1.Text = "+";
-            button1.TextAlign = ContentAlignment.TopCenter;
-            button1.UseVisualStyleBackColor = true;
+            btnUserPlus.BackColor = Color.Transparent;
+            btnUserPlus.FlatAppearance.BorderSize = 0;
+            btnUserPlus.FlatStyle = FlatStyle.Flat;
+            btnUserPlus.Font = new Font("함초롬돋움", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            btnUserPlus.ForeColor = Color.DimGray;
+            btnUserPlus.Location = new Point(439, 164);
+            btnUserPlus.Name = "btnUserPlus";
+            btnUserPlus.Size = new Size(32, 50);
+            btnUserPlus.TabIndex = 5;
+            btnUserPlus.Text = "+";
+            btnUserPlus.TextAlign = ContentAlignment.BottomCenter;
+            btnUserPlus.UseVisualStyleBackColor = false;
+            // 
+            // rbColor
+            // 
+            rbColor.BackColor = Color.RosyBrown;
+            rbColor.FlatAppearance.BorderSize = 0;
+            rbColor.FlatStyle = FlatStyle.Flat;
+            rbColor.Location = new Point(467, 111);
+            rbColor.Name = "rbColor";
+            rbColor.Size = new Size(25, 25);
+            rbColor.TabIndex = 6;
+            rbColor.UseVisualStyleBackColor = false;
+            // 
+            // btnSharePlus
+            // 
+            btnSharePlus.BackColor = Color.DimGray;
+            btnSharePlus.FlatAppearance.BorderSize = 0;
+            btnSharePlus.FlatStyle = FlatStyle.Flat;
+            btnSharePlus.Font = new Font("맑은 고딕", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            btnSharePlus.ForeColor = Color.Snow;
+            btnSharePlus.Location = new Point(207, 575);
+            btnSharePlus.Name = "btnSharePlus";
+            btnSharePlus.Size = new Size(118, 36);
+            btnSharePlus.TabIndex = 7;
+            btnSharePlus.Text = "생성하기";
+            btnSharePlus.UseVisualStyleBackColor = false;
             // 
             // makeShare
             // 
@@ -126,15 +157,18 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Snow;
             ClientSize = new Size(534, 761);
-            Controls.Add(button1);
-            Controls.Add(listView1);
-            Controls.Add(textBox1);
+            Controls.Add(btnSharePlus);
+            Controls.Add(rbColor);
+            Controls.Add(btnUserPlus);
+            Controls.Add(lvShareUser);
+            Controls.Add(txtShareUser);
             Controls.Add(_panel);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(txtCalName);
             Name = "makeShare";
-            Text = "makeShare";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "공유 캘린더";
             contextMenuStripDelete.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -146,10 +180,12 @@
         private Label label1;
         private Panel _panel;
         private Label label2;
-        private TextBox textBox1;
-        private ListView listView1;
-        private Button button1;
+        private TextBox txtShareUser;
+        private ListView lvShareUser;
+        private Button btnUserPlus;
         private ContextMenuStrip contextMenuStripDelete;
         private ToolStripMenuItem 제거ToolStripMenuItem;
+        private Common.RoundButton rbColor;
+        private Button btnSharePlus;
     }
 }
