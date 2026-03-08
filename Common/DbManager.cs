@@ -56,11 +56,12 @@ namespace Project_Maver.Common
                         cmd.Parameters.AddWithValue(param.Key, param.Value);
                     }
                 }
-                conn.Close();
                 return cmd.ExecuteNonQuery(); // 영향받은 행의 수 반환 (성공한 갯수)
+                conn.Close();
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 Console.WriteLine(ex.Message);
                 return -1;
             }
