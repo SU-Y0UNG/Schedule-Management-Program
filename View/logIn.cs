@@ -1,5 +1,6 @@
 using Maver_켈린더;
 using Project_Maver.Common;
+using Project_Maver.View;
 
 namespace maverCalender
 {
@@ -71,6 +72,26 @@ namespace maverCalender
             // this.Hide();
             // joinForm.ShowDialog();
             // this.Show();
+        }
+
+        //아이디 찾기 화면 이동
+        private void lklId_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // 1.아이디 찾기 폼 객체를 생성
+            FindId fi = new FindId();
+
+            // 창 띄우기
+            fi.ShowDialog();
+        }
+
+        //비번 찾기 화면 이동
+        private void lklPW_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // 1.비번 찾기 폼 객체를 생성
+            Findpw fpw = new Findpw();
+
+            // 창 띄우기
+            fpw.ShowDialog();
         }
     }
 }
