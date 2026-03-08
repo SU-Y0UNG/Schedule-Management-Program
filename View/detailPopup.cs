@@ -4,6 +4,7 @@ using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using Project_Maver.Common;
 using System;
@@ -19,6 +20,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 
 namespace maverCalender
@@ -87,12 +89,15 @@ namespace maverCalender
         private void detailPopup_Load(object sender, EventArgs e)
         {
             GetWeather();
+            worldTime();
+            // 승환
+            LoadDetailData("user1");
         }
         private Color selectedColor = Color.SkyBlue;
 
 
-         
-      
+
+
 
         private void btnSelectColor_Click(object sender, EventArgs e)
         {
@@ -106,6 +111,211 @@ namespace maverCalender
                 // 버튼 배경색을 선택한 색으로 바꿔서 사용자가 바로 확인하게 함
                 btnSelectColor.BackColor = selectedColor;
             }
+        }
+
+        // 승환
+        private MySqlConnection conn;
+        private MySqlCommand cmd;
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            string connectionString = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
+            string query = @"INSERT INTO events (user_id, title, start_date, end_date, start_time, end_time, memo) 
+                     VALUES (@UserId, @Title, @StartDate, @EndDate, @StartTime, @EndTime, @Memo)";
+            conn = new MySqlConnection(connectionString);
+
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(query, conn);
+
+                // 3. 파라미터를 통해 값 할당 (보안을 위해 직접 대입 대신 이 방식을 권장합니다)
+                cmd.Parameters.AddWithValue("@UserId", txtUserid.Text);
+                cmd.Parameters.AddWithValue("@Title", txtTitle.Text);
+                cmd.Parameters.AddWithValue("@StartDate", dtpStartDate.Value);
+                cmd.Parameters.AddWithValue("@EndDate", dtpEndDate.Value);
+                cmd.Parameters.AddWithValue("@Memo", txtMemo.Text);
+                cmd.Parameters.AddWithValue("@StartTime", dtpStartTime.Value);
+                cmd.Parameters.AddWithValue("@EndTime", dtpEndTime.Value);
+
+                // 4. 쿼리 실행
+                int result = cmd.ExecuteNonQuery();
+
+                if (result > 0)
+                {
+                    MessageBox.Show("일정이 성공적으로 저장되었습니다!");
+                    this.Close(); // 저장 후 팝업 닫기
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        // 승환
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // 사용자에게 정말 삭제할지 확인 (실수 방지)
+            DialogResult confirm = MessageBox.Show("이 일정을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm == DialogResult.Yes)
+            {
+                string connectionString = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
+                string query = "DELETE FROM events WHERE user_Id = @UserId AND title = @Title";
+                conn = new MySqlConnection(connectionString);
+                try
+                {
+                    conn.Open();
+                    cmd = new MySqlCommand(query, conn);
+                    // 삭제조건은 user_id와 title을 쓰면 그 행이 삭제
+                    cmd.Parameters.AddWithValue("@UserId", txtUserid.Text);
+                    cmd.Parameters.AddWithValue("@Title", txtTitle.Text);
+
+                    int result = cmd.ExecuteNonQuery();
+
+                    if (result > 0)
+                    {
+                        MessageBox.Show("일정이 삭제되었습니다.");
+                        this.Close(); // 팝업 닫기
+                    }
+                    else
+                    {
+                        MessageBox.Show("삭제할 일정을 찾을 수 없습니다.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+        }
+        // 승환
+        private string selectedScheduleId;
+        public detailPopup(string id)
+        {
+            InitializeComponent();
+            this.selectedScheduleId = id;
+        }
+
+        // 승환
+        private void LoadDetailData(string userid)
+        {
+            string connstr = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
+            conn = new MySqlConnection(connstr);
+            try
+            {
+                conn.Open();
+
+                // 2. 쿼리 작성 (필요한 컬럼만 지정)
+                string sql = @"SELECT user_id, title, start_time, end_time, start_date, end_date, memo 
+                           FROM events 
+                           WHERE user_id = @userid"; // id는 이 폼을 열 때 넘겨받은 변수여야 합니다.
+
+                cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@userid", userid); // 예시로 1번 데이터를 가져옵니다.
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                // 3. 데이터를 UI 칸에 채우기
+                if (reader.Read())
+                {
+                    // 문자열 데이터 (텍스트박스)
+                    txtUserid.Text = reader["user_id"].ToString();
+                    txtTitle.Text = reader["title"].ToString();
+                    txtMemo.Text = reader["memo"]?.ToString() ?? ""; // 메모가 비어있을 경우 대비
+
+                    // 날짜 데이터 (DateTimePicker)
+                    // DB 타입이 Date나 DateTime일 경우입니다.
+                    dtpStartDate.Value = Convert.ToDateTime(reader["start_date"]);
+                    dtpEndDate.Value = Convert.ToDateTime(reader["end_date"]);
+
+                    // 시간 데이터 (DateTimePicker의 Format을 Time으로 설정했을 경우)
+                    // DB 타입이 Time일 경우 TimeSpan으로 읽어와 처리할 수 있습니다.
+                    if (reader["start_time"] != DBNull.Value)
+                    {
+                        TimeSpan startTime = (TimeSpan)reader["start_time"];
+                        dtpStartTime.Value = DateTime.Today.Add(startTime);
+                    }
+
+                    if (reader["end_time"] != DBNull.Value)
+                    {
+                        TimeSpan endTime = (TimeSpan)reader["end_time"];
+                        dtpEndTime.Value = DateTime.Today.Add(endTime);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"에러 이유: {ex.Message}\n\n위치: {ex.StackTrace}");
+            }
+        }
+        // 승환
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            string connStr = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
+            conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+
+                // 2. UPDATE 쿼리 (화면의 입력값을 DB에 반영)
+                // 주의: WHERE 절에는 'user_id'가 아닌 고유 키인 'event_id'를 쓰는 것이 안전합니다.
+                string sql = @"UPDATE events 
+                           SET title = @title, 
+                               start_date = @start_date, 
+                               end_date = @end_date, 
+                               start_time = @start_time, 
+                               end_time = @end_time,
+                               memo = @memo
+                           WHERE user_id = @user_id"; // 여기서는 일단 기존처럼 user_id를 기준으로 합니다.
+
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                // 3. 파라미터 매핑 (화면의 컨트롤 값을 DB로 전달)
+                cmd.Parameters.AddWithValue("@title", txtTitle.Text);
+                cmd.Parameters.AddWithValue("@start_date", dtpStartDate.Value.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@end_date", dtpEndDate.Value.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@start_time", dtpStartTime.Value.ToString("HH:mm:ss"));
+                cmd.Parameters.AddWithValue("@end_time", dtpEndTime.Value.ToString("HH:mm:ss"));
+                cmd.Parameters.AddWithValue("@user_id", txtUserid.Text); // 기준이 되는 ID
+                cmd.Parameters.AddWithValue("@memo", txtMemo.Text);
+
+                // 4. 실행
+                int result = cmd.ExecuteNonQuery();
+
+                if (result > 0)
+                {
+                    MessageBox.Show("일정이 성공적으로 수정되었습니다!");
+                    this.Close(); // 저장 후 팝업 닫기
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("저장 중 오류 발생: " + ex.Message);
+            }
+        }
+
+        //수영
+        private void cbWorldTime_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //선택된 시간대 객체를 가져오기
+            TimeZoneInfo selectedZone = (TimeZoneInfo)cbWorldTime.SelectedItem;
+
+            //현재 시간을 해당시간대로 변환
+            DateTime currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, selectedZone);
+
+            //콤보박스에 시간 표시
+            cbWorldTime.Text = currentTime.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+        //수영
+        public void worldTime()
+        {
+            foreach (TimeZoneInfo timeZone in TimeZoneInfo.GetSystemTimeZones())
+            {
+                cbWorldTime.Items.Add(timeZone);
+            }
+
+            // 콤보박스에 이름이 보이도록 설정
+            cbWorldTime.DisplayMember = "DisplayName";
         }
     }
 }

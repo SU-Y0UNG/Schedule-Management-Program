@@ -43,7 +43,6 @@ namespace maverCalender
             pbWatch = new PictureBox();
             pbOff = new PictureBox();
             pbWorld = new PictureBox();
-            tbWorldTime = new TextBox();
             pictureBox2 = new PictureBox();
             lbLine1 = new Label();
             lbLine2 = new Label();
@@ -67,16 +66,23 @@ namespace maverCalender
             btnAdd = new Button();
             pbOn = new PictureBox();
             btnLogin = new Button();
-            dateTimePicker1 = new DateTimePicker();
+            dtpStartDate = new DateTimePicker();
             lblDesc = new Label();
             lblTemp = new Label();
             lblCity = new Label();
             pictureBoxWeather = new PictureBox();
             btnGetWeather = new Button();
-            dateTimePicker2 = new DateTimePicker();
-            dateTimePicker3 = new DateTimePicker();
-            dateTimePicker4 = new DateTimePicker();
+            dtpEndDate = new DateTimePicker();
+            dtpStartTime = new DateTimePicker();
+            dtpEndTime = new DateTimePicker();
             btnSelectColor = new RoundButton();
+            txtTitle = new TextBox();
+            cbWorldTime = new ComboBox();
+            txtMemo = new TextBox();
+            lbUserid = new Label();
+            txtUserid = new TextBox();
+            btnDelete = new Button();
+            btnUpdate = new Button();
             ((System.ComponentModel.ISupportInitialize)pbWatch).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbOff).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbWorld).BeginInit();
@@ -217,14 +223,6 @@ namespace maverCalender
             pbWorld.TabIndex = 5;
             pbWorld.TabStop = false;
             // 
-            // tbWorldTime
-            // 
-            tbWorldTime.BackColor = Color.Snow;
-            tbWorldTime.Location = new Point(69, 202);
-            tbWorldTime.Name = "tbWorldTime";
-            tbWorldTime.Size = new Size(349, 23);
-            tbWorldTime.TabIndex = 6;
-            // 
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
@@ -316,7 +314,7 @@ namespace maverCalender
             lbExplanation.Name = "lbExplanation";
             lbExplanation.Size = new Size(31, 15);
             lbExplanation.TabIndex = 4;
-            lbExplanation.Text = "설명";
+            lbExplanation.Text = "메모";
             // 
             // lbInvite
             // 
@@ -421,6 +419,7 @@ namespace maverCalender
             btnSave.TabIndex = 0;
             btnSave.Text = "저장";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // cb
             // 
@@ -465,12 +464,12 @@ namespace maverCalender
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
             // 
-            // dateTimePicker1
+            // dtpStartDate
             // 
-            dateTimePicker1.Location = new Point(154, 127);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(179, 23);
-            dateTimePicker1.TabIndex = 9;
+            dtpStartDate.Location = new Point(154, 127);
+            dtpStartDate.Name = "dtpStartDate";
+            dtpStartDate.Size = new Size(179, 23);
+            dtpStartDate.TabIndex = 9;
             // 
             // lblDesc
             // 
@@ -517,30 +516,30 @@ namespace maverCalender
             btnGetWeather.Text = "button1";
             btnGetWeather.UseVisualStyleBackColor = true;
             // 
-            // dateTimePicker2
+            // dtpEndDate
             // 
-            dateTimePicker2.Location = new Point(154, 156);
-            dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(179, 23);
-            dateTimePicker2.TabIndex = 9;
+            dtpEndDate.Location = new Point(154, 156);
+            dtpEndDate.Name = "dtpEndDate";
+            dtpEndDate.Size = new Size(179, 23);
+            dtpEndDate.TabIndex = 9;
             // 
-            // dateTimePicker3
+            // dtpStartTime
             // 
-            dateTimePicker3.Format = DateTimePickerFormat.Time;
-            dateTimePicker3.Location = new Point(362, 127);
-            dateTimePicker3.Name = "dateTimePicker3";
-            dateTimePicker3.ShowUpDown = true;
-            dateTimePicker3.Size = new Size(97, 23);
-            dateTimePicker3.TabIndex = 9;
+            dtpStartTime.Format = DateTimePickerFormat.Time;
+            dtpStartTime.Location = new Point(362, 127);
+            dtpStartTime.Name = "dtpStartTime";
+            dtpStartTime.ShowUpDown = true;
+            dtpStartTime.Size = new Size(97, 23);
+            dtpStartTime.TabIndex = 9;
             // 
-            // dateTimePicker4
+            // dtpEndTime
             // 
-            dateTimePicker4.Format = DateTimePickerFormat.Time;
-            dateTimePicker4.Location = new Point(362, 156);
-            dateTimePicker4.Name = "dateTimePicker4";
-            dateTimePicker4.ShowUpDown = true;
-            dateTimePicker4.Size = new Size(97, 23);
-            dateTimePicker4.TabIndex = 9;
+            dtpEndTime.Format = DateTimePickerFormat.Time;
+            dtpEndTime.Location = new Point(362, 156);
+            dtpEndTime.Name = "dtpEndTime";
+            dtpEndTime.ShowUpDown = true;
+            dtpEndTime.Size = new Size(97, 23);
+            dtpEndTime.TabIndex = 9;
             // 
             // btnSelectColor
             // 
@@ -554,25 +553,91 @@ namespace maverCalender
             btnSelectColor.UseVisualStyleBackColor = false;
             btnSelectColor.Click += btnSelectColor_Click;
             // 
+            // txtTitle
+            // 
+            txtTitle.Location = new Point(185, 68);
+            txtTitle.Name = "txtTitle";
+            txtTitle.Size = new Size(274, 23);
+            txtTitle.TabIndex = 14;
+            // 
+            // cbWorldTime
+            // 
+            cbWorldTime.FormattingEnabled = true;
+            cbWorldTime.Location = new Point(80, 205);
+            cbWorldTime.Name = "cbWorldTime";
+            cbWorldTime.Size = new Size(349, 23);
+            cbWorldTime.TabIndex = 15;
+            cbWorldTime.SelectedIndexChanged += cbWorldTime_SelectedIndexChanged;
+            // 
+            // txtMemo
+            // 
+            txtMemo.Location = new Point(101, 357);
+            txtMemo.Name = "txtMemo";
+            txtMemo.Size = new Size(358, 23);
+            txtMemo.TabIndex = 16;
+            // 
+            // lbUserid
+            // 
+            lbUserid.AutoSize = true;
+            lbUserid.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            lbUserid.ForeColor = Color.Gray;
+            lbUserid.Location = new Point(125, 38);
+            lbUserid.Name = "lbUserid";
+            lbUserid.Size = new Size(65, 17);
+            lbUserid.TabIndex = 4;
+            lbUserid.Text = "사용자 ID";
+            // 
+            // txtUserid
+            // 
+            txtUserid.Location = new Point(199, 32);
+            txtUserid.Name = "txtUserid";
+            txtUserid.Size = new Size(134, 23);
+            txtUserid.TabIndex = 17;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(406, 1);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(44, 23);
+            btnDelete.TabIndex = 18;
+            btnDelete.Text = "삭제";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.Location = new Point(356, 1);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(44, 23);
+            btnUpdate.TabIndex = 19;
+            btnUpdate.Text = "수정";
+            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
+            // 
             // detailPopup
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Snow;
             ClientSize = new Size(534, 761);
+            Controls.Add(btnUpdate);
+            Controls.Add(btnDelete);
+            Controls.Add(txtUserid);
+            Controls.Add(txtMemo);
+            Controls.Add(cbWorldTime);
+            Controls.Add(txtTitle);
             Controls.Add(btnSelectColor);
             Controls.Add(btnGetWeather);
             Controls.Add(pictureBoxWeather);
             Controls.Add(lblCity);
             Controls.Add(lblTemp);
-            Controls.Add(dateTimePicker4);
-            Controls.Add(dateTimePicker2);
-            Controls.Add(dateTimePicker3);
+            Controls.Add(dtpEndTime);
+            Controls.Add(dtpEndDate);
+            Controls.Add(dtpStartTime);
             Controls.Add(lblDesc);
-            Controls.Add(dateTimePicker1);
+            Controls.Add(dtpStartDate);
             Controls.Add(btnLogin);
             Controls.Add(cb);
-            Controls.Add(tbWorldTime);
             Controls.Add(pbOn);
             Controls.Add(pbOff);
             Controls.Add(pictureBox2);
@@ -591,6 +656,7 @@ namespace maverCalender
             Controls.Add(lbExplanation);
             Controls.Add(lbReply);
             Controls.Add(lbToday);
+            Controls.Add(lbUserid);
             Controls.Add(lbPlan);
             Controls.Add(lbLine9);
             Controls.Add(lbLine8);
@@ -638,7 +704,6 @@ namespace maverCalender
         private PictureBox pbWatch;
         private PictureBox pbOff;
         private PictureBox pbWorld;
-        private TextBox tbWorldTime;
         private PictureBox pictureBox2;
         private Label lbLine1;
         private Label lbLine2;
@@ -662,16 +727,23 @@ namespace maverCalender
         private Button btnAdd;
         private PictureBox pbOn;
         private Button btnLogin;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dtpStartDate;
         private Label lblDesc;
         private Label lblTemp;
         private Label lblCity;
         private PictureBox pictureBoxWeather;
         private Button btnGetWeather;
-        private DateTimePicker dateTimePicker2;
-        private DateTimePicker dateTimePicker3;
-        private DateTimePicker dateTimePicker4;
+        private DateTimePicker dtpEndDate;
+        private DateTimePicker dtpStartTime;
+        private DateTimePicker dtpEndTime;
         private RoundButton btnSelectColor;
+        private TextBox txtTitle;
+        private ComboBox cbWorldTime;
+        private TextBox txtMemo;
+        private Label lbUserid;
+        private TextBox txtUserid;
+        private Button btnDelete;
+        private Button btnUpdate;
         //private RoundButton btnSelectColor;
     }
 }
