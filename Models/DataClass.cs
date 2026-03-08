@@ -11,13 +11,13 @@ namespace Project_Maver.Models
 
     }
 
-    class User
-    {
-        string id { get; set; };
-        string name { get; set; };
-        string email { get; set; };
-        string pw { get; set; };
-        DateTime birth { get; set; };
-        string phone { get; set; };
-    }
+    //class User
+    //{
+    //    string id { get; set; }
+    //    string name { get; set; }
+    //    string email { get; set; }
+    //    string pw { get; set; }
+    //    DateTime birth { get; set; }
+    //    string phone { get; set; }
+    //}
 }
