@@ -105,6 +105,7 @@
             lklId.TabStop = true;
             lklId.Text = "아이디 찾기";
             lklId.VisitedLinkColor = Color.DarkGray;
+            lklId.LinkClicked += lklId_LinkClicked;
             // 
             // lklPW
             // 
@@ -119,6 +120,7 @@
             lklPW.TabStop = true;
             lklPW.Text = "비밀번호 찾기";
             lklPW.VisitedLinkColor = Color.DarkGray;
+            lklPW.LinkClicked += lklPW_LinkClicked;
             // 
             // lklMember
             // 

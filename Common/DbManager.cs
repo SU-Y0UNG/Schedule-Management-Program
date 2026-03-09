@@ -31,11 +31,14 @@ namespace Project_Maver.Common
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dt);
 
-                conn.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("에러!! : " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
             }
             return dt;
         }
@@ -64,6 +67,10 @@ namespace Project_Maver.Common
                 MessageBox.Show(ex.Message);
                 Console.WriteLine(ex.Message);
                 return -1;
+            }
+            finally
+            {
+                conn.Close();
             }
 
         }
