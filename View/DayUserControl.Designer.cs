@@ -1,6 +1,6 @@
 ﻿namespace Project_Maver.View
 {
-    partial class Day
+    partial class DayUserControl
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -28,32 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            lbDay = new Label();
             SuspendLayout();
             // 
-            // label1
+            // lbDay
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("맑은 고딕", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(0, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(19, 21);
-            label1.TabIndex = 0;
-            label1.Text = "1";
+            lbDay.AutoSize = true;
+            lbDay.Font = new Font("맑은 고딕", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lbDay.Location = new Point(0, 0);
+            lbDay.Name = "lbDay";
+            lbDay.Size = new Size(0, 21);
+            lbDay.TabIndex = 0;
             // 
-            // Day
+            // DayUserControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(label1);
-            Name = "Day";
-            Size = new Size(210, 113);
+            BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(lbDay);
+            Name = "DayUserControl";
+            Size = new Size(210, 111);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
+        private Label lbDay;
     }
 }

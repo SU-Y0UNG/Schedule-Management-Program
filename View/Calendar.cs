@@ -1,9 +1,13 @@
 using Project_Maver.Common;
+using Project_Maver.View;
 
 namespace Maver_켈린더
 {
     public partial class Calendar : Form
     {
+
+        private int currentYear;        // 현재년도
+        private int currentMonth;       // 현재 달
 
         public Calendar()
         {
@@ -11,8 +15,14 @@ namespace Maver_켈린더
 
             tableLayoutPanel1.BringToFront();
             pnlCategori.BringToFront();
-            flowLayoutPanel1.SendToBack();
-            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flpMain.SendToBack();
+            flpMain.Dock = DockStyle.None;
+
+            currentYear = DateTime.Now.Year;
+            currentMonth = DateTime.Now.Month;
+
+            lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
+
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
@@ -40,6 +50,8 @@ namespace Maver_켈린더
             {
                 lbID.Text = UserSession.UserId + "님 접속 중";
             }
+
+            DisplayDays(currentYear, currentMonth);
         }
 
 
@@ -50,6 +62,10 @@ namespace Maver_켈린더
             //id.ShowDialog();
         }
 
+
+        //------------------------------------------------------------------------------------
+        // 2026-03-09 영현 추가
+        //------------------------------------------------------------------------------------
         bool isMenuOpen = false;
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -103,6 +119,73 @@ namespace Maver_켈린더
                 // 선택되지 않은 일반 상태는 기본 대로 그립니다.
                 e.DrawDefault = true;
             }
+        }
+
+        //---------------------------------------------------
+        // 2026-03-09 은비 - 캘린더 화면구현
+        //---------------------------------------------------
+
+        private void DisplayDays(int year, int month)
+        {
+            flpMain.Controls.Clear();
+
+            // 이번달 1일이 무슨 요일인지
+            // 0:일요일 ~ 6:토요일
+            DateTime startOfMonth = new DateTime(year, month, 1);
+            int startDayOfWeek = (int)startOfMonth.DayOfWeek;
+
+
+            // 이번달의 마지막 날짜(28,30,31) 확인
+            int LastDayOfCurMonth = DateTime.DaysInMonth(year, month);
+
+            // 1일 시작 전 앞자리 빈칸 만들기
+            for (int i = 0; i < startDayOfWeek; i++)
+            {
+                UserControl day = new DayUserControl();
+                flpMain.Controls.Add(day);
+            }
+
+            // 실제 날짜 칸 생성 시작
+            for (int i = 1; i <= LastDayOfCurMonth; i++)
+            {
+                DateTime dateForSlot = new DateTime(year, month, i);
+
+                DayUserControl duc = new DayUserControl(i, dateForSlot);
+
+                // 각 유저컨트롤에 클릭이벤트!!
+                duc.Click += (s, e) =>
+                {
+                    MessageBox.Show(dateForSlot.ToString());
+                };
+
+                flpMain.Controls.Add(duc);
+            }
+
+
+        }
+
+        private void btnBeforeDate_Click(object sender, EventArgs e)
+        {
+            currentMonth--;
+            if (currentMonth < 1)
+            {
+                currentMonth = 12;
+                currentYear --;
+            }
+            lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
+            DisplayDays(currentYear,currentMonth);
+        }
+
+        private void btnAfterDate_Click(object sender, EventArgs e)
+        {
+            currentMonth++;
+            if (currentMonth > 12)
+            {
+                currentMonth = 1;
+                currentYear++;
+            }
+            lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
+            DisplayDays(currentYear, currentMonth);
         }
     }
 }
