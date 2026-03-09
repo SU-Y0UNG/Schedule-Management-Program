@@ -86,6 +86,7 @@ namespace maverCalender
             textBox2 = new TextBox();
             lbWorldTime = new Label();
             btnMinus = new Button();
+            lbStandardTime = new Label();
             ((System.ComponentModel.ISupportInitialize)pbWatch).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbOff).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbWorld).BeginInit();
@@ -100,6 +101,7 @@ namespace maverCalender
             // 
             // btnClose
             // 
+            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("맑은 고딕", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
@@ -113,6 +115,7 @@ namespace maverCalender
             // 
             // lbTitle
             // 
+            lbTitle.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbTitle.AutoSize = true;
             lbTitle.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             lbTitle.Location = new Point(242, 16);
@@ -123,17 +126,19 @@ namespace maverCalender
             // 
             // cbChoice
             // 
+            cbChoice.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cbChoice.DropDownStyle = ComboBoxStyle.DropDownList;
             cbChoice.ForeColor = Color.Black;
             cbChoice.FormattingEnabled = true;
             cbChoice.Items.AddRange(new object[] { "내 캘린더" });
             cbChoice.Location = new Point(57, 67);
             cbChoice.Name = "cbChoice";
-            cbChoice.Size = new Size(82, 23);
+            cbChoice.Size = new Size(103, 23);
             cbChoice.TabIndex = 2;
             // 
             // lbLine
             // 
+            lbLine.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbLine.AutoSize = true;
             lbLine.ForeColor = Color.LightGray;
             lbLine.Location = new Point(57, 118);
@@ -144,6 +149,7 @@ namespace maverCalender
             // 
             // lbLine5
             // 
+            lbLine5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbLine5.AutoSize = true;
             lbLine5.ForeColor = Color.LightGray;
             lbLine5.Location = new Point(57, 214);
@@ -154,6 +160,7 @@ namespace maverCalender
             // 
             // lbToday
             // 
+            lbToday.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbToday.AutoSize = true;
             lbToday.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             lbToday.ForeColor = Color.Gray;
@@ -165,6 +172,7 @@ namespace maverCalender
             // 
             // lbStart
             // 
+            lbStart.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbStart.AutoSize = true;
             lbStart.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             lbStart.ForeColor = Color.Black;
@@ -176,6 +184,7 @@ namespace maverCalender
             // 
             // lbEnd
             // 
+            lbEnd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbEnd.AutoSize = true;
             lbEnd.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             lbEnd.ForeColor = Color.Black;
@@ -187,6 +196,7 @@ namespace maverCalender
             // 
             // pbWatch
             // 
+            pbWatch.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbWatch.Image = (Image)resources.GetObject("pbWatch.Image");
             pbWatch.Location = new Point(60, 141);
             pbWatch.Name = "pbWatch";
@@ -197,6 +207,7 @@ namespace maverCalender
             // 
             // pbOff
             // 
+            pbOff.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbOff.Image = (Image)resources.GetObject("pbOff.Image");
             pbOff.Location = new Point(420, 138);
             pbOff.Name = "pbOff";
@@ -208,6 +219,7 @@ namespace maverCalender
             // 
             // pbWorld
             // 
+            pbWorld.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbWorld.Image = (Image)resources.GetObject("pbWorld.Image");
             pbWorld.Location = new Point(60, 243);
             pbWorld.Name = "pbWorld";
@@ -218,9 +230,10 @@ namespace maverCalender
             // 
             // lbLine1
             // 
+            lbLine1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbLine1.AutoSize = true;
             lbLine1.ForeColor = Color.LightGray;
-            lbLine1.Location = new Point(28, 263);
+            lbLine1.Location = new Point(57, 297);
             lbLine1.Name = "lbLine1";
             lbLine1.Size = new Size(427, 15);
             lbLine1.TabIndex = 3;
@@ -228,9 +241,10 @@ namespace maverCalender
             // 
             // lbLine2
             // 
+            lbLine2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbLine2.AutoSize = true;
             lbLine2.ForeColor = Color.LightGray;
-            lbLine2.Location = new Point(57, 312);
+            lbLine2.Location = new Point(57, 344);
             lbLine2.Name = "lbLine2";
             lbLine2.Size = new Size(427, 15);
             lbLine2.TabIndex = 3;
@@ -238,9 +252,10 @@ namespace maverCalender
             // 
             // lbLine4
             // 
+            lbLine4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbLine4.AutoSize = true;
             lbLine4.ForeColor = Color.LightGray;
-            lbLine4.Location = new Point(57, 363);
+            lbLine4.Location = new Point(57, 395);
             lbLine4.Name = "lbLine4";
             lbLine4.Size = new Size(427, 15);
             lbLine4.TabIndex = 3;
@@ -248,10 +263,11 @@ namespace maverCalender
             // 
             // lbReply
             // 
+            lbReply.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbReply.AutoSize = true;
             lbReply.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             lbReply.ForeColor = Color.Gray;
-            lbReply.Location = new Point(80, 295);
+            lbReply.Location = new Point(80, 327);
             lbReply.Name = "lbReply";
             lbReply.Size = new Size(31, 15);
             lbReply.TabIndex = 4;
@@ -259,10 +275,11 @@ namespace maverCalender
             // 
             // lbPlace
             // 
+            lbPlace.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbPlace.AutoSize = true;
             lbPlace.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             lbPlace.ForeColor = Color.Gray;
-            lbPlace.Location = new Point(80, 346);
+            lbPlace.Location = new Point(80, 378);
             lbPlace.Name = "lbPlace";
             lbPlace.Size = new Size(31, 15);
             lbPlace.TabIndex = 4;
@@ -270,9 +287,10 @@ namespace maverCalender
             // 
             // lbLine6
             // 
+            lbLine6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbLine6.AutoSize = true;
             lbLine6.ForeColor = Color.LightGray;
-            lbLine6.Location = new Point(57, 412);
+            lbLine6.Location = new Point(57, 444);
             lbLine6.Name = "lbLine6";
             lbLine6.Size = new Size(427, 15);
             lbLine6.TabIndex = 3;
@@ -280,9 +298,10 @@ namespace maverCalender
             // 
             // lbLine7
             // 
+            lbLine7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbLine7.AutoSize = true;
             lbLine7.ForeColor = Color.LightGray;
-            lbLine7.Location = new Point(57, 463);
+            lbLine7.Location = new Point(57, 495);
             lbLine7.Name = "lbLine7";
             lbLine7.Size = new Size(427, 15);
             lbLine7.TabIndex = 3;
@@ -290,10 +309,11 @@ namespace maverCalender
             // 
             // lbExplanation
             // 
+            lbExplanation.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbExplanation.AutoSize = true;
             lbExplanation.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             lbExplanation.ForeColor = Color.Gray;
-            lbExplanation.Location = new Point(80, 395);
+            lbExplanation.Location = new Point(80, 427);
             lbExplanation.Name = "lbExplanation";
             lbExplanation.Size = new Size(31, 15);
             lbExplanation.TabIndex = 4;
@@ -301,10 +321,11 @@ namespace maverCalender
             // 
             // lbInvite
             // 
+            lbInvite.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbInvite.AutoSize = true;
             lbInvite.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             lbInvite.ForeColor = Color.Gray;
-            lbInvite.Location = new Point(80, 446);
+            lbInvite.Location = new Point(80, 478);
             lbInvite.Name = "lbInvite";
             lbInvite.Size = new Size(31, 15);
             lbInvite.TabIndex = 4;
@@ -312,9 +333,10 @@ namespace maverCalender
             // 
             // lbLine8
             // 
+            lbLine8.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbLine8.AutoSize = true;
             lbLine8.ForeColor = Color.LightGray;
-            lbLine8.Location = new Point(77, 513);
+            lbLine8.Location = new Point(77, 545);
             lbLine8.Name = "lbLine8";
             lbLine8.Size = new Size(407, 15);
             lbLine8.TabIndex = 3;
@@ -322,10 +344,11 @@ namespace maverCalender
             // 
             // lbalert
             // 
+            lbalert.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbalert.AutoSize = true;
             lbalert.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             lbalert.ForeColor = Color.Gray;
-            lbalert.Location = new Point(80, 498);
+            lbalert.Location = new Point(80, 530);
             lbalert.Name = "lbalert";
             lbalert.Size = new Size(31, 15);
             lbalert.TabIndex = 4;
@@ -333,9 +356,10 @@ namespace maverCalender
             // 
             // lbLine9
             // 
+            lbLine9.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbLine9.AutoSize = true;
             lbLine9.ForeColor = Color.LightGray;
-            lbLine9.Location = new Point(57, 562);
+            lbLine9.Location = new Point(57, 594);
             lbLine9.Name = "lbLine9";
             lbLine9.Size = new Size(427, 15);
             lbLine9.TabIndex = 3;
@@ -343,8 +367,9 @@ namespace maverCalender
             // 
             // pbReply
             // 
+            pbReply.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbReply.Image = (Image)resources.GetObject("pbReply.Image");
-            pbReply.Location = new Point(60, 295);
+            pbReply.Location = new Point(60, 327);
             pbReply.Name = "pbReply";
             pbReply.Size = new Size(17, 15);
             pbReply.SizeMode = PictureBoxSizeMode.Zoom;
@@ -353,8 +378,9 @@ namespace maverCalender
             // 
             // pbPlace
             // 
+            pbPlace.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbPlace.Image = (Image)resources.GetObject("pbPlace.Image");
-            pbPlace.Location = new Point(60, 345);
+            pbPlace.Location = new Point(60, 377);
             pbPlace.Name = "pbPlace";
             pbPlace.Size = new Size(17, 15);
             pbPlace.SizeMode = PictureBoxSizeMode.Zoom;
@@ -363,8 +389,9 @@ namespace maverCalender
             // 
             // pbExplanation
             // 
+            pbExplanation.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbExplanation.Image = (Image)resources.GetObject("pbExplanation.Image");
-            pbExplanation.Location = new Point(60, 395);
+            pbExplanation.Location = new Point(60, 427);
             pbExplanation.Name = "pbExplanation";
             pbExplanation.Size = new Size(17, 15);
             pbExplanation.SizeMode = PictureBoxSizeMode.Zoom;
@@ -373,8 +400,9 @@ namespace maverCalender
             // 
             // pbInvite
             // 
+            pbInvite.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbInvite.Image = (Image)resources.GetObject("pbInvite.Image");
-            pbInvite.Location = new Point(58, 444);
+            pbInvite.Location = new Point(58, 476);
             pbInvite.Name = "pbInvite";
             pbInvite.Size = new Size(20, 17);
             pbInvite.SizeMode = PictureBoxSizeMode.Zoom;
@@ -383,8 +411,9 @@ namespace maverCalender
             // 
             // pbAlert
             // 
+            pbAlert.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbAlert.Image = (Image)resources.GetObject("pbAlert.Image");
-            pbAlert.Location = new Point(60, 498);
+            pbAlert.Location = new Point(60, 530);
             pbAlert.Name = "pbAlert";
             pbAlert.Size = new Size(17, 15);
             pbAlert.SizeMode = PictureBoxSizeMode.Zoom;
@@ -393,6 +422,7 @@ namespace maverCalender
             // 
             // btnSave
             // 
+            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnSave.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             btnSave.Location = new Point(451, 12);
             btnSave.Name = "btnSave";
@@ -404,21 +434,23 @@ namespace maverCalender
             // 
             // cbAlert
             // 
+            cbAlert.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cbAlert.BackColor = Color.Snow;
             cbAlert.FormattingEnabled = true;
             cbAlert.Items.AddRange(new object[] { "알림없음", "정시", "5분 전", "10분 전", "15분 전", "30분 전", "1시간 전", "2시간 전", "3시간 전", "12시간 전", "1일(24시간) 전", "2일(48시간) 전", "1주일(168시간) 전" });
-            cbAlert.Location = new Point(80, 536);
+            cbAlert.Location = new Point(80, 568);
             cbAlert.Name = "cbAlert";
             cbAlert.Size = new Size(389, 23);
             cbAlert.TabIndex = 7;
             // 
             // btnPlus
             // 
+            btnPlus.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnPlus.FlatAppearance.BorderSize = 0;
             btnPlus.FlatStyle = FlatStyle.Flat;
             btnPlus.Font = new Font("맑은 고딕", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             btnPlus.ForeColor = Color.DimGray;
-            btnPlus.Location = new Point(451, 483);
+            btnPlus.Location = new Point(451, 515);
             btnPlus.Name = "btnPlus";
             btnPlus.Size = new Size(29, 30);
             btnPlus.TabIndex = 0;
@@ -428,6 +460,7 @@ namespace maverCalender
             // 
             // pbOn
             // 
+            pbOn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbOn.Image = (Image)resources.GetObject("pbOn.Image");
             pbOn.Location = new Point(420, 138);
             pbOn.Name = "pbOn";
@@ -439,16 +472,18 @@ namespace maverCalender
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(12, 687);
+            btnLogin.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnLogin.Location = new Point(13, 677);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(75, 23);
+            btnLogin.Size = new Size(53, 33);
             btnLogin.TabIndex = 8;
-            btnLogin.Text = "로그인";
+            btnLogin.Text = "Google";
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
             // 
             // dtpStartDate
             // 
+            dtpStartDate.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dtpStartDate.Location = new Point(150, 163);
             dtpStartDate.Name = "dtpStartDate";
             dtpStartDate.Size = new Size(179, 23);
@@ -456,6 +491,7 @@ namespace maverCalender
             // 
             // lblDesc
             // 
+            lblDesc.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblDesc.AutoSize = true;
             lblDesc.Location = new Point(118, 723);
             lblDesc.Name = "lblDesc";
@@ -465,6 +501,7 @@ namespace maverCalender
             // 
             // lblTemp
             // 
+            lblTemp.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblTemp.AutoSize = true;
             lblTemp.Location = new Point(54, 723);
             lblTemp.Name = "lblTemp";
@@ -474,6 +511,7 @@ namespace maverCalender
             // 
             // lblCity
             // 
+            lblCity.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblCity.AutoSize = true;
             lblCity.Location = new Point(13, 723);
             lblCity.Name = "lblCity";
@@ -483,6 +521,7 @@ namespace maverCalender
             // 
             // pbWeather
             // 
+            pbWeather.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbWeather.Location = new Point(292, 715);
             pbWeather.Name = "pbWeather";
             pbWeather.Size = new Size(37, 34);
@@ -492,6 +531,7 @@ namespace maverCalender
             // 
             // dtpEndDate
             // 
+            dtpEndDate.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dtpEndDate.Location = new Point(150, 192);
             dtpEndDate.Name = "dtpEndDate";
             dtpEndDate.Size = new Size(179, 23);
@@ -499,15 +539,18 @@ namespace maverCalender
             // 
             // dtpStartTime
             // 
+            dtpStartTime.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dtpStartTime.Format = DateTimePickerFormat.Time;
             dtpStartTime.Location = new Point(358, 163);
             dtpStartTime.Name = "dtpStartTime";
             dtpStartTime.ShowUpDown = true;
             dtpStartTime.Size = new Size(97, 23);
             dtpStartTime.TabIndex = 9;
+
             // 
             // dtpEndTime
             // 
+            dtpEndTime.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dtpEndTime.Format = DateTimePickerFormat.Time;
             dtpEndTime.Location = new Point(358, 192);
             dtpEndTime.Name = "dtpEndTime";
@@ -517,33 +560,39 @@ namespace maverCalender
             // 
             // txtTitle
             // 
+            txtTitle.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtTitle.Location = new Point(137, 101);
             txtTitle.Name = "txtTitle";
             txtTitle.Size = new Size(332, 23);
             txtTitle.TabIndex = 14;
+            txtTitle.Text = " ";
             // 
             // cbWorldTime
             // 
+            cbWorldTime.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cbWorldTime.FormattingEnabled = true;
             cbWorldTime.Location = new Point(115, 239);
             cbWorldTime.Name = "cbWorldTime";
-            cbWorldTime.Size = new Size(354, 23);
+            cbWorldTime.Size = new Size(179, 23);
             cbWorldTime.TabIndex = 15;
             cbWorldTime.SelectedIndexChanged += cbWorldTime_SelectedIndexChanged;
             // 
             // txtMemo
             // 
-            txtMemo.Location = new Point(117, 392);
+            txtMemo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtMemo.Location = new Point(117, 424);
             txtMemo.Name = "txtMemo";
             txtMemo.Size = new Size(352, 23);
             txtMemo.TabIndex = 16;
+            txtMemo.Text = " ";
             // 
             // lbUserid
             // 
+            lbUserid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbUserid.AutoSize = true;
             lbUserid.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             lbUserid.ForeColor = Color.Gray;
-            lbUserid.Location = new Point(54, 40);
+            lbUserid.Location = new Point(54, 41);
             lbUserid.Name = "lbUserid";
             lbUserid.Size = new Size(21, 17);
             lbUserid.TabIndex = 4;
@@ -551,15 +600,18 @@ namespace maverCalender
             // 
             // txtUserid
             // 
+            txtUserid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtUserid.Location = new Point(77, 38);
             txtUserid.Name = "txtUserid";
-            txtUserid.Size = new Size(62, 23);
+            txtUserid.Size = new Size(83, 23);
             txtUserid.TabIndex = 17;
+            txtUserid.Text = " ";
             // 
             // btnDelete
             // 
+            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnDelete.BackColor = Color.Transparent;
-            btnDelete.Location = new Point(433, 607);
+            btnDelete.Location = new Point(433, 639);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(44, 24);
             btnDelete.TabIndex = 18;
@@ -569,8 +621,9 @@ namespace maverCalender
             // 
             // btnUpdate
             // 
+            btnUpdate.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnUpdate.BackColor = Color.Transparent;
-            btnUpdate.Location = new Point(383, 607);
+            btnUpdate.Location = new Point(383, 639);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(44, 24);
             btnUpdate.TabIndex = 19;
@@ -580,9 +633,10 @@ namespace maverCalender
             // 
             // cbRepeat
             // 
+            cbRepeat.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cbRepeat.FormattingEnabled = true;
             cbRepeat.Items.AddRange(new object[] { "매주", "매월", "매년" });
-            cbRepeat.Location = new Point(115, 292);
+            cbRepeat.Location = new Point(115, 324);
             cbRepeat.Name = "cbRepeat";
             cbRepeat.Size = new Size(354, 23);
             cbRepeat.TabIndex = 20;
@@ -590,6 +644,7 @@ namespace maverCalender
             // 
             // btnColor
             // 
+            btnColor.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnColor.BackColor = Color.Bisque;
             btnColor.FlatAppearance.BorderSize = 0;
             btnColor.FlatStyle = FlatStyle.Flat;
@@ -602,6 +657,7 @@ namespace maverCalender
             // 
             // lbPlan
             // 
+            lbPlan.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbPlan.AutoSize = true;
             lbPlan.BackColor = Color.Transparent;
             lbPlan.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
@@ -614,20 +670,23 @@ namespace maverCalender
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(115, 338);
+            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            textBox1.Location = new Point(115, 370);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(354, 23);
             textBox1.TabIndex = 22;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(115, 443);
+            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            textBox2.Location = new Point(115, 475);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(354, 23);
             textBox2.TabIndex = 22;
             // 
             // lbWorldTime
             // 
+            lbWorldTime.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lbWorldTime.AutoSize = true;
             lbWorldTime.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
             lbWorldTime.ForeColor = Color.Gray;
@@ -639,11 +698,12 @@ namespace maverCalender
             // 
             // btnMinus
             // 
+            btnMinus.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnMinus.FlatAppearance.BorderSize = 0;
             btnMinus.FlatStyle = FlatStyle.Flat;
             btnMinus.Font = new Font("맑은 고딕", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             btnMinus.ForeColor = Color.DimGray;
-            btnMinus.Location = new Point(451, 483);
+            btnMinus.Location = new Point(451, 515);
             btnMinus.Name = "btnMinus";
             btnMinus.Size = new Size(29, 30);
             btnMinus.TabIndex = 0;
@@ -651,12 +711,20 @@ namespace maverCalender
             btnMinus.UseVisualStyleBackColor = true;
             btnMinus.Click += btnMinus_Click;
             // 
+            // lbStandardTime
+            // 
+            lbStandardTime.Location = new Point(115, 274);
+            lbStandardTime.Name = "lbStandardTime";
+            lbStandardTime.Size = new Size(179, 23);
+            lbStandardTime.TabIndex = 23;
+            // 
             // detailPopup
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FloralWhite;
             ClientSize = new Size(534, 761);
+            Controls.Add(lbStandardTime);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
             Controls.Add(btnColor);
@@ -703,7 +771,6 @@ namespace maverCalender
             Controls.Add(lbLine2);
             Controls.Add(lbLine1);
             Controls.Add(lbLine5);
-            Controls.Add(lbLine);
             Controls.Add(cbChoice);
             Controls.Add(lbTitle);
             Controls.Add(btnSave);
@@ -712,6 +779,7 @@ namespace maverCalender
             Controls.Add(txtTitle);
             Controls.Add(pbOn);
             Controls.Add(btnMinus);
+            Controls.Add(lbLine);
             Name = "detailPopup";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "detailPopup";
@@ -775,7 +843,6 @@ namespace maverCalender
         private DateTimePicker dtpStartTime;
         private DateTimePicker dtpEndTime;
         private RoundButton btnSelectColor;
-        private TextBox txtTitle;
         private ComboBox cbWorldTime;
         private TextBox txtMemo;
         private Label lbUserid;
@@ -788,6 +855,8 @@ namespace maverCalender
         private Label lbWorldTime;
         public ComboBox cbRepeat;
         private Button btnMinus;
+        private Label lbStandardTime;
+        public TextBox txtTitle;
         //private RoundButton btnSelectColor;
     }
 }
