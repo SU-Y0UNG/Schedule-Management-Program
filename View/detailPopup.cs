@@ -7,6 +7,7 @@ using Google.Apis.Util.Store;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using Project_Maver.Common;
+using Project_Maver.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,11 +28,24 @@ namespace maverCalender
 {
     public partial class detailPopup : Form
     {
+
+        pnlRepeat repeat = new pnlRepeat();
         public detailPopup()
         {
             InitializeComponent();
+
+
+            repeat.Location = new Point(108, 320);
+            //패널추가
+
+            this.Controls.Add(repeat);
+            //추가하고 숨기기
+
+            repeat.Visible = false;
+
         }
 
+        //구글 로그인(수영)
         private async void btnLogin_Click(object sender, EventArgs e)
         {
             UserCredential credential;
@@ -52,6 +66,9 @@ namespace maverCalender
 
             MessageBox.Show("로그인 성공!");
         }
+
+
+        //날씨(수영)
         string cityName = "Seoul";
         public async void GetWeather()
         {
@@ -76,7 +93,7 @@ namespace maverCalender
 
                     // 아이콘 이미지 불러오기 (이미지 URL 활용)
                     string iconUrl = $"http://openweathermap.org/img/wn/{data.Weather[0].Icon}@2x.png";
-                    pictureBoxWeather.Load(iconUrl);
+                    pbWeather.Load(iconUrl);
                 }
                 catch (Exception ex)
                 {
@@ -88,30 +105,15 @@ namespace maverCalender
 
         private void detailPopup_Load(object sender, EventArgs e)
         {
+            //수영
             GetWeather();
             worldTime();
+
             // 승환
             LoadDetailData("user1");
         }
         private Color selectedColor = Color.SkyBlue;
 
-
-
-
-
-        private void btnSelectColor_Click(object sender, EventArgs e)
-        {
-            ColorDialog colorDialog = new ColorDialog();
-
-            // 색상 선택창 띄우기
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                selectedColor = colorDialog.Color;
-
-                // 버튼 배경색을 선택한 색으로 바꿔서 사용자가 바로 확인하게 함
-                btnSelectColor.BackColor = selectedColor;
-            }
-        }
 
         // 승환
         private MySqlConnection conn;
@@ -151,6 +153,12 @@ namespace maverCalender
             {
                 MessageBox.Show(ex.ToString());
             }
+
+            //수영
+            MessageBox.Show(selectedColor.ToString());
+            this.DialogResult = DialogResult.OK; // 저장 후 창 닫기
+            this.Close();
+
         }
         // 승환
         private void btnDelete_Click(object sender, EventArgs e)
@@ -306,6 +314,7 @@ namespace maverCalender
             //콤보박스에 시간 표시
             cbWorldTime.Text = currentTime.ToString("yyyy-MM-dd HH:mm:ss");
         }
+
         //수영
         public void worldTime()
         {
@@ -316,6 +325,119 @@ namespace maverCalender
 
             // 콤보박스에 이름이 보이도록 설정
             cbWorldTime.DisplayMember = "DisplayName";
+        }
+
+        //수영
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();           
+            {
+                // 색상 선택창 띄우기
+                if (colorDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    selectedColor = colorDialog.Color;
+                    // 버튼 배경색을 선택한 색으로 바꿔서 사용자가 바로 확인하게 함
+                    btnColor.BackColor = selectedColor;
+                }
+                
+            }
+        }
+
+
+
+        private void cbRepeat_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            CheckBox[] days = { repeat.cbSun, repeat.cbSat, repeat.cbFri, repeat.cbTur, repeat.cbWed, repeat.cbTue, repeat.cbMon };
+
+            
+
+            string selectedType = cbRepeat.SelectedItem.ToString();
+
+            // 초기화: 모든 패널 숨기기
+            //weekly.Visible = false;
+            //monthly.Visible = false;
+            repeat.Visible = false;
+
+            // 선택된 유형에 따라 패널 보이기
+            switch (selectedType)
+            {
+                case "매주":
+                    repeat.Visible = true;
+                    repeat.lbChoice.Text = cbRepeat.Text;
+                    repeat.lbChange.Visible = true;
+                    repeat.tbNum.Text = " ";
+                    foreach (var cb in days)
+                        cb.Visible = true;
+                    repeat.BringToFront();
+                    break;
+
+                case "매월":
+                    repeat.Visible = true;
+                    repeat.lbChoice.Text = cbRepeat.Text;
+                    repeat.lbChange.Visible = true;
+                    repeat.tbNum.Text = " ";
+                    foreach (var cb in days)
+                        cb.Visible = true;
+                    repeat.lbChange.Text = "개월";
+                    repeat.BringToFront();
+                    break;
+                case "매년":
+                    repeat.Visible = true;
+                    repeat.lbChoice.Text = cbRepeat.Text;
+                    repeat.lbChange.Visible = false;
+                    repeat.tbNum.Text = "-";
+                    repeat.tbNum.Enabled = false;
+                    foreach (var cb in days)
+                        cb.Visible = false;
+                    repeat.BringToFront();
+                    
+                    break;
+
+                case "NONE":
+                default:
+                    // 아무것도 안 보여줌
+                    break;
+            }
+
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void pbOff_Click(object sender, EventArgs e)
+        {
+            pbOn.BringToFront();
+            //dtpStartTime.Visible = false;
+            //dtpEndTime.Visible = false;
+            dtpStartTime.Enabled = false;
+            dtpEndTime.Enabled = false;
+        }
+
+        private void pbOn_Click(object sender, EventArgs e)
+        {
+            pbOff.BringToFront();
+            //dtpStartTime.Visible = true;
+            //dtpEndTime.Visible = true;
+            dtpStartTime.Enabled = true;
+            dtpEndTime.Enabled = true;
+        }
+
+        private void btnMinus_Click(object sender, EventArgs e)
+        {
+            btnMinus.Visible = false;
+            btnPlus.Visible = true;
+            cbAlert.Visible = false;
+            lbLine9.Visible = false;
+        }
+
+        private void btnPlus_Click(object sender, EventArgs e)
+        {
+            btnPlus.Visible = false;
+            btnMinus.Visible = true;
+            cbAlert.Visible = true;
         }
     }
 }
