@@ -27,5 +27,27 @@ namespace Project_Maver.View
             _date = thisDate;
             lbDay.Text = day.ToString();
         }
+        // 승환(3/10)
+        public void setDetailPopupText(string text)
+        {
+            //lbText.Text = text;
+        }
+
+        public void addTitleLabel(string text)
+        {
+            Label label = new Label();
+            label.Text = text;
+            label.AutoSize = true;
+            label.MaximumSize = new Size(this.Width - 10, 0); // 칸 너비를 넘지 않게 설정
+            label.Font = new Font("맑은 고딕", 9, FontStyle.Regular);
+            label.BackColor = Color.LightBlue; // 구분하기 쉽게 색상 지정
+            label.Margin = new Padding(3, 1, 3, 1);
+
+            int currentControlsCount = this.Controls.Count;
+            label.Location = new Point(5, 20 + (currentControlsCount * 20));
+
+            this.Controls.Add(label);
+            label.BringToFront();
+        }
     }
 }

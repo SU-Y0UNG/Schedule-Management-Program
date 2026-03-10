@@ -1,3 +1,4 @@
+﻿using maverCalender;
 using Project_Maver.Common;
 using Project_Maver.View;
 
@@ -152,10 +153,24 @@ namespace Maver_켈린더
 
                 DayUserControl duc = new DayUserControl(i, dateForSlot);
 
+                // 승환(3/10)
+                flpMain.Controls.Add(duc);
+
                 // 각 유저컨트롤에 클릭이벤트!!
                 duc.Click += (s, e) =>
                 {
                     MessageBox.Show(dateForSlot.ToString());
+                    //===================================================
+                    // 승환(3.10)
+                    //===================================================
+                    detailPopup popup = new detailPopup();
+                    //popup.ShowDialog();
+
+                    if(popup.ShowDialog() == DialogResult.OK)
+                    {
+                        string title = popup.getDetailPopupTitle();
+                        duc.addTitleLabel(title);
+                    }
                 };
 
                 flpMain.Controls.Add(duc);

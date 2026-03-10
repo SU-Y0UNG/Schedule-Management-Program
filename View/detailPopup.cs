@@ -28,6 +28,9 @@ namespace maverCalender
 {
     public partial class detailPopup : Form
     {
+        // 승환(3월10)
+        public string title {  get; set; }
+        public event Action<detailPopup> ScheduleSaved;
 
         pnlRepeat repeat = new pnlRepeat();
         public detailPopup()
@@ -143,6 +146,7 @@ namespace maverCalender
 
 
         private Color selectedColor = Color.SkyBlue;
+
         // 승환
         private MySqlConnection conn;
         private MySqlCommand cmd;
@@ -197,14 +201,24 @@ namespace maverCalender
                 if (result > 0)
                 {
                     MessageBox.Show("일정이 성공적으로 저장되었습니다!");
-                    this.Close(); // 저장 후 팝업 닫기
-
+                    //this.Close(); // 저장 후 팝업 닫기
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+            // 승환(3.10)
+            //detailPopup popup = new detailPopup()
+            //{
+            //    title = txtTitle.Text
+            //};
+            //ScheduleSaved?.Invoke(popup);
+            //this.Hide();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
 
             //수영
             MessageBox.Show(selectedColor.ToString());
@@ -212,6 +226,12 @@ namespace maverCalender
             this.Close();
 
         }
+        // 승환(3/10)
+        public string getDetailPopupTitle()
+        {
+            return txtTitle.Text;
+        }
+
         // 승환
         private void btnDelete_Click(object sender, EventArgs e)
         {

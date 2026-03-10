@@ -44,6 +44,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(lbDay);
             Name = "DayUserControl";
