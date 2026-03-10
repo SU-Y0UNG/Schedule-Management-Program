@@ -58,7 +58,7 @@
             Controls.Add(lbHolidayName);
             Controls.Add(lbDay);
             Name = "DayUserControl";
-            Size = new Size(210, 111);
+            Size = new Size(210, 135);
             ResumeLayout(false);
             PerformLayout();
         }
