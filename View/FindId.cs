@@ -28,12 +28,18 @@ namespace Project_Maver.View
             }
 
             // 2. JoinMember 클래스의 메서드 호출
+
             String foundId = JoinMember.FindUserId(txtName.Text, txtEmail.Text, txtPhone.Text);
+            // JoinMember 클래스의 FindUserId 메서드에 텍스트 박스에 입력된 값들을 전달
             {
                 // 3. 결과 처리
                 if (foundId != null)
                 {
                     MessageBox.Show($"{txtName.Text}님의 아이디는 [{foundId}] 입니다.");
+
+                    //*****************서현****************************//
+                    this.Close();
+                    //************************************************//
                 }
 
                 else
