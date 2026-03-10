@@ -33,10 +33,11 @@ namespace Project_Maver.View
             string inputEmail = txtEmail1.Text.Trim();
             // Trim(): 사용자가 아이디 앞뒤에 실수로 넣은 공백을 자동으로 제거해준다.
 
-            // @가 없으면 네이버로 자동으로 설정
+            // @가 없을 때 메세지 알림(이거 3월 10일 오후 4시에 수정함)
             if (!inputEmail.Contains("@"))
             {
-                inputEmail += "@naver.com";
+                MessageBox.Show("이메일 형식을 올바르게 입력해주세요.\n예: example@gmail.com");
+                return;
             }
 
             // 1. 입력 검증
@@ -99,13 +100,14 @@ namespace Project_Maver.View
         {
             try
             {
-                
-                SmtpClient smtp = new SmtpClient("smtp.naver.com",587);
+                //네이버 메일
+                SmtpClient smtp = new SmtpClient("smtp.naver.com", 587); // 587은 네이버 포트 번호이다.
                 smtp.EnableSsl = true;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.UseDefaultCredentials = false;
-                
-                //직접 만든 임시 메일
+
+                //직접 만든 임시 메일, 그리고 내정보 → 보안설정 -> 2단계 인증 들어가기-> 아이디의 비번 입력 -> 앱 비밀번호 생성으로 12자리 앱 비번을 만들었다. 
+                //종류 입력에서 MaverSMTP라고 설정했다.
                 smtp.Credentials = new NetworkCredential("jdhem334", "1HRQB7JCJLJV");
 
 
@@ -114,16 +116,17 @@ namespace Project_Maver.View
                 mail.To.Add(toEmail);
                 mail.Subject = "[Project Maver] 임시 비밀번호 발급 안내";
                 mail.Body = $"안녕하세요. {toEmail}님.\n요청하신 임시 비밀번호는 [{tempPw}] 입니다.\n보안을 위해 로그인 후 즉시 비밀번호를 변경해주세요.";
-               
+
                 smtp.Send(mail);
                 return true;
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("오류 발생: " + ex.Message + "\n" + ex.StackTrace);
                 return false;
             }
+
         }
 
 
