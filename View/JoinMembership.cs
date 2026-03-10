@@ -17,7 +17,7 @@ namespace Maver_켈린더
         public JoinMembership()
         {
             InitializeComponent();
-            InitializeComboBoxes();
+            InitializeComboBoxes(); //연도와 월 목록을 초기화하고 숫자를 채워 넣는 함수
         }
 
         // 생년월일 설정
@@ -48,21 +48,28 @@ namespace Maver_켈린더
 
         }
 
+        // 사용자가 선택한 달에 따라 일(day)목록을 동적으로 변경하는 날짜 관리 로직
         private void UpdateDays()
         {
             // 연도와 월이 모두 선택되었는지 확인
             if (cbYear.SelectedItem == null || cbMonth.SelectedItem == null)
                 return;
 
+
+            // 콤보박스에 들어있는 값을 숫자로 계산하거나
+            // 날짜 함수에 넣기 위해 정수형으로 변환시킨다.   
             int year = (int)cbYear.SelectedItem;
             int month = (int)cbMonth.SelectedItem;
 
-            // 현재 선택되어 있는 '일'을 기억해둡니다 (나중에 다시 선택해주기 위함)
+
+            // 현재 선택되어 있는 '일'을 기억해둔다 (나중에 다시 선택해주기 위함)
+            //사용자가 이미 날짜를 선택했다면, 월을 바꿨을 때 그 숫자를 기억해 둔다.
             int? currentSelectedDay = (int?)cbDay.SelectedItem;
 
             cbDay.Items.Clear();
 
-            // 해당 연도와 월의 마지막 날짜를 계산 (예: 2024년 2월 -> 29)
+            // 선택된 연도(year)와 월(month)의 마지막 날이 며칠인지 계산하고
+            // daysInMonth 변수에 저장한다.(윤년도 자동으로 계산한다)
             int daysInMonth = DateTime.DaysInMonth(year, month);
 
             for (int day = 1; day <= daysInMonth; day++)
@@ -71,7 +78,7 @@ namespace Maver_켈린더
             }
 
             // 이전에 선택했던 날이 여전히 유효하다면 다시 선택해주고, 
-            // 아니라면 첫 번째 항목(1일)을 선택합니다.
+            // 아니라면 첫 번째 항목(1일)을 선택한다.
             if (currentSelectedDay.HasValue && currentSelectedDay <= daysInMonth)
             {
                 cbDay.SelectedItem = currentSelectedDay;
@@ -82,7 +89,7 @@ namespace Maver_켈린더
             }
         }
 
-
+        // 회원 정보 데이터 구조
         public class UserUnfo
         {
             public string Id { get; set; }
@@ -93,9 +100,10 @@ namespace Maver_켈린더
             public string Phone { get; set; }
         }
 
+        //가입 버튼 이벤트
         private void btnJoin_Click(object sender, EventArgs e)
         {
-            //1.텍스트 박스 입력 확인
+            // 1.텍스트 박스 입력 확인(모든 텍스트 박스에 내용이 적혀 있는지 검사한다)
             if (string.IsNullOrEmpty(txtId.Text) ||
                 string.IsNullOrEmpty(txtPassWord.Text) ||
                 string.IsNullOrEmpty(txtName.Text) ||
@@ -128,14 +136,13 @@ namespace Maver_켈린더
                 return;
             }
 
-            //모든 검증이 완료되면
-            // 여기서 부터는 입력한 모든 정보를 다음 폼으로 전달하는 코드다. 
-
-            //  5. 다음 폼으로 이동 (가상의 ResultForm이라고 가정)
-
+            // 데이터 가공 및 저장   
+            // 각각 떨어져 있는 연, 월, 일 데이터를 하나의 문자열로 합치는 과정이다.
             string birth = $"{cbYear.SelectedItem}-{cbMonth.SelectedItem}-{cbDay.SelectedItem}";
 
-            // JoinMember 로직 클래스 호출
+
+            // 화면에 입력된 아이디, 비밀번호, 이름, 이메일, 생년월일, 전화번호를
+            // JoinMember라는 클래스의 저장 함수로 전달합니다.
 
             bool result = JoinMember.InsertUser( // DBtest를 project_Maver로 바꿔야 한다. 
                 txtId.Text,
@@ -145,6 +152,7 @@ namespace Maver_켈린더
                 birth,
                 txtPhone.Text);
 
+            // DB 저장에 성공하면 true, 실패하면 false를 반환한다.
             if (result)
             {
                 MessageBox.Show("회원가입 완료");
@@ -157,16 +165,18 @@ namespace Maver_켈린더
 
         }
 
-        // 연도를 바꿀 때마다 실행됨
+      
+        // 사용자가 연도를 클릭해서 다른 연도로 바꾸는 순간 실행
         private void cbYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateDays(); // 연도가 바뀌면 (윤년일 수 있으니) 일수를 다시 계산
+            UpdateDays(); // 연도가 바뀌면 (윤년일 수 있으니)
+                          // 날짜 목록을 다시 계산하도록 UpdateDays()를 호출
         }
 
-        // 월을 바꿀 때마다 실행됨
+        // 사용자가 월을 클릭해서 다른 월로 바꾸는 순간 실행됨
         private void cbMonth_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateDays(); // 월이 바뀌면 (28, 30, 31일 중 하나로) 일수를 다시 계산
+            UpdateDays(); // 월이 바뀌면 (28, 30, 31일 중 하나로) 날짜 목록을 갱신합니다.
         }
 
        

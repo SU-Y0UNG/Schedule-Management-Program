@@ -35,6 +35,8 @@
             label2 = new Label();
             label1 = new Label();
             pictureBox1 = new PictureBox();
+            label6 = new Label();
+            txtEmail1 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -42,11 +44,11 @@
             // 
             btnFindPW.BackColor = Color.LimeGreen;
             btnFindPW.Font = new Font("맑은 고딕", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            btnFindPW.Location = new Point(303, 300);
+            btnFindPW.Location = new Point(303, 322);
             btnFindPW.Name = "btnFindPW";
-            btnFindPW.Size = new Size(181, 52);
+            btnFindPW.Size = new Size(198, 52);
             btnFindPW.TabIndex = 15;
-            btnFindPW.Text = "비밀번호 찾기";
+            btnFindPW.Text = "임시 비밀번호 발급";
             btnFindPW.UseVisualStyleBackColor = false;
             btnFindPW.Click += btnFindPW_Click;
             // 
@@ -69,11 +71,11 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(210, 149);
+            label2.Location = new Point(176, 149);
             label2.Name = "label2";
-            label2.Size = new Size(374, 15);
+            label2.Size = new Size(462, 15);
             label2.TabIndex = 8;
-            label2.Text = "비밀번호는 회원가입시 입력하신 아이디를 통해 찾으실 수 있습니다.";
+            label2.Text = "비밀번호는 회원가입시 입력하신 아이디와 이메일을 입력하시면 찾으실 수 있습니다.";
             // 
             // label1
             // 
@@ -95,6 +97,22 @@
             pictureBox1.TabIndex = 6;
             pictureBox1.TabStop = false;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(248, 249);
+            label6.Name = "label6";
+            label6.Size = new Size(54, 15);
+            label6.TabIndex = 11;
+            label6.Text = "이메일 : ";
+            // 
+            // txtEmail1
+            // 
+            txtEmail1.Location = new Point(248, 271);
+            txtEmail1.Name = "txtEmail1";
+            txtEmail1.Size = new Size(324, 23);
+            txtEmail1.TabIndex = 14;
+            // 
             // Findpw
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -102,6 +120,8 @@
             BackColor = Color.White;
             ClientSize = new Size(800, 450);
             Controls.Add(btnFindPW);
+            Controls.Add(txtEmail1);
+            Controls.Add(label6);
             Controls.Add(txtId1);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -126,5 +146,7 @@
         private Label label2;
         private Label label1;
         private PictureBox pictureBox1;
+        private Label label6;
+        private TextBox txtEmail1;
     }
 }

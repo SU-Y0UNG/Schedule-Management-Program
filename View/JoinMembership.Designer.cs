@@ -115,13 +115,16 @@
             txtPassWord.Name = "txtPassWord";
             txtPassWord.Size = new Size(280, 23);
             txtPassWord.TabIndex = 3;
+            txtPassWord.UseSystemPasswordChar = true;
             // 
             // txtPwCheck
             // 
             txtPwCheck.Location = new Point(35, 547);
             txtPwCheck.Name = "txtPwCheck";
+            txtPwCheck.PasswordChar = '*';
             txtPwCheck.Size = new Size(280, 23);
             txtPwCheck.TabIndex = 3;
+            txtPwCheck.UseSystemPasswordChar = true;
             // 
             // chkInfo
             // 
