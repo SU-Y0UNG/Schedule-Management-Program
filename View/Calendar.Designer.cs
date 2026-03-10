@@ -59,6 +59,9 @@
             btnAfterDate = new Button();
             lbThisDate = new Label();
             flpMain = new FlowLayoutPanel();
+            cmsCalendar = new ContextMenuStrip(components);
+            tsmDelete = new ToolStripMenuItem();
+            tsmExit = new ToolStripMenuItem();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             pnlCategori.SuspendLayout();
@@ -66,6 +69,7 @@
             tableLayoutPanel1.SuspendLayout();
             pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            cmsCalendar.SuspendLayout();
             SuspendLayout();
             // 
             // imageList1
@@ -140,6 +144,7 @@
             // treeView1
             // 
             treeView1.BackColor = Color.WhiteSmoke;
+            treeView1.ContextMenuStrip = cmsCalendar;
             treeView1.Dock = DockStyle.Fill;
             treeView1.DrawMode = TreeViewDrawMode.OwnerDrawText;
             treeView1.Location = new Point(0, 0);
@@ -163,6 +168,7 @@
             treeView1.DrawNode += treeView1_DrawNode;
             treeView1.BeforeSelect += cdMain_BeforeSelect;
             treeView1.AfterSelect += treeView1_AfterSelect;
+            treeView1.NodeMouseClick += treeView1_NodeMouseClick;
             // 
             // tableLayoutPanel1
             // 
@@ -401,6 +407,27 @@
             flpMain.Size = new Size(1278, 717);
             flpMain.TabIndex = 0;
             // 
+            // cmsCalendar
+            // 
+            cmsCalendar.Items.AddRange(new ToolStripItem[] { tsmDelete, tsmExit });
+            cmsCalendar.Name = "contextMenuStrip1";
+            cmsCalendar.Size = new Size(99, 48);
+            cmsCalendar.Opening += cmsCalendar_Opening;
+            // 
+            // tsmDelete
+            // 
+            tsmDelete.Name = "tsmDelete";
+            tsmDelete.Size = new Size(98, 22);
+            tsmDelete.Text = "제거";
+            tsmDelete.Click += tsmDelete_Click;
+            // 
+            // tsmExit
+            // 
+            tsmExit.Name = "tsmExit";
+            tsmExit.Size = new Size(98, 22);
+            tsmExit.Text = "탈퇴";
+            tsmExit.Click += tsmExit_Click;
+            // 
             // Calendar
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -421,6 +448,7 @@
             pnlHead.ResumeLayout(false);
             pnlHead.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            cmsCalendar.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -451,5 +479,8 @@
         private Project_Maver.Common.RoundButton btnGoToday;
         private Button btnSearch;
         private TextBox txtSearch;
+        private ContextMenuStrip cmsCalendar;
+        private ToolStripMenuItem tsmDelete;
+        private ToolStripMenuItem tsmExit;
     }
 }

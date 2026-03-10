@@ -26,59 +26,85 @@ namespace Project_Maver.View
         }
         private void btnSharePlus_Click(object sender, EventArgs e)
         {
-            if (_mode == "공용" && lvShareUser.Items.Count == 0)
+            try
             {
-                MessageBox.Show("공유할 유저를 최소 한 명 이상 선택해주세요");
-                return;
-            }
-
-            string calName = txtCalName.Text;
-            if (string.IsNullOrEmpty(calName))
-            {
-                MessageBox.Show("캘린더 이름을 입력해주세요");
-                return;
-            }
-            string color = ColorTranslator.ToHtml(rbColor.BackColor);
-            string currentUserId = UserSession.UserId;
-
-            string groupSql = "INSERT INTO share_group(share_name, color) VALUES (@name, @color); SELECT LAST_INSERT_ID();";
-            var groupParam = new Dictionary<string, object> {
-                { "@name", calName },
-                {"@color", color }
-            };
-
-            DataTable dtGroup = DbManager.select_Query(groupSql, groupParam);
-            if (dtGroup == null || dtGroup.Rows.Count == 0) return;
-
-            int newShareId = Convert.ToInt32(dtGroup.Rows[0][0]);
-
-            string memberSql = "INSERT INTO share_member(share_id, user_id, role) VALUES (@sid, @id, @role)";
-
-            var ownerParam = new Dictionary<string, object>
-            {
-                {"@sid", newShareId },
-                { "@id", currentUserId },
-                {"@role", 0 }
-            };
-            DbManager.void_query(memberSql, ownerParam);
-
-            if(_mode == "공용")
-            {
-                foreach (ListViewItem item in lvShareUser.Items)
+                // 1. 유효성 검사
+                if (_mode == "공용" && lvShareUser.Items.Count == 0)
                 {
-                   string targetUserId = item.Tag.ToString();
+                    MessageBox.Show("공유할 유저를 최소 한 명 이상 선택해주세요");
+                    return;
+                }
 
-                    var mParam = new Dictionary<string, object>
+                string calName = txtCalName.Text.Trim();
+                if (string.IsNullOrEmpty(calName))
+                {
+                    MessageBox.Show("캘린더 이름을 입력해주세요");
+                    return;
+                }
+
+                // 2. 데이터 준비
+                string color = ColorTranslator.ToHtml(rbColor.BackColor);
+                string currentUserId = UserSession.UserId;
+
+                // 3. share_group 데이터 삽입 (INSERT만 먼저 실행)
+                string insertGroupSql = "INSERT INTO share_group(share_name, color) VALUES (@name, @color)";
+                var groupParam = new Dictionary<string, object> {
+            { "@name", calName },
+            { "@color", color }
+        };
+
+                // void_query로 먼저 확실하게 저장
+                DbManager.void_query(insertGroupSql, groupParam);
+
+                // 4. 생성된 ID 가져오기 (분리해서 실행)
+                string idSql = "SELECT LAST_INSERT_ID()";
+                DataTable dtGroup = DbManager.select_Query(idSql, null);
+
+                if (dtGroup == null || dtGroup.Rows.Count == 0)
+                {
+                    MessageBox.Show("데이터 저장 후 ID를 가져오는데 실패했습니다.");
+                    return;
+                }
+
+                int newShareId = Convert.ToInt32(dtGroup.Rows[0][0]);
+
+                // 5. share_member 데이터 삽입 (방장 추가)
+                string memberSql = "INSERT INTO share_member(share_id, user_id, role) VALUES (@sid, @id, @role)";
+                var ownerParam = new Dictionary<string, object>
+        {
+            {"@sid", newShareId },
+            {"@id", currentUserId },
+            {"@role", 1 } // 1을 방장으로 가정
+        };
+                DbManager.void_query(memberSql, ownerParam);
+
+                // 6. 공용일 경우 멤버들 추가
+                if (_mode == "공용")
+                {
+                    foreach (ListViewItem item in lvShareUser.Items)
+                    {
+                        if (item.Tag == null) continue;
+
+                        string targetUserId = item.Tag.ToString();
+                        var mParam = new Dictionary<string, object>
                 {
                     { "@sid", newShareId },
-                    {"@id", targetUserId },
-                    {"@role", 1 }
+                    { "@id", targetUserId },
+                    { "@role", 0 } // 0을 일반 멤버로 가정
                 };
-                    DbManager.void_query(memberSql, mParam);
+                        DbManager.void_query(memberSql, mParam);
+                    }
                 }
+
+                MessageBox.Show("캘린더가 성공적으로 생성되었습니다!"); // 성공 메시지 추가
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            catch (Exception ex)
+            {
+                // 에러가 발생하면 여기서 멈추고 이유를 알려줍니다.
+                MessageBox.Show($"오류 발생: {ex.Message}\n\n상세 정보: {ex.StackTrace}");
+            }
         }
 
         private void makeShare_Load(object sender, EventArgs e)
@@ -144,9 +170,8 @@ namespace Project_Maver.View
                 MessageBox.Show("존재하지 않는 유저입니다.");
             }
 
-           
-        }
 
+        }
         private void rbColor_Click(object sender, EventArgs e)
         {
             ColorDialog cd = new ColorDialog();

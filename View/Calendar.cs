@@ -60,27 +60,59 @@ namespace Maver_켈린더
 
         private void CreateDefaultCalendar()
         {
-            string groupSql = "INSERT INTO share_group (share_name, color) VALUES (@name, @color); Select LAST_INSERT_ID(); ";
-            var groupParam = new Dictionary<string, object>
+            // 로그인 정보가 없으면 캘린더 데이터 생성 X
+            if (string.IsNullOrEmpty(UserSession.UserId)) return;
+
+            try
             {
+                // 해당 유저의 캘린더가 있는지 확인
+                string checkSql = "SELECT COUNT(*) FROM share_member WHERE user_id = @id";
+                var checkParam = new Dictionary<string, object> { { "@id", UserSession.UserId } };
+
+                DataTable dtCheck = DbManager.select_Query(checkSql, checkParam);
+
+                if (dtCheck != null && dtCheck.Rows.Count > 0)
+                {
+                    if (Convert.ToInt32(dtCheck.Rows[0][0]) > 0)
+                    {
+                        // 존재하면 개인 캘린더 생성 중단
+                        return;
+                    }
+                }
+
+                //share_group 캘린더 생성
+                string groupSql = "INSERT INTO share_group (share_name, color) VALUES (@name, @color); Select LAST_INSERT_ID(); ";
+                var groupParam = new Dictionary<string, object>
+                {
                 //여기 만들면 두개 생김.
-                {"@name", "개인 캘린더" },
-                {"@color","#A0A0A0" }
-            };
+                    {"@name", "개인 캘린더" },
+                    {"@color","#A0A0A0" }// 기본 회색 설정
+                };
+                DbManager.void_query(groupSql, groupParam);
 
-            DataTable dt = DbManager.select_Query(groupSql, groupParam);
+                // 생성된 그룹 ID 가져오기
+                string idSql = "SELECT LAST_INSERT_ID()";
+                DataTable dtId = DbManager.select_Query(idSql, null);
 
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                int newId = Convert.ToInt32(dt.Rows[0][0]);
-                string memberSql = "INSERT INTO share_member(share_id, user_id, role) VALUES (@sid, @id, @role)";
-                var memberParam = new Dictionary<string, object>
+                if (dtId != null && dtId.Rows.Count > 0)
+                {
+                    int newId = Convert.ToInt32(dtId.Rows[0][0]);
+
+                    // share_member 추가
+                    string memberSql = "INSERT INTO share_member(share_id, user_id, role) VALUES (@sid, @id, @role)";
+                    var memberParam = new Dictionary<string, object>
                 {
                     {"@sid", newId },
                     {"@id", UserSession.UserId },
-                    {"@role", UserSession.UserId }
+                    {"@role", 1 } // 관리자
                 };
-                DbManager.void_query(memberSql, memberParam);
+                    DbManager.void_query(memberSql, memberParam);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("캘린더 생성 중 오류가 발생했습니다: " + ex.Message);
             }
         }
 
@@ -202,28 +234,57 @@ namespace Maver_켈린더
             }
 
             // DB에서 내가 속한 캘린더 목록 가져오기
-            string sql = @"SELECT g.share_id, g.share_name, 
-                (SELECT COUNT(*) FROM share_member WHERE share_id = g.share_id) as member_count
-                FROM share_group g 
-                JOIN share_member m ON g.share_id = m.share_id 
+            string sql = @"
+                SELECT 
+                    g.share_id, 
+                    g.share_name, 
+                    g.color,
+                    (SELECT COUNT(*) FROM share_member WHERE share_id = g.share_id) as member_count
+                FROM share_group g
+                JOIN share_member m ON g.share_id = m.share_id
                 WHERE m.user_id = @id";
 
             var param = new Dictionary<string, object> { { "@id", UserSession.UserId } };
-            DataTable dt = DbManager.select_Query(sql, param);
-
-            if (dt != null)
+            try
             {
-                foreach (DataRow row in dt.Rows)
+                DataTable dt = DbManager.select_Query(sql, param);
+
+                if (dt != null)
                 {
-                    int memberCount = Convert.ToInt32(row["member_count"]);
-                    // 멤버가 나 포함 2명 이상일때만 '공용'목록에 추가
-                    if (memberCount > 1)
+                    foreach (DataRow row in dt.Rows)
                     {
+                        int memberCount = Convert.ToInt32(row["member_count"]);
+                        string hexColor = row["color"]?.ToString() ?? "#000000"; ////DB에서 색상 코드 가져옴
+
                         TreeNode sharedNode = new TreeNode(row["share_name"].ToString());
+
+                        // 나중에 일정 조회할 때 필요
                         sharedNode.Tag = row["share_id"];
-                        treeView1.Nodes[0].Nodes[1].Nodes.Add(sharedNode);
+
+                        // DB에 저장된 HEX문자열을 Color객체로 변환하여 적용
+                        try
+                        {
+                            sharedNode.ForeColor = ColorTranslator.FromHtml(hexColor);
+                        }
+                        catch
+                        {
+                            sharedNode.ForeColor = Color.Black; //예외 발생시 기본색
+                        }
+                        // 멤버가 나 포함 2명 이상일때만 '공용'목록에 추가
+                        if (memberCount > 1)
+                        {
+                            publicRoot.Nodes.Add(sharedNode);
+                        }
+                        else
+                        {
+                            privateRoot.Nodes.Add(sharedNode);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("RefreshTreeView 에러: " + ex.Message);
             }
             treeView1.ExpandAll();
         }
@@ -252,6 +313,125 @@ namespace Maver_켈린더
             else
             {
                 e.DrawDefault = true;
+            }
+        }
+        private void cmsCalendar_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // 현재 선택된 노드 확인
+            TreeNode selectedNode = treeView1.SelectedNode;
+
+            if (selectedNode == null || selectedNode.Tag == null)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            if (selectedNode.Text == "개인 캘린더")
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            int shareId = Convert.ToInt32(selectedNode.Tag);
+            string currentUserId = UserSession.UserId;
+
+            string sql = "SELECT role FROM share_member WHERE share_id = @sid AND user_id = @id";
+            var param = new Dictionary<string, object>
+            {
+                {"@sid", shareId },
+                {"@id", currentUserId }
+            };
+
+            DataTable dt = DbManager.select_Query(sql, param);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                int role = Convert.ToInt32(dt.Rows[0]["role"]);
+
+                if (role == 1)
+                {
+                    tsmDelete.Visible = true;
+                    tsmExit.Visible = false;
+                }
+                else
+                {
+                    tsmDelete.Visible = false;
+                    tsmExit.Visible = true;
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                treeView1.SelectedNode = e.Node;
+            }
+        }
+        // 그룹 제거
+        private void tsmDelete_Click(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode == null || treeView1.SelectedNode.Tag == null) return;
+
+            int shareId = Convert.ToInt32(treeView1.SelectedNode.Tag);
+            string shareName = treeView1.SelectedNode.Text;
+
+            if (MessageBox.Show($"[{shareName}] 캘린더를 삭제하시겠습니까?" +
+                "\n*모든 멤버의 목록에서 사라집니다.", "캘린더 제거", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                try
+                {
+                    //자식 테이블 먼저 삭제
+                    string delMemberSql = "DELETE FROM share_member WHERE share_id = @sid";
+                    //부모 테이블 데이터 삭제
+                    string delGroupSql = "DELETE FROM share_group WHERE share_id = @sid";
+
+                    var param = new Dictionary<string, object> { { "@sid", shareId } };
+                    DbManager.void_query(delMemberSql, param);
+                    DbManager.void_query(delGroupSql, param);
+
+                    MessageBox.Show("캘린더가 성공적으로 제거되었습니다.");
+
+                    RefreshTreeView(); // 트리뷰 갱신
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("삭제 중 오류가 발생했습니다: " + ex.Message);
+                }
+            }
+        }
+        //그룹 탈퇴
+        private void tsmExit_Click(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode == null || treeView1.SelectedNode.Tag == null) return;
+
+            int shareId = Convert.ToInt32(treeView1.SelectedNode.Tag);
+            string shareName = treeView1.SelectedNode.Text;
+
+            if (MessageBox.Show($"[{shareName}] 캘린더에서 탈퇴하시겠습니까?", "캘린더 탈퇴", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                try
+                {
+                    string exitSql = "DELETE FROM share_member WHERE share_id = @sid AND user_id = @id";
+                    var param = new Dictionary<string, object>
+                    {
+                        {"@sid", shareId },
+                        {"@id", UserSession.UserId }
+                    };
+
+                    DbManager.void_query(exitSql, param);
+
+                    MessageBox.Show("탈퇴하였습니다.");
+
+                    RefreshTreeView();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("탈퇴 처리 중 오류가 발생했습니다: " + ex.Message);
+                }
             }
         }
         //---------------------------------------------------
@@ -331,7 +511,7 @@ namespace Maver_켈린더
                     // 승환(3.10)+수영(3.10)
                     //===================================================
                     detailPopup popup = new detailPopup();
-                    popup.selectedDate =  dateForSlot; //선택한 날짜가 뜨도록
+                    popup.selectedDate = dateForSlot; //선택한 날짜가 뜨도록
 
 
                     if (popup.ShowDialog() == DialogResult.OK)
@@ -520,5 +700,7 @@ namespace Maver_켈린더
             searchForm.ShowDialog();
 
         }
+
+       
     }
 }
