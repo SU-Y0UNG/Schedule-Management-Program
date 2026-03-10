@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Net;
+using System.Net.Mail; // 메일 발송에 필요한 문구
+
 using MySql.Data.MySqlClient; // DB연결을 위해 필요하다
 using Project_Maver.Common;  // DbManager, 전역변수 UserSession사용
 
@@ -18,7 +21,7 @@ namespace Project_Maver.View
     {
         public Findpw()
         {
-            InitializeComponent();
+            InitializeComponent();  
         }
 
         private void btnFindPW_Click(object sender, EventArgs e)
@@ -30,6 +33,12 @@ namespace Project_Maver.View
             string inputEmail = txtEmail1.Text.Trim();
             // Trim(): 사용자가 아이디 앞뒤에 실수로 넣은 공백을 자동으로 제거해준다.
 
+            // @가 없으면 네이버로 자동으로 설정
+            if (!inputEmail.Contains("@"))
+            {
+                inputEmail += "@naver.com";
+            }
+
             // 1. 입력 검증
             if (string.IsNullOrEmpty(inputID) || string.IsNullOrEmpty(inputEmail))
             {
@@ -37,7 +46,7 @@ namespace Project_Maver.View
                 return;
             }
 
-
+           // DB 조회
             string checkSql = "SELECT * FROM user WHERE id = @id AND email = @email";
             Dictionary<string, object> checkParams = new Dictionary<string, object>
             {
@@ -46,6 +55,7 @@ namespace Project_Maver.View
             };
 
             DataTable dt = DbManager.select_Query(checkSql, checkParams);
+
 
             if (dt.Rows.Count > 0)
             {
@@ -63,20 +73,56 @@ namespace Project_Maver.View
 
                 int result = DbManager.void_query(updateSql, updateParams);
 
+
+                // 이메일 발송 연동 로직
                 if (result > 0)
                 {
-                    // 4. 메세지 박스로 임시 비번 출력 후 창 닫기
-                    MessageBox.Show($"{inputID}님의 임시 비밀번호가 발급되었습니다. \n\n" +
-                        $"임시 비밀번호 : [{tempPw}]\n\n" +
-                        "로그인 후 반드시 비밀번호를 변경해주세요.");
+                    // 실제 메일을 보내는 함수를 호출
+                    if (SendEmail(inputEmail, tempPw))
+                    {
+                        //성공 시
+                        MessageBox.Show($"{inputEmail} 메일로 임시 비밀번호를 발송했습니다.\n 확인 후 로그인 해 주세요.", "발송 성공");
+                        this.Close();
+                    }
 
-                    this.Close();
+                    else
+                    {
+                        //실패 시
+                        MessageBox.Show($"메일 발송에 실패했습니다. \n 화면에 임시 비밀번호를 띄우겠습니다. 메모해주세요. \n\n 임시 비번 : [{tempPw}]", "알림");
+                        this.Close();
+                    }
                 }
             }
+        }
 
-            else
+        private bool SendEmail(string toEmail, string tempPw)
+        {
+            try
             {
-                MessageBox.Show("일치하는 회원이 없습니다.");
+                
+                SmtpClient smtp = new SmtpClient("smtp.naver.com",587);
+                smtp.EnableSsl = true;
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.UseDefaultCredentials = false;
+                
+                //직접 만든 임시 메일
+                smtp.Credentials = new NetworkCredential("jdhem334", "1HRQB7JCJLJV");
+
+
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("jdhem334@naver.com", "Maver 관리자");
+                mail.To.Add(toEmail);
+                mail.Subject = "[Project Maver] 임시 비밀번호 발급 안내";
+                mail.Body = $"안녕하세요. {toEmail}님.\n요청하신 임시 비밀번호는 [{tempPw}] 입니다.\n보안을 위해 로그인 후 즉시 비밀번호를 변경해주세요.";
+               
+                smtp.Send(mail);
+                return true;
+            }
+
+            catch(Exception ex)
+            {
+                MessageBox.Show("오류 발생: " + ex.Message + "\n" + ex.StackTrace);
+                return false;
             }
         }
 
