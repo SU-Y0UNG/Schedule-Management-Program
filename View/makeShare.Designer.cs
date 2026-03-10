@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            cbCalendarSelect = new ComboBox();
             txtCalName = new TextBox();
             label1 = new Label();
             _panel = new Panel();
-            label2 = new Label();
+            lbShareUser = new Label();
             txtShareUser = new TextBox();
             lvShareUser = new ListView();
             contextMenuStripDelete = new ContextMenuStrip(components);
@@ -40,8 +41,22 @@
             btnUserPlus = new Button();
             rbColor = new Project_Maver.Common.RoundButton();
             btnSharePlus = new Button();
+            label3 = new Label();
+            panel1 = new Panel();
             contextMenuStripDelete.SuspendLayout();
             SuspendLayout();
+            // 
+            // cbCalendarSelect
+            // 
+            cbCalendarSelect.Enabled = false;
+            cbCalendarSelect.FlatStyle = FlatStyle.Flat;
+            cbCalendarSelect.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            cbCalendarSelect.FormattingEnabled = true;
+            cbCalendarSelect.Items.AddRange(new object[] { "개인", "공용" });
+            cbCalendarSelect.Location = new Point(138, 185);
+            cbCalendarSelect.Name = "cbCalendarSelect";
+            cbCalendarSelect.Size = new Size(121, 23);
+            cbCalendarSelect.TabIndex = 8;
             // 
             // txtCalName
             // 
@@ -72,19 +87,19 @@
             _panel.Size = new Size(510, 1);
             _panel.TabIndex = 2;
             // 
-            // label2
+            // lbShareUser
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(12, 174);
-            label2.Name = "label2";
-            label2.Size = new Size(88, 24);
-            label2.TabIndex = 1;
-            label2.Text = "유저 추가";
+            lbShareUser.AutoSize = true;
+            lbShareUser.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            lbShareUser.Location = new Point(12, 252);
+            lbShareUser.Name = "lbShareUser";
+            lbShareUser.Size = new Size(88, 24);
+            lbShareUser.TabIndex = 1;
+            lbShareUser.Text = "유저 추가";
             // 
             // txtShareUser
             // 
-            txtShareUser.Location = new Point(127, 179);
+            txtShareUser.Location = new Point(127, 257);
             txtShareUser.Name = "txtShareUser";
             txtShareUser.Size = new Size(308, 23);
             txtShareUser.TabIndex = 3;
@@ -92,7 +107,7 @@
             // lvShareUser
             // 
             lvShareUser.ContextMenuStrip = contextMenuStripDelete;
-            lvShareUser.Location = new Point(127, 208);
+            lvShareUser.Location = new Point(127, 286);
             lvShareUser.Name = "lvShareUser";
             lvShareUser.Size = new Size(308, 60);
             lvShareUser.TabIndex = 4;
@@ -118,7 +133,7 @@
             btnUserPlus.FlatStyle = FlatStyle.Flat;
             btnUserPlus.Font = new Font("함초롬돋움", 24F, FontStyle.Bold, GraphicsUnit.Point);
             btnUserPlus.ForeColor = Color.DimGray;
-            btnUserPlus.Location = new Point(439, 164);
+            btnUserPlus.Location = new Point(438, 241);
             btnUserPlus.Name = "btnUserPlus";
             btnUserPlus.Size = new Size(32, 50);
             btnUserPlus.TabIndex = 5;
@@ -150,6 +165,25 @@
             btnSharePlus.TabIndex = 7;
             btnSharePlus.Text = "생성하기";
             btnSharePlus.UseVisualStyleBackColor = false;
+            btnSharePlus.Click += btnSharePlus_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Location = new Point(12, 180);
+            label3.Name = "label3";
+            label3.Size = new Size(106, 24);
+            label3.TabIndex = 1;
+            label3.Text = "캘린더 선택";
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Silver;
+            panel1.Location = new Point(12, 228);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(510, 1);
+            panel1.TabIndex = 2;
             // 
             // makeShare
             // 
@@ -157,18 +191,22 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Snow;
             ClientSize = new Size(534, 761);
+            Controls.Add(cbCalendarSelect);
             Controls.Add(btnSharePlus);
             Controls.Add(rbColor);
             Controls.Add(btnUserPlus);
             Controls.Add(lvShareUser);
             Controls.Add(txtShareUser);
+            Controls.Add(panel1);
             Controls.Add(_panel);
-            Controls.Add(label2);
+            Controls.Add(label3);
+            Controls.Add(lbShareUser);
             Controls.Add(label1);
             Controls.Add(txtCalName);
             Name = "makeShare";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "공유 캘린더";
+            Load += makeShare_Load;
             contextMenuStripDelete.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -179,7 +217,7 @@
         private TextBox txtCalName;
         private Label label1;
         private Panel _panel;
-        private Label label2;
+        private Label lbShareUser;
         private TextBox txtShareUser;
         private ListView lvShareUser;
         private Button btnUserPlus;
@@ -187,5 +225,8 @@
         private ToolStripMenuItem 제거ToolStripMenuItem;
         private Common.RoundButton rbColor;
         private Button btnSharePlus;
+        private Label label3;
+        private Panel panel1;
+        private ComboBox cbCalendarSelect;
     }
 }
