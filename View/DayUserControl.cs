@@ -46,6 +46,21 @@ namespace Project_Maver.View
             int currentControlsCount = this.Controls.Count;
             label.Location = new Point(5, 20 + (currentControlsCount * 20));
 
+            //수영 추가
+            label.Tag = text;
+
+            label.Click += (s, e) =>
+            {
+                Maver_켈린더.Calendar calendar = this.FindForm() as Maver_켈린더.Calendar;
+
+                if (calendar != null)
+                {
+                    string clickedTitle = (string)((Label)s).Tag;
+                    calendar.ShowDetailPanel(this, clickedTitle);
+
+                }
+            };
+
             this.Controls.Add(label);
             label.BringToFront();
         }

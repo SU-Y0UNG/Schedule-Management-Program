@@ -24,7 +24,7 @@ namespace Maver_켈린더
             currentMonth = DateTime.Now.Month;
 
             lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
-
+            pnlDt.Visible = false;
         }
 
 
@@ -257,7 +257,7 @@ namespace Maver_켈린더
                 }
 
                 // 승환(3/10)
-                flpMain.Controls.Add(duc);
+                //flpMain.Controls.Add(duc);
 
                 // 각 유저컨트롤에 클릭이벤트!!
                 duc.Click += (s, e) =>
@@ -352,6 +352,27 @@ namespace Maver_켈린더
                 }
 
             }
+        }
+        pnlDetail pnlDt = new pnlDetail();
+        //수영
+        public void ShowDetailPanel(DayUserControl day, string title)
+        {
+            if (!this.Controls.Contains(pnlDt)) { this.Controls.Add(pnlDt); }
+            // DayUserControl 위치를 Form 기준 좌표로 변환
+            Point pos = day.Parent.PointToScreen(day.Location);
+            pos = this.PointToClient(pos);
+
+            // 패널 위치 (오른쪽 아래)
+            pnlDt.Location = new Point(
+                pos.X + day.Width / 2,
+                pos.Y + day.Height / 2
+            );
+
+            // 상세정보 표시
+            //lblDetailTitle.Text = title;
+
+            pnlDt.Visible = true;
+            pnlDt.BringToFront();
         }
     }
 }
