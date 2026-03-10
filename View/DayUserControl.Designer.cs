@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             lbDay = new Label();
+            lbHolidayName = new Label();
             SuspendLayout();
             // 
             // lbDay
@@ -40,12 +41,21 @@
             lbDay.Size = new Size(0, 21);
             lbDay.TabIndex = 0;
             // 
+            // lbHolidayName
+            // 
+            lbHolidayName.AutoSize = true;
+            lbHolidayName.Location = new Point(29, 4);
+            lbHolidayName.Name = "lbHolidayName";
+            lbHolidayName.Size = new Size(0, 15);
+            lbHolidayName.TabIndex = 1;
+            // 
             // DayUserControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(lbHolidayName);
             Controls.Add(lbDay);
             Name = "DayUserControl";
             Size = new Size(210, 111);
@@ -56,5 +66,6 @@
         #endregion
 
         private Label lbDay;
+        private Label lbHolidayName;
     }
 }

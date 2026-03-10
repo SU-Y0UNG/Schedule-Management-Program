@@ -205,6 +205,7 @@ namespace Maver_켈린더
         }
         //---------------------------------------------------
         // 2026-03-09 은비 - 캘린더 화면구현
+        // 2026-03-10 은비 - 공휴일 추가
         //---------------------------------------------------
 
         private void DisplayDays(int year, int month)
@@ -216,6 +217,8 @@ namespace Maver_켈린더
             DateTime startOfMonth = new DateTime(year, month, 1);
             int startDayOfWeek = (int)startOfMonth.DayOfWeek;
 
+            Holidays holidays = new Holidays();
+            var holiday = holidays.getHolidays(year);
 
             // 이번달의 마지막 날짜(28,30,31) 확인
             int LastDayOfCurMonth = DateTime.DaysInMonth(year, month);
@@ -233,6 +236,25 @@ namespace Maver_켈린더
                 DateTime dateForSlot = new DateTime(year, month, i);
 
                 DayUserControl duc = new DayUserControl(i, dateForSlot);
+
+
+                // 공휴일 이름까지 함께 처리
+                if (holiday.ContainsKey(dateForSlot))
+                {
+                    // 딕셔너리에서 날짜(Key)로 이름(Value)을 찾아서 넘겨줌
+                    string name = holiday[dateForSlot];
+                    duc.SetHoliday(name);
+                }
+                else if (dateForSlot.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    // 이름은 없지만 일요일인 경우
+                    duc.SetColorRed();
+                }
+                else if (dateForSlot.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    // 토요일인 경우 (파란색)
+                    duc.SetColorBlue();
+                }
 
                 // 승환(3/10)
                 flpMain.Controls.Add(duc);

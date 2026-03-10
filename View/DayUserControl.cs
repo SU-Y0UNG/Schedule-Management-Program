@@ -49,5 +49,40 @@ namespace Project_Maver.View
             this.Controls.Add(label);
             label.BringToFront();
         }
+
+        // 은비 추가
+        public void SetHoliday(string holidayName)
+        {
+            // 1. 날짜 색상을 빨간색으로 변경
+            if (lbDay != null) lbDay.ForeColor = Color.Red;
+
+            // 2. 공휴일 이름 라벨에 텍스트 넣기
+            // (디자인 창에서 lblHolidayName이라는 라벨을 미리 만들어두세요!)
+            if (lbHolidayName != null)
+            {
+                lbHolidayName.Text = holidayName;
+                lbHolidayName.ForeColor = Color.Red; // 이름도 빨간색으로
+            }
+        }
+
+        // 빨간글씨 (일요일이나 공휴일)
+        public void SetColorRed()
+        {
+            if (lbDay != null) // 날짜 숫자가 써있는 라벨 이름
+            {
+                lbDay.ForeColor = Color.Red;
+            }
+        }
+
+        // 토요일 파란글씨
+        public void SetColorBlue()
+        {
+            if (lbDay != null)
+            {
+                // 텍스트 색상을 파란색으로 변경
+                lbDay.ForeColor = Color.Blue;
+            }
+        }
+
     }
 }
