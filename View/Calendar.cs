@@ -24,7 +24,7 @@ namespace Maver_켈린더
             currentMonth = DateTime.Now.Month;
 
             lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
-
+            pnlDt.Visible = false;
         }
 
 
@@ -256,13 +256,24 @@ namespace Maver_켈린더
                     duc.SetColorBlue();
                 }
 
+                // 오늘날짜 패널 포커싱
+                if (dateForSlot.Date == DateTime.Today)
+                {
+                    // 배경색을 조금 더 강조하거나 테두리 효과를 줍니다.
+                    duc.BackColor = Color.LightSteelBlue; // 선택된 느낌의 색상
+                    duc.BorderStyle = BorderStyle.FixedSingle; // 테두리 추가로 포커스 효과
+
+                    // 만약 폼이 로드되자마자 이 컨트롤로 스크롤을 맞추고 싶다면
+                    // duc.Select();
+                }
+
+
                 // 승환(3/10)
-                flpMain.Controls.Add(duc);
+                //flpMain.Controls.Add(duc);
 
                 // 각 유저컨트롤에 클릭이벤트!!
                 duc.Click += (s, e) =>
                 {
-                    MessageBox.Show(dateForSlot.ToString());
                     //===================================================
                     // 승환(3.10)
                     //===================================================
@@ -275,13 +286,14 @@ namespace Maver_켈린더
                         duc.addTitleLabel(title);
                     }
                 };
-
+                lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
                 flpMain.Controls.Add(duc);
             }
 
 
         }
 
+        // 전 달로 가는버튼 <
         private void btnBeforeDate_Click(object sender, EventArgs e)
         {
             currentMonth--;
@@ -290,10 +302,11 @@ namespace Maver_켈린더
                 currentMonth = 12;
                 currentYear--;
             }
-            lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
+            //lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
             DisplayDays(currentYear, currentMonth);
         }
 
+        // 다음 달로 가는버튼 >
         private void btnAfterDate_Click(object sender, EventArgs e)
         {
             currentMonth++;
@@ -302,10 +315,22 @@ namespace Maver_켈린더
                 currentMonth = 1;
                 currentYear++;
             }
-            lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
+            //lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
             DisplayDays(currentYear, currentMonth);
         }
 
+        // 은비 - 추가
+        // 오늘 날짜로 찾아가는 버튼
+        private void btnGoToday_Click(object sender, EventArgs e)
+        {
+            int todayYear = DateTime.Today.Year;
+            int todayMonth = DateTime.Today.Month;
+
+            currentYear = todayYear;
+            currentMonth = todayMonth;
+
+            DisplayDays(currentYear, currentMonth);
+        }
 
 
 
@@ -352,6 +377,27 @@ namespace Maver_켈린더
                 }
 
             }
+        }
+        pnlDetail pnlDt = new pnlDetail();
+        //수영
+        public void ShowDetailPanel(DayUserControl day, string title)
+        {
+            if (!this.Controls.Contains(pnlDt)) { this.Controls.Add(pnlDt); }
+            // DayUserControl 위치를 Form 기준 좌표로 변환
+            Point pos = day.Parent.PointToScreen(day.Location);
+            pos = this.PointToClient(pos);
+
+            // 패널 위치 (오른쪽 아래)
+            pnlDt.Location = new Point(
+                pos.X + day.Width / 2,
+                pos.Y + day.Height / 2
+            );
+
+            // 상세정보 표시
+            //lblDetailTitle.Text = title;
+
+            pnlDt.Visible = true;
+            pnlDt.BringToFront();
         }
     }
 }

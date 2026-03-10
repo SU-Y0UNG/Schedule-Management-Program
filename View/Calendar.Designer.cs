@@ -30,10 +30,10 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Calendar));
-            TreeNode treeNode1 = new TreeNode("개인 캘린더");
-            TreeNode treeNode2 = new TreeNode("개인", new TreeNode[] { treeNode1 });
-            TreeNode treeNode3 = new TreeNode("공용");
-            TreeNode treeNode4 = new TreeNode("캘린더", new TreeNode[] { treeNode2, treeNode3 });
+            TreeNode treeNode5 = new TreeNode("개인 캘린더");
+            TreeNode treeNode6 = new TreeNode("개인", new TreeNode[] { treeNode5 });
+            TreeNode treeNode7 = new TreeNode("공용");
+            TreeNode treeNode8 = new TreeNode("캘린더", new TreeNode[] { treeNode6, treeNode7 });
             imageList1 = new ImageList(components);
             pnlMain = new Panel();
             pictureBox2 = new PictureBox();
@@ -56,6 +56,7 @@
             btnAfterDate = new Button();
             lbThisDate = new Label();
             flpMain = new FlowLayoutPanel();
+            btnGoToday = new Project_Maver.Common.RoundButton();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             pnlCategori.SuspendLayout();
@@ -126,20 +127,20 @@
             treeView1.DrawMode = TreeViewDrawMode.OwnerDrawText;
             treeView1.Location = new Point(0, 0);
             treeView1.Name = "treeView1";
-            treeNode1.Checked = true;
-            treeNode1.Name = "ndPrivate1";
-            treeNode1.Text = "개인 캘린더";
-            treeNode2.Name = "ndPrivate";
-            treeNode2.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            treeNode2.Text = "개인";
-            treeNode3.Name = "ndPublic";
-            treeNode3.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            treeNode3.Text = "공용";
-            treeNode4.BackColor = Color.White;
-            treeNode4.Name = "ndMain";
-            treeNode4.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            treeNode4.Text = "캘린더";
-            treeView1.Nodes.AddRange(new TreeNode[] { treeNode4 });
+            treeNode5.Checked = true;
+            treeNode5.Name = "ndPrivate1";
+            treeNode5.Text = "개인 캘린더";
+            treeNode6.Name = "ndPrivate";
+            treeNode6.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            treeNode6.Text = "개인";
+            treeNode7.Name = "ndPublic";
+            treeNode7.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            treeNode7.Text = "공용";
+            treeNode8.BackColor = Color.White;
+            treeNode8.Name = "ndMain";
+            treeNode8.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            treeNode8.Text = "캘린더";
+            treeView1.Nodes.AddRange(new TreeNode[] { treeNode8 });
             treeView1.Size = new Size(300, 862);
             treeView1.TabIndex = 0;
             treeView1.DrawNode += cdMain_DrawNode;
@@ -265,6 +266,7 @@
             // pnlHead
             // 
             pnlHead.Anchor = AnchorStyles.Top;
+            pnlHead.Controls.Add(btnGoToday);
             pnlHead.Controls.Add(pictureBox1);
             pnlHead.Controls.Add(lbID);
             pnlHead.Controls.Add(btnLogInOut);
@@ -273,7 +275,7 @@
             pnlHead.Controls.Add(lbThisDate);
             pnlHead.Location = new Point(91, 0);
             pnlHead.Name = "pnlHead";
-            pnlHead.Size = new Size(1436, 64);
+            pnlHead.Size = new Size(1436, 138);
             pnlHead.TabIndex = 2;
             // 
             // pictureBox1
@@ -314,7 +316,7 @@
             btnBeforeDate.FlatAppearance.BorderSize = 0;
             btnBeforeDate.FlatStyle = FlatStyle.Flat;
             btnBeforeDate.Font = new Font("함초롬돋움", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnBeforeDate.Location = new Point(514, 4);
+            btnBeforeDate.Location = new Point(514, 47);
             btnBeforeDate.Name = "btnBeforeDate";
             btnBeforeDate.Size = new Size(37, 59);
             btnBeforeDate.TabIndex = 1;
@@ -329,7 +331,7 @@
             btnAfterDate.FlatAppearance.BorderSize = 0;
             btnAfterDate.FlatStyle = FlatStyle.Flat;
             btnAfterDate.Font = new Font("함초롬돋움", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAfterDate.Location = new Point(855, 4);
+            btnAfterDate.Location = new Point(855, 47);
             btnAfterDate.Name = "btnAfterDate";
             btnAfterDate.Size = new Size(37, 59);
             btnAfterDate.TabIndex = 1;
@@ -342,11 +344,11 @@
             lbThisDate.Anchor = AnchorStyles.Top;
             lbThisDate.AutoSize = true;
             lbThisDate.Font = new Font("함초롬돋움", 35.9999962F, FontStyle.Bold, GraphicsUnit.Point);
-            lbThisDate.Location = new Point(594, 4);
+            lbThisDate.Location = new Point(617, 47);
             lbThisDate.Name = "lbThisDate";
-            lbThisDate.Size = new Size(196, 62);
+            lbThisDate.Size = new Size(170, 62);
             lbThisDate.TabIndex = 0;
-            lbThisDate.Text = "2026.03";
+            lbThisDate.Text = "2026.3";
             // 
             // flpMain
             // 
@@ -356,6 +358,17 @@
             flpMain.Name = "flpMain";
             flpMain.Size = new Size(1278, 813);
             flpMain.TabIndex = 0;
+            // 
+            // btnGoToday
+            // 
+            btnGoToday.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnGoToday.Location = new Point(659, 103);
+            btnGoToday.Name = "btnGoToday";
+            btnGoToday.Size = new Size(90, 35);
+            btnGoToday.TabIndex = 9;
+            btnGoToday.Text = "오늘 >";
+            btnGoToday.UseVisualStyleBackColor = true;
+            btnGoToday.Click += btnGoToday_Click;
             // 
             // Calendar
             // 
@@ -404,5 +417,6 @@
         private PictureBox pictureBox1;
         private TreeView treeView1;
         private PictureBox CalenderPlus;
+        private Project_Maver.Common.RoundButton btnGoToday;
     }
 }

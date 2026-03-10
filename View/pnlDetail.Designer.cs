@@ -1,6 +1,6 @@
 ﻿namespace Project_Maver.View
 {
-    partial class DayUserControl
+    partial class pnlDetail
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -28,44 +28,50 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lbDay = new Label();
-            lbHolidayName = new Label();
+            button1 = new Button();
+            btnClose = new Button();
             SuspendLayout();
             // 
-            // lbDay
+            // button1
             // 
-            lbDay.AutoSize = true;
-            lbDay.Font = new Font("맑은 고딕", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbDay.Location = new Point(0, 0);
-            lbDay.Name = "lbDay";
-            lbDay.Size = new Size(0, 21);
-            lbDay.TabIndex = 0;
+            button1.BackColor = Color.White;
+            button1.FlatStyle = FlatStyle.Popup;
+            button1.Location = new Point(108, 106);
+            button1.Name = "button1";
+            button1.Size = new Size(95, 23);
+            button1.TabIndex = 1;
+            button1.Text = "상세정보확인";
+            button1.UseVisualStyleBackColor = false;
             // 
-            // lbHolidayName
+            // btnClose
             // 
-            lbHolidayName.AutoSize = true;
-            lbHolidayName.Location = new Point(29, 4);
-            lbHolidayName.Name = "lbHolidayName";
-            lbHolidayName.Size = new Size(0, 15);
-            lbHolidayName.TabIndex = 1;
+            btnClose.BackColor = Color.Transparent;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("맑은 고딕", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            btnClose.Location = new Point(254, -8);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(48, 44);
+            btnClose.TabIndex = 2;
+            btnClose.Text = "x";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
             // 
-            // DayUserControl
+            // pnlDetail
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Control;
+            BackColor = Color.White;
             BorderStyle = BorderStyle.FixedSingle;
-            Controls.Add(lbHolidayName);
-            Controls.Add(lbDay);
-            Name = "DayUserControl";
-            Size = new Size(210, 135);
+            Controls.Add(btnClose);
+            Controls.Add(button1);
+            Name = "pnlDetail";
+            Size = new Size(298, 140);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private Label lbDay;
-        private Label lbHolidayName;
+        private Button button1;
+        private Button btnClose;
     }
 }
