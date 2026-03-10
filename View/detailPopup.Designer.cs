@@ -546,7 +546,6 @@ namespace maverCalender
             dtpStartTime.ShowUpDown = true;
             dtpStartTime.Size = new Size(97, 23);
             dtpStartTime.TabIndex = 9;
-
             // 
             // dtpEndTime
             // 
@@ -645,10 +644,10 @@ namespace maverCalender
             // btnColor
             // 
             btnColor.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnColor.BackColor = Color.Bisque;
+            btnColor.BackColor = Color.SkyBlue;
             btnColor.FlatAppearance.BorderSize = 0;
             btnColor.FlatStyle = FlatStyle.Flat;
-            btnColor.Location = new Point(60, 105);
+            btnColor.Location = new Point(60, 103);
             btnColor.Name = "btnColor";
             btnColor.Size = new Size(17, 17);
             btnColor.TabIndex = 21;
@@ -662,7 +661,7 @@ namespace maverCalender
             lbPlan.BackColor = Color.Transparent;
             lbPlan.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             lbPlan.ForeColor = Color.Gray;
-            lbPlan.Location = new Point(86, 105);
+            lbPlan.Location = new Point(84, 105);
             lbPlan.Name = "lbPlan";
             lbPlan.Size = new Size(47, 17);
             lbPlan.TabIndex = 4;

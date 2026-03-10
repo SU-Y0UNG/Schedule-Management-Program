@@ -28,6 +28,19 @@ namespace maverCalender
 {
     public partial class detailPopup : Form
     {
+        public DateTime StartDate
+        {
+            get { return dtpStartDate.Value; }
+            set { dtpStartDate.Value = value; }
+        }
+        public DateTime EndDate
+        {
+            get { return dtpEndDate.Value; }
+            set { dtpEndDate.Value = value; }
+        }
+
+        public DateTime selectedDate;
+
         // 승환(3월10)
         public string title {  get; set; }
         public event Action<detailPopup> ScheduleSaved;
@@ -43,6 +56,7 @@ namespace maverCalender
             this.Controls.Add(repeat);
             //추가하고 숨기기
 
+            btnColor.Visible = true;
             repeat.Visible = false;
 
         }
@@ -59,9 +73,11 @@ namespace maverCalender
             textContent();
             dtpStartTime.Format = DateTimePickerFormat.Custom;
             dtpStartTime.CustomFormat = "HH:mm";
+            dtpStartDate.Value = selectedDate;
 
             dtpEndTime.Format = DateTimePickerFormat.Custom;
             dtpEndTime.CustomFormat = "HH:mm";
+            dtpEndTime.Value = selectedDate;
         }
 
         public void textContent()
@@ -144,8 +160,8 @@ namespace maverCalender
         }
 
 
-
-        private Color selectedColor = Color.SkyBlue;
+        public Color btncolor = Color.Pink;
+        public Color selectedColor = Color.SkyBlue;
 
         // 승환
         private MySqlConnection conn;

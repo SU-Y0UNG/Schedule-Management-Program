@@ -30,6 +30,7 @@
         {
             lbDay = new Label();
             lbHolidayName = new Label();
+            flpEvent = new FlowLayoutPanel();
             SuspendLayout();
             // 
             // lbDay
@@ -49,12 +50,23 @@
             lbHolidayName.Size = new Size(0, 15);
             lbHolidayName.TabIndex = 1;
             // 
+            // flpEvent
+            // 
+            flpEvent.FlowDirection = FlowDirection.TopDown;
+            flpEvent.Location = new Point(1, 29);
+            flpEvent.Margin = new Padding(0);
+            flpEvent.Name = "flpEvent";
+            flpEvent.Size = new Size(208, 105);
+            flpEvent.TabIndex = 2;
+            flpEvent.WrapContents = false;
+            // 
             // DayUserControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(flpEvent);
             Controls.Add(lbHolidayName);
             Controls.Add(lbDay);
             Name = "DayUserControl";
@@ -67,5 +79,6 @@
 
         private Label lbDay;
         private Label lbHolidayName;
+        private FlowLayoutPanel flpEvent;
     }
 }

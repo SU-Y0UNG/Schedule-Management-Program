@@ -93,6 +93,8 @@
             // btnGoToday
             // 
             btnGoToday.BackColor = SystemColors.ActiveCaption;
+            btnGoToday.FlatAppearance.BorderSize = 0;
+            btnGoToday.FlatStyle = FlatStyle.Flat;
             btnGoToday.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             btnGoToday.Location = new Point(907, 941);
             btnGoToday.Name = "btnGoToday";

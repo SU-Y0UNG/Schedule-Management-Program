@@ -287,6 +287,8 @@ namespace Maver_켈린더
                 DateTime dateForSlot = new DateTime(year, month, i);
 
                 DayUserControl duc = new DayUserControl(i, dateForSlot);
+                duc.Tag = dateForSlot;
+
 
                 // 공휴일 이름까지 함께 처리
                 if (holiday.ContainsKey(dateForSlot))
@@ -306,16 +308,16 @@ namespace Maver_켈린더
                     duc.SetColorBlue();
                 }
 
-                // 오늘날짜 패널 포커싱
-                if (dateForSlot.Date == DateTime.Today)
-                {
-                    // 배경색을 조금 더 강조하거나 테두리 효과를 줍니다.
-                    duc.BackColor = Color.LightSteelBlue; // 선택된 느낌의 색상
-                    duc.BorderStyle = BorderStyle.FixedSingle; // 테두리 추가로 포커스 효과
+                //// 오늘날짜 패널 포커싱
+                //if (dateForSlot.Date == DateTime.Today)
+                //{
+                //    // 배경색을 조금 더 강조하거나 테두리 효과를 줍니다.
+                //    duc.BackColor = Color.LightSteelBlue; // 선택된 느낌의 색상
+                //    duc.BorderStyle = BorderStyle.FixedSingle; // 테두리 추가로 포커스 효과
 
-                    // 만약 폼이 로드되자마자 이 컨트롤로 스크롤을 맞추고 싶다면
-                    // duc.Select();
-                }
+                //    // 만약 폼이 로드되자마자 이 컨트롤로 스크롤을 맞추고 싶다면
+                //    // duc.Select();
+                //}
 
 
                 // 승환(3/10)
@@ -324,19 +326,42 @@ namespace Maver_켈린더
                 // 각 유저컨트롤에 클릭이벤트!!
                 duc.Click += (s, e) =>
                 {
+                    MessageBox.Show(dateForSlot.ToString());
                     //===================================================
-                    // 승환(3.10)
+                    // 승환(3.10)+수영(3.10)
                     //===================================================
                     detailPopup popup = new detailPopup();
-                    //popup.ShowDialog();
+                    popup.selectedDate =  dateForSlot; //선택한 날짜가 뜨도록
+
 
                     if (popup.ShowDialog() == DialogResult.OK)
                     {
                         string title = popup.getDetailPopupTitle();
-                        duc.addTitleLabel(title);
+                        //수영 추가
+                        Color color = popup.selectedColor;
+                        //duc.addTitleLabel(title,color);
+
+                        DateTime start = popup.StartDate;
+                        DateTime end = popup.EndDate;
+
+                        bool isSingleDay = (start.Date == end.Date);
+
+                        for (DateTime d = start; d <= end; d = d.AddDays(1))
+                        {
+                            foreach (Control c in flpMain.Controls)
+                            {
+                                DayUserControl control = c as DayUserControl;
+                                if (control != null && control._date.Date == d.Date)
+                                {
+                                    string labelText = (d.Date == start.Date) ? title : "";
+                                    control.addTitleLabel(labelText, color, isSingleDay);
+                                }
+                            }
+                        }
+
                     }
                 };
-                lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
+
                 flpMain.Controls.Add(duc);
             }
 
