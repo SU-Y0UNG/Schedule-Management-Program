@@ -30,14 +30,15 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Calendar));
-            TreeNode treeNode5 = new TreeNode("개인 캘린더");
-            TreeNode treeNode6 = new TreeNode("개인", new TreeNode[] { treeNode5 });
-            TreeNode treeNode7 = new TreeNode("공용");
-            TreeNode treeNode8 = new TreeNode("캘린더", new TreeNode[] { treeNode6, treeNode7 });
+            TreeNode treeNode1 = new TreeNode("개인 캘린더");
+            TreeNode treeNode2 = new TreeNode("개인", new TreeNode[] { treeNode1 });
+            TreeNode treeNode3 = new TreeNode("공용");
+            TreeNode treeNode4 = new TreeNode("캘린더", new TreeNode[] { treeNode2, treeNode3 });
             imageList1 = new ImageList(components);
             pnlMain = new Panel();
             pictureBox2 = new PictureBox();
             pnlCategori = new Panel();
+            CalenderPlus = new PictureBox();
             treeView1 = new TreeView();
             tableLayoutPanel1 = new TableLayoutPanel();
             label2 = new Label();
@@ -50,7 +51,7 @@
             pnlHead = new Panel();
             pictureBox1 = new PictureBox();
             lbID = new Label();
-            button4 = new Button();
+            btnLogInOut = new Button();
             btnBeforeDate = new Button();
             btnAfterDate = new Button();
             lbThisDate = new Label();
@@ -58,6 +59,7 @@
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             pnlCategori.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)CalenderPlus).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -98,11 +100,24 @@
             // 
             // pnlCategori
             // 
+            pnlCategori.Controls.Add(CalenderPlus);
             pnlCategori.Controls.Add(treeView1);
             pnlCategori.Location = new Point(-300, 0);
             pnlCategori.Name = "pnlCategori";
             pnlCategori.Size = new Size(300, 862);
             pnlCategori.TabIndex = 1;
+            // 
+            // CalenderPlus
+            // 
+            CalenderPlus.BackColor = Color.WhiteSmoke;
+            CalenderPlus.Image = (Image)resources.GetObject("CalenderPlus.Image");
+            CalenderPlus.Location = new Point(264, 13);
+            CalenderPlus.Name = "CalenderPlus";
+            CalenderPlus.Size = new Size(21, 23);
+            CalenderPlus.SizeMode = PictureBoxSizeMode.Zoom;
+            CalenderPlus.TabIndex = 2;
+            CalenderPlus.TabStop = false;
+            CalenderPlus.Click += CalenderPlus_Click;
             // 
             // treeView1
             // 
@@ -111,20 +126,20 @@
             treeView1.DrawMode = TreeViewDrawMode.OwnerDrawText;
             treeView1.Location = new Point(0, 0);
             treeView1.Name = "treeView1";
-            treeNode5.Checked = true;
-            treeNode5.Name = "ndPrivate1";
-            treeNode5.Text = "개인 캘린더";
-            treeNode6.Name = "ndPrivate";
-            treeNode6.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            treeNode6.Text = "개인";
-            treeNode7.Name = "ndPublic";
-            treeNode7.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            treeNode7.Text = "공용";
-            treeNode8.BackColor = Color.White;
-            treeNode8.Name = "ndMain";
-            treeNode8.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            treeNode8.Text = "캘린더";
-            treeView1.Nodes.AddRange(new TreeNode[] { treeNode8 });
+            treeNode1.Checked = true;
+            treeNode1.Name = "ndPrivate1";
+            treeNode1.Text = "개인 캘린더";
+            treeNode2.Name = "ndPrivate";
+            treeNode2.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            treeNode2.Text = "개인";
+            treeNode3.Name = "ndPublic";
+            treeNode3.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            treeNode3.Text = "공용";
+            treeNode4.BackColor = Color.White;
+            treeNode4.Name = "ndMain";
+            treeNode4.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            treeNode4.Text = "캘린더";
+            treeView1.Nodes.AddRange(new TreeNode[] { treeNode4 });
             treeView1.Size = new Size(300, 862);
             treeView1.TabIndex = 0;
             treeView1.DrawNode += cdMain_DrawNode;
@@ -252,7 +267,7 @@
             pnlHead.Anchor = AnchorStyles.Top;
             pnlHead.Controls.Add(pictureBox1);
             pnlHead.Controls.Add(lbID);
-            pnlHead.Controls.Add(button4);
+            pnlHead.Controls.Add(btnLogInOut);
             pnlHead.Controls.Add(btnBeforeDate);
             pnlHead.Controls.Add(btnAfterDate);
             pnlHead.Controls.Add(lbThisDate);
@@ -264,7 +279,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(1222, 3);
+            pictureBox1.Location = new Point(1185, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(41, 33);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -274,22 +289,23 @@
             // lbID
             // 
             lbID.AutoSize = true;
-            lbID.Location = new Point(1269, 9);
+            lbID.Location = new Point(1232, 10);
             lbID.Name = "lbID";
             lbID.Size = new Size(46, 15);
             lbID.TabIndex = 5;
             lbID.Text = "label11";
             // 
-            // button4
+            // btnLogInOut
             // 
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            button4.Location = new Point(1321, 3);
-            button4.Name = "button4";
-            button4.Size = new Size(53, 25);
-            button4.TabIndex = 3;
-            button4.Text = "로그인";
-            button4.UseVisualStyleBackColor = true;
+            btnLogInOut.FlatStyle = FlatStyle.Flat;
+            btnLogInOut.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            btnLogInOut.Location = new Point(1284, 6);
+            btnLogInOut.Name = "btnLogInOut";
+            btnLogInOut.Size = new Size(90, 25);
+            btnLogInOut.TabIndex = 3;
+            btnLogInOut.Text = "로그인";
+            btnLogInOut.UseVisualStyleBackColor = true;
+            btnLogInOut.Click += btnLogInOut_Click;
             // 
             // btnBeforeDate
             // 
@@ -355,6 +371,7 @@
             pnlMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             pnlCategori.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)CalenderPlus).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             pnlHead.ResumeLayout(false);
@@ -373,7 +390,7 @@
         private Label lbThisDate;
         private Button btnAfterDate;
         private TableLayoutPanel tableLayoutPanel1;
-        private Button button4;
+        private Button btnLogInOut;
         private Label label2;
         private Label label3;
         private Label label4;
@@ -386,5 +403,6 @@
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
         private TreeView treeView1;
+        private PictureBox CalenderPlus;
     }
 }
