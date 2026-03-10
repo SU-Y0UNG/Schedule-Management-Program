@@ -36,9 +36,9 @@
             TreeNode treeNode4 = new TreeNode("캘린더", new TreeNode[] { treeNode2, treeNode3 });
             imageList1 = new ImageList(components);
             pnlMain = new Panel();
+            btnGoToday = new Project_Maver.Common.RoundButton();
             pictureBox2 = new PictureBox();
             pnlCategori = new Panel();
-            txtSearch = new TextBox();
             CalenderPlus = new PictureBox();
             treeView1 = new TreeView();
             tableLayoutPanel1 = new TableLayoutPanel();
@@ -50,7 +50,8 @@
             label7 = new Label();
             label8 = new Label();
             pnlHead = new Panel();
-            btnGoToday = new Project_Maver.Common.RoundButton();
+            btnSearch = new Button();
+            txtSearch = new TextBox();
             pictureBox1 = new PictureBox();
             lbID = new Label();
             btnLogInOut = new Button();
@@ -77,6 +78,7 @@
             // 
             // pnlMain
             // 
+            pnlMain.Controls.Add(btnGoToday);
             pnlMain.Controls.Add(pictureBox2);
             pnlMain.Controls.Add(pnlCategori);
             pnlMain.Controls.Add(tableLayoutPanel1);
@@ -87,6 +89,18 @@
             pnlMain.Name = "pnlMain";
             pnlMain.Size = new Size(1584, 1061);
             pnlMain.TabIndex = 0;
+            // 
+            // btnGoToday
+            // 
+            btnGoToday.BackColor = SystemColors.ActiveCaption;
+            btnGoToday.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnGoToday.Location = new Point(907, 941);
+            btnGoToday.Name = "btnGoToday";
+            btnGoToday.Size = new Size(97, 47);
+            btnGoToday.TabIndex = 9;
+            btnGoToday.Text = "오늘 >";
+            btnGoToday.UseVisualStyleBackColor = false;
+            btnGoToday.Click += btnGoToday_Click;
             // 
             // pictureBox2
             // 
@@ -102,27 +116,12 @@
             // 
             // pnlCategori
             // 
-            pnlCategori.Controls.Add(txtSearch);
             pnlCategori.Controls.Add(CalenderPlus);
             pnlCategori.Controls.Add(treeView1);
             pnlCategori.Location = new Point(-300, 0);
             pnlCategori.Name = "pnlCategori";
             pnlCategori.Size = new Size(300, 862);
             pnlCategori.TabIndex = 1;
-            // 
-            // txtSearch
-            // 
-            txtSearch.BackColor = SystemColors.ButtonHighlight;
-            txtSearch.Cursor = Cursors.Hand;
-            txtSearch.Font = new Font("함초롬돋움", 8.999999F, FontStyle.Regular, GraphicsUnit.Point);
-            txtSearch.Location = new Point(48, 435);
-            txtSearch.Name = "txtSearch";
-            txtSearch.PlaceholderText = "검색하려면 클릭하세요";
-            txtSearch.ReadOnly = true;
-            txtSearch.ShortcutsEnabled = false;
-            txtSearch.Size = new Size(148, 23);
-            txtSearch.TabIndex = 3;
-            txtSearch.MouseClick += txtSearch_MouseClick;
             // 
             // CalenderPlus
             // 
@@ -282,33 +281,46 @@
             // pnlHead
             // 
             pnlHead.Anchor = AnchorStyles.Top;
-            pnlHead.Controls.Add(btnGoToday);
+            pnlHead.Controls.Add(btnSearch);
+            pnlHead.Controls.Add(txtSearch);
             pnlHead.Controls.Add(pictureBox1);
             pnlHead.Controls.Add(lbID);
             pnlHead.Controls.Add(btnLogInOut);
             pnlHead.Controls.Add(btnBeforeDate);
             pnlHead.Controls.Add(btnAfterDate);
             pnlHead.Controls.Add(lbThisDate);
-            pnlHead.Location = new Point(91, 0);
+            pnlHead.Location = new Point(39, 0);
             pnlHead.Name = "pnlHead";
-            pnlHead.Size = new Size(1436, 138);
+            pnlHead.Size = new Size(1488, 138);
             pnlHead.TabIndex = 2;
             // 
-            // btnGoToday
+            // btnSearch
             // 
-            btnGoToday.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnGoToday.Location = new Point(659, 103);
-            btnGoToday.Name = "btnGoToday";
-            btnGoToday.Size = new Size(90, 35);
-            btnGoToday.TabIndex = 9;
-            btnGoToday.Text = "오늘 >";
-            btnGoToday.UseVisualStyleBackColor = true;
-            btnGoToday.Click += btnGoToday_Click;
+            btnSearch.Location = new Point(241, 104);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(64, 29);
+            btnSearch.TabIndex = 10;
+            btnSearch.Text = "검색";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // txtSearch
+            // 
+            txtSearch.BackColor = SystemColors.ButtonHighlight;
+            txtSearch.Cursor = Cursors.Hand;
+            txtSearch.Font = new Font("함초롬돋움", 8.999999F, FontStyle.Regular, GraphicsUnit.Point);
+            txtSearch.Location = new Point(8, 109);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "검색할 일정명을 입력하세요";
+            txtSearch.ShortcutsEnabled = false;
+            txtSearch.Size = new Size(227, 23);
+            txtSearch.TabIndex = 3;
+            txtSearch.MouseClick += txtSearch_MouseClick;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(1185, 4);
+            pictureBox1.Location = new Point(1269, 7);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(41, 33);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -318,7 +330,7 @@
             // lbID
             // 
             lbID.AutoSize = true;
-            lbID.Location = new Point(1232, 10);
+            lbID.Location = new Point(1316, 13);
             lbID.Name = "lbID";
             lbID.Size = new Size(46, 15);
             lbID.TabIndex = 5;
@@ -328,7 +340,7 @@
             // 
             btnLogInOut.FlatStyle = FlatStyle.Flat;
             btnLogInOut.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            btnLogInOut.Location = new Point(1284, 6);
+            btnLogInOut.Location = new Point(1395, 7);
             btnLogInOut.Name = "btnLogInOut";
             btnLogInOut.Size = new Size(90, 25);
             btnLogInOut.TabIndex = 3;
@@ -343,7 +355,7 @@
             btnBeforeDate.FlatAppearance.BorderSize = 0;
             btnBeforeDate.FlatStyle = FlatStyle.Flat;
             btnBeforeDate.Font = new Font("함초롬돋움", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnBeforeDate.Location = new Point(514, 47);
+            btnBeforeDate.Location = new Point(540, 47);
             btnBeforeDate.Name = "btnBeforeDate";
             btnBeforeDate.Size = new Size(37, 59);
             btnBeforeDate.TabIndex = 1;
@@ -358,7 +370,7 @@
             btnAfterDate.FlatAppearance.BorderSize = 0;
             btnAfterDate.FlatStyle = FlatStyle.Flat;
             btnAfterDate.Font = new Font("함초롬돋움", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAfterDate.Location = new Point(855, 47);
+            btnAfterDate.Location = new Point(881, 47);
             btnAfterDate.Name = "btnAfterDate";
             btnAfterDate.Size = new Size(37, 59);
             btnAfterDate.TabIndex = 1;
@@ -371,7 +383,7 @@
             lbThisDate.Anchor = AnchorStyles.Top;
             lbThisDate.AutoSize = true;
             lbThisDate.Font = new Font("함초롬돋움", 35.9999962F, FontStyle.Bold, GraphicsUnit.Point);
-            lbThisDate.Location = new Point(617, 47);
+            lbThisDate.Location = new Point(643, 47);
             lbThisDate.Name = "lbThisDate";
             lbThisDate.Size = new Size(170, 62);
             lbThisDate.TabIndex = 0;
@@ -380,10 +392,11 @@
             // flpMain
             // 
             flpMain.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            flpMain.AutoScroll = true;
             flpMain.BackColor = Color.FloralWhite;
             flpMain.Location = new Point(201, 218);
             flpMain.Name = "flpMain";
-            flpMain.Size = new Size(1278, 813);
+            flpMain.Size = new Size(1278, 717);
             flpMain.TabIndex = 0;
             // 
             // Calendar
@@ -400,7 +413,6 @@
             pnlMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             pnlCategori.ResumeLayout(false);
-            pnlCategori.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CalenderPlus).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
@@ -435,6 +447,7 @@
         private TreeView treeView1;
         private PictureBox CalenderPlus;
         private Project_Maver.Common.RoundButton btnGoToday;
+        private Button btnSearch;
         private TextBox txtSearch;
     }
 }

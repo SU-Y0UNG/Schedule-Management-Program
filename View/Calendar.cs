@@ -288,7 +288,6 @@ namespace Maver_켈린더
 
                 DayUserControl duc = new DayUserControl(i, dateForSlot);
 
-
                 // 공휴일 이름까지 함께 처리
                 if (holiday.ContainsKey(dateForSlot))
                 {
@@ -457,12 +456,44 @@ namespace Maver_켈린더
 
         private void txtSearch_MouseClick(object sender, MouseEventArgs e)
         {
-            // 커서가 깜빡이지 않게 포커스를 트리뷰로 넘김
-            treeView1.Focus();
 
+        }
+
+
+        // 일정 검색해서 찾은 날 포커싱
+        public void focusSearchEvents(DateTime targetDate)
+        {
+            // 1. 해당 연/월로 이동
+            currentYear = targetDate.Year;
+            currentMonth = targetDate.Month;
+
+            // 2. 화면 다시 그리기
+            DisplayDays(currentYear, currentMonth);
+
+            // 3. 생성된 날짜 칸(DayUserControl)들 중에서 해당 날짜 찾아서 포커스
+            foreach (Control control in flpMain.Controls)
+            {
+                if (control is DayUserControl duc && duc.Tag != null)
+                {
+                    // 각 날짜에 태그값 추가
+                    DateTime ducDate = (DateTime)duc.Tag;
+
+                    if (ducDate.Date == targetDate.Date)
+                    {
+                        //duc.BorderStyle = Color.LightSteelBlue;
+                        duc.Focus(); // 컨트롤에 포커스 주기
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
             // 창 띄우기
-            SearchEventForm searchForm = new SearchEventForm();
+            SearchEventForm searchForm = new SearchEventForm(txtSearch.Text);
             searchForm.ShowDialog();
+
         }
     }
 }
