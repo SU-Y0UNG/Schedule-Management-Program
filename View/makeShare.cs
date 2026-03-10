@@ -26,39 +26,56 @@ namespace Project_Maver.View
         }
         private void btnSharePlus_Click(object sender, EventArgs e)
         {
+            if (_mode == "공용" && lvShareUser.Items.Count == 0)
+            {
+                MessageBox.Show("공유할 유저를 최소 한 명 이상 선택해주세요");
+                return;
+            }
+
             string calName = txtCalName.Text;
-            string color = "#" + rbColor.BackColor.Name;
+            if (string.IsNullOrEmpty(calName))
+            {
+                MessageBox.Show("캘린더 이름을 입력해주세요");
+                return;
+            }
+            string color = ColorTranslator.ToHtml(rbColor.BackColor);
             string currentUserId = UserSession.UserId;
 
-            string groupSql = "INSERT INTO  share_group(share_name, color) VALUES (@name, @color);" +
-                "SELECT LAST_INSERT_ID();";
-            var groupParam = new Dictionary<string, object> { { "@name", calName }, { "@color", color } };
+            string groupSql = "INSERT INTO share_group(share_name, color) VALUES (@name, @color); SELECT LAST_INSERT_ID();";
+            var groupParam = new Dictionary<string, object> {
+                { "@name", calName },
+                {"@color", color }
+            };
 
-            DataTable dt = DbManager.select_Query(groupSql, groupParam);
-            if (dt == null || dt.Rows.Count == 0) return;
+            DataTable dtGroup = DbManager.select_Query(groupSql, groupParam);
+            if (dtGroup == null || dtGroup.Rows.Count == 0) return;
 
-            int newShareId = Convert.ToInt32(dt.Rows[0][0]);
+            int newShareId = Convert.ToInt32(dtGroup.Rows[0][0]);
 
-            string memberSql = "INSERT INTO  share_member(share_id, user_id, role) VALUES (@sid, @id, @role)";
+            string memberSql = "INSERT INTO share_member(share_id, user_id, role) VALUES (@sid, @id, @role)";
 
-            List<string> targets = new List<string> { currentUserId };
-            if (_mode == "공용")
+            var ownerParam = new Dictionary<string, object>
+            {
+                {"@sid", newShareId },
+                { "@id", currentUserId },
+                {"@role", 0 }
+            };
+            DbManager.void_query(memberSql, ownerParam);
+
+            if(_mode == "공용")
             {
                 foreach (ListViewItem item in lvShareUser.Items)
                 {
-                    targets.Add(item.Text);
-                }
-            }
+                   string targetUserId = item.Tag.ToString();
 
-            foreach (string id in targets.Distinct())
-            {
-                var mParam = new Dictionary<string, object>
+                    var mParam = new Dictionary<string, object>
                 {
                     { "@sid", newShareId },
-                    { "@id", id },
-                    { "@role", currentUserId }
+                    {"@id", targetUserId },
+                    {"@role", 1 }
                 };
-                DbManager.void_query(memberSql, mParam);
+                    DbManager.void_query(memberSql, mParam);
+                }
             }
             this.DialogResult = DialogResult.OK;
             this.Close();
@@ -71,12 +88,12 @@ namespace Project_Maver.View
         }
         private void UpdateLayoutByMode()
         {
-            if(_mode == "개인")
+            if (_mode == "개인")
             {
                 lbShareUser.Visible = false;
-                txtShareUser.Visible=false;
-                btnUserPlus.Visible=false;
-                lvShareUser.Visible=false;
+                txtShareUser.Visible = false;
+                btnUserPlus.Visible = false;
+                lvShareUser.Visible = false;
             }
             else
             {
@@ -86,5 +103,59 @@ namespace Project_Maver.View
                 lvShareUser.Visible = true;
             }
         }
+
+        private void btnUserPlus_Click(object sender, EventArgs e)
+        {
+            string targetId = txtShareUser.Text.Trim();
+            if (string.IsNullOrEmpty(targetId)) return;
+
+            if (targetId == UserSession.UserId)
+            {
+                MessageBox.Show("본인은 추가할 수 없습니다.");
+                return;
+            }
+
+            string checkSql = "SELECT id, name FROM user WHERE id = @id";
+            var param = new Dictionary<string, object> { { "@id", targetId } };
+            DataTable dtCheck = DbManager.select_Query(checkSql, param); ////변수명 중복 방지
+
+            if (dtCheck != null && dtCheck.Rows.Count > 0)
+            {
+                string userName = dtCheck.Rows[0]["name"].ToString();
+                string userId = dtCheck.Rows[0]["id"].ToString();
+
+                foreach (ListViewItem existingItem in lvShareUser.Items)
+                {
+                    if (existingItem.Tag != null && existingItem.Tag.ToString() == userId)
+                    {
+                        MessageBox.Show("이미 추가된 유저입니다.");
+                        return;
+                    }
+                }
+
+                ListViewItem item = new ListViewItem(userName);
+                item.Tag = userId;
+
+                lvShareUser.Items.Add(item);
+                txtShareUser.Clear();
+            }
+            else
+            {
+                MessageBox.Show("존재하지 않는 유저입니다.");
+            }
+
+           
+        }
+
+        private void rbColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog cd = new ColorDialog();
+            if(cd.ShowDialog() == DialogResult.OK)
+            {
+                rbColor.BackColor = cd.Color;
+            }
+        }
+
+
     }
 }

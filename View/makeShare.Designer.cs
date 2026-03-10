@@ -112,7 +112,7 @@
             lvShareUser.Size = new Size(308, 60);
             lvShareUser.TabIndex = 4;
             lvShareUser.UseCompatibleStateImageBehavior = false;
-            lvShareUser.View = System.Windows.Forms.View.Details;
+            lvShareUser.View = System.Windows.Forms.View.List;
             // 
             // contextMenuStripDelete
             // 
@@ -140,6 +140,7 @@
             btnUserPlus.Text = "+";
             btnUserPlus.TextAlign = ContentAlignment.BottomCenter;
             btnUserPlus.UseVisualStyleBackColor = false;
+            btnUserPlus.Click += btnUserPlus_Click;
             // 
             // rbColor
             // 
@@ -151,6 +152,7 @@
             rbColor.Size = new Size(25, 25);
             rbColor.TabIndex = 6;
             rbColor.UseVisualStyleBackColor = false;
+            rbColor.Click += rbColor_Click;
             // 
             // btnSharePlus
             // 

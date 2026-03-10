@@ -37,6 +37,8 @@ namespace Maver_켈린더
             }
 
             //영현
+            RefreshTreeView();
+
             string checkSql = @"SELECT g.share_id
                                 FROM share_group g
                                 JOIN share_member m ON g.share_id = m.share_id
@@ -51,7 +53,6 @@ namespace Maver_켈린더
             {
                 CreateDefaultCalendar();
             }
-            RefreshTreeView();
 
             // 은비 - 캘린더 그리기
             DisplayDays(currentYear, currentMonth);
@@ -129,6 +130,7 @@ namespace Maver_켈린더
         private void cdMain_AfterSelect(object sender, TreeViewEventArgs e)
         {
             pnlCategori.Focus();
+
         }
 
         private void cdMain_DrawNode(object sender, DrawTreeNodeEventArgs e)
@@ -158,11 +160,18 @@ namespace Maver_켈린더
         }
 
         //makeShare랑 연결
-
         private void CalenderPlus_Click(object sender, EventArgs e)
         {
+            // 캘린더 추가할때 로그인 여부 (로그인 안하면 캘린더 추가x)
+            if (string.IsNullOrEmpty(UserSession.UserId))
+            {
+                MessageBox.Show("로그인이 필요합니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 로그인된 경우 선택 가능
             ContextMenuStrip menu = new ContextMenuStrip();
-            menu.Items.Add("개인 캘린더", null, (s, ev) => openMakeShareForm("개인"));
+            menu.Items.Add("공용 캘린더 추가", null, (s, ev) => openMakeShareForm("공용"));
             menu.Show(CalenderPlus, new Point(0, CalenderPlus.Height));
         }
         private void openMakeShareForm(string mode)
@@ -173,11 +182,26 @@ namespace Maver_켈린더
                 RefreshTreeView();
             }
         }
+
+        // RefreshTreeView() >> 카테고리에 목록 집어넣음. 중요함!!!!!!!!!!!
         public void RefreshTreeView()
         {
-            treeView1.Nodes[0].Nodes[0].Nodes.Clear();
-            treeView1.Nodes[0].Nodes[1].Nodes.Clear();
+            TreeNode privateRoot = treeView1.Nodes.Find("ndPrivate", true).FirstOrDefault();
+            TreeNode publicRoot = treeView1.Nodes.Find("ndPublic", true).FirstOrDefault();
+            if (privateRoot == null || publicRoot == null) return;
 
+            privateRoot.Nodes.Clear();
+            publicRoot.Nodes.Clear();
+
+            // 로그인 되어있으면 '개인 캘린더' 추가
+            if (!string.IsNullOrEmpty(UserSession.UserId))
+            {
+                TreeNode privateNode = new TreeNode("개인 캘린더");
+                privateNode.ForeColor = Color.DarkBlue;
+                privateRoot.Nodes.Add(privateNode);
+            }
+
+            // DB에서 내가 속한 캘린더 목록 가져오기
             string sql = @"SELECT g.share_id, g.share_name, 
                 (SELECT COUNT(*) FROM share_member WHERE share_id = g.share_id) as member_count
                 FROM share_group g 
@@ -191,17 +215,44 @@ namespace Maver_켈린더
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    TreeNode newNode = new TreeNode(row["share_name"].ToString());
-                    newNode.Tag = row["share_id"];
                     int memberCount = Convert.ToInt32(row["member_count"]);
-
-                    if (memberCount <= 1)
-                        treeView1.Nodes[0].Nodes[0].Nodes.Add(newNode);
-                    else
-                        treeView1.Nodes[0].Nodes[1].Nodes.Add(newNode);
+                    // 멤버가 나 포함 2명 이상일때만 '공용'목록에 추가
+                    if (memberCount > 1)
+                    {
+                        TreeNode sharedNode = new TreeNode(row["share_name"].ToString());
+                        sharedNode.Tag = row["share_id"];
+                        treeView1.Nodes[0].Nodes[1].Nodes.Add(sharedNode);
+                    }
                 }
             }
             treeView1.ExpandAll();
+        }
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Text == "개인캘린더")
+            {
+                e.Node.ForeColor = Color.DarkBlue;
+                treeView1.SelectedNode.BackColor = Color.WhiteSmoke;
+
+            }
+        }
+        private void treeView1_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            if (e.Node == null || e.Bounds.IsEmpty) return;
+
+            Color textColor = e.Node.ForeColor;
+            if (textColor == Color.Empty || textColor.Name == "0")
+                textColor = treeView1.ForeColor;
+
+            if ((e.State & TreeNodeStates.Selected) != 0)
+            {
+                e.Graphics.FillRectangle(Brushes.WhiteSmoke, e.Bounds);
+                TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.NodeFont ?? treeView1.Font, e.Bounds, textColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+            }
+            else
+            {
+                e.DrawDefault = true;
+            }
         }
         //---------------------------------------------------
         // 2026-03-09 은비 - 캘린더 화면구현
@@ -343,11 +394,15 @@ namespace Maver_켈린더
                 // 1. 로그아웃 상태
                 lbID.Text = "로그인 해주세요";
                 btnLogInOut.Text = "로그인";
+
+                RefreshTreeView(); //영현
             }
             else
             {
                 lbID.Text = $"{UserSession.UserId}님 환영합니다!";
                 btnLogInOut.Text = "로그아웃";
+
+                RefreshTreeView(); //영현
             }
         }
 
@@ -398,6 +453,16 @@ namespace Maver_켈린더
 
             pnlDt.Visible = true;
             pnlDt.BringToFront();
+        }
+
+        private void txtSearch_MouseClick(object sender, MouseEventArgs e)
+        {
+            // 커서가 깜빡이지 않게 포커스를 트리뷰로 넘김
+            treeView1.Focus();
+
+            // 창 띄우기
+            SearchEventForm searchForm = new SearchEventForm();
+            searchForm.ShowDialog();
         }
     }
 }
