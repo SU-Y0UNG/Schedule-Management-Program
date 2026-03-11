@@ -84,13 +84,13 @@ namespace maverCalender
             // 승환
             //LoadDetailData("user1");
             //textContent();
-            dtpStartTime.Format = DateTimePickerFormat.Custom;
-            dtpStartTime.CustomFormat = "HH:mm";
-            dtpStartDate.Value = selectedDate;
+            //dtpStartTime.Format = DateTimePickerFormat.Custom;
+            //dtpStartTime.CustomFormat = "HH:mm";
+            //dtpStartDate.Value = selectedDate;
 
-            dtpEndTime.Format = DateTimePickerFormat.Custom;
-            dtpEndTime.CustomFormat = "HH:mm";
-            dtpEndDate.Value = selectedDate;
+            //dtpEndTime.Format = DateTimePickerFormat.Custom;
+            //dtpEndTime.CustomFormat = "HH:mm";
+            //dtpEndTime.Value = selectedDate;
         }
 
         public void textContent()
