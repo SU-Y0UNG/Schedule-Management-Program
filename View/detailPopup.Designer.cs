@@ -105,7 +105,7 @@ namespace maverCalender
             btnClose.Font = new Font("맑은 고딕", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             btnClose.Location = new Point(7, 10);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(29, 30);
+            btnClose.Size = new Size(29, 0);
             btnClose.TabIndex = 0;
             btnClose.Text = "X";
             btnClose.UseVisualStyleBackColor = true;
@@ -198,7 +198,7 @@ namespace maverCalender
             pbWatch.Image = (Image)resources.GetObject("pbWatch.Image");
             pbWatch.Location = new Point(60, 141);
             pbWatch.Name = "pbWatch";
-            pbWatch.Size = new Size(17, 15);
+            pbWatch.Size = new Size(17, 0);
             pbWatch.SizeMode = PictureBoxSizeMode.Zoom;
             pbWatch.TabIndex = 5;
             pbWatch.TabStop = false;
@@ -209,7 +209,7 @@ namespace maverCalender
             pbOff.Image = (Image)resources.GetObject("pbOff.Image");
             pbOff.Location = new Point(420, 138);
             pbOff.Name = "pbOff";
-            pbOff.Size = new Size(35, 15);
+            pbOff.Size = new Size(35, 0);
             pbOff.SizeMode = PictureBoxSizeMode.Zoom;
             pbOff.TabIndex = 5;
             pbOff.TabStop = false;
@@ -221,7 +221,7 @@ namespace maverCalender
             pbWorld.Image = (Image)resources.GetObject("pbWorld.Image");
             pbWorld.Location = new Point(60, 243);
             pbWorld.Name = "pbWorld";
-            pbWorld.Size = new Size(17, 15);
+            pbWorld.Size = new Size(17, 0);
             pbWorld.SizeMode = PictureBoxSizeMode.Zoom;
             pbWorld.TabIndex = 5;
             pbWorld.TabStop = false;
@@ -369,7 +369,7 @@ namespace maverCalender
             pbReply.Image = (Image)resources.GetObject("pbReply.Image");
             pbReply.Location = new Point(60, 327);
             pbReply.Name = "pbReply";
-            pbReply.Size = new Size(17, 15);
+            pbReply.Size = new Size(17, 0);
             pbReply.SizeMode = PictureBoxSizeMode.Zoom;
             pbReply.TabIndex = 5;
             pbReply.TabStop = false;
@@ -380,7 +380,7 @@ namespace maverCalender
             pbPlace.Image = (Image)resources.GetObject("pbPlace.Image");
             pbPlace.Location = new Point(60, 377);
             pbPlace.Name = "pbPlace";
-            pbPlace.Size = new Size(17, 15);
+            pbPlace.Size = new Size(17, 0);
             pbPlace.SizeMode = PictureBoxSizeMode.Zoom;
             pbPlace.TabIndex = 5;
             pbPlace.TabStop = false;
@@ -391,7 +391,7 @@ namespace maverCalender
             pbExplanation.Image = (Image)resources.GetObject("pbExplanation.Image");
             pbExplanation.Location = new Point(60, 427);
             pbExplanation.Name = "pbExplanation";
-            pbExplanation.Size = new Size(17, 15);
+            pbExplanation.Size = new Size(17, 0);
             pbExplanation.SizeMode = PictureBoxSizeMode.Zoom;
             pbExplanation.TabIndex = 5;
             pbExplanation.TabStop = false;
@@ -402,7 +402,7 @@ namespace maverCalender
             pbInvite.Image = (Image)resources.GetObject("pbInvite.Image");
             pbInvite.Location = new Point(58, 476);
             pbInvite.Name = "pbInvite";
-            pbInvite.Size = new Size(20, 17);
+            pbInvite.Size = new Size(20, 0);
             pbInvite.SizeMode = PictureBoxSizeMode.Zoom;
             pbInvite.TabIndex = 5;
             pbInvite.TabStop = false;
@@ -413,7 +413,7 @@ namespace maverCalender
             pbAlert.Image = (Image)resources.GetObject("pbAlert.Image");
             pbAlert.Location = new Point(60, 530);
             pbAlert.Name = "pbAlert";
-            pbAlert.Size = new Size(17, 15);
+            pbAlert.Size = new Size(17, 0);
             pbAlert.SizeMode = PictureBoxSizeMode.Zoom;
             pbAlert.TabIndex = 5;
             pbAlert.TabStop = false;
@@ -422,9 +422,9 @@ namespace maverCalender
             // 
             btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnSave.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnSave.Location = new Point(451, 12);
+            btnSave.Location = new Point(425, 10);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(44, 24);
+            btnSave.Size = new Size(59, 36);
             btnSave.TabIndex = 0;
             btnSave.Text = "저장";
             btnSave.UseVisualStyleBackColor = true;
@@ -450,7 +450,7 @@ namespace maverCalender
             btnPlus.ForeColor = Color.DimGray;
             btnPlus.Location = new Point(451, 515);
             btnPlus.Name = "btnPlus";
-            btnPlus.Size = new Size(29, 30);
+            btnPlus.Size = new Size(29, 0);
             btnPlus.TabIndex = 0;
             btnPlus.Text = "+";
             btnPlus.UseVisualStyleBackColor = true;
@@ -462,7 +462,7 @@ namespace maverCalender
             pbOn.Image = (Image)resources.GetObject("pbOn.Image");
             pbOn.Location = new Point(420, 138);
             pbOn.Name = "pbOn";
-            pbOn.Size = new Size(35, 15);
+            pbOn.Size = new Size(35, 0);
             pbOn.SizeMode = PictureBoxSizeMode.Zoom;
             pbOn.TabIndex = 5;
             pbOn.TabStop = false;
@@ -471,9 +471,9 @@ namespace maverCalender
             // btnLogin
             // 
             btnLogin.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnLogin.Location = new Point(13, 677);
+            btnLogin.Location = new Point(12, 624);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(53, 33);
+            btnLogin.Size = new Size(53, 31);
             btnLogin.TabIndex = 8;
             btnLogin.Text = "Google";
             btnLogin.UseVisualStyleBackColor = true;
@@ -491,7 +491,7 @@ namespace maverCalender
             // 
             lblDesc.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblDesc.AutoSize = true;
-            lblDesc.Location = new Point(118, 723);
+            lblDesc.Location = new Point(121, 669);
             lblDesc.Name = "lblDesc";
             lblDesc.Size = new Size(31, 15);
             lblDesc.TabIndex = 10;
@@ -501,7 +501,7 @@ namespace maverCalender
             // 
             lblTemp.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblTemp.AutoSize = true;
-            lblTemp.Location = new Point(54, 723);
+            lblTemp.Location = new Point(57, 669);
             lblTemp.Name = "lblTemp";
             lblTemp.Size = new Size(35, 15);
             lblTemp.TabIndex = 10;
@@ -511,7 +511,7 @@ namespace maverCalender
             // 
             lblCity.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblCity.AutoSize = true;
-            lblCity.Location = new Point(13, 723);
+            lblCity.Location = new Point(16, 669);
             lblCity.Name = "lblCity";
             lblCity.Size = new Size(26, 15);
             lblCity.TabIndex = 10;
@@ -520,7 +520,7 @@ namespace maverCalender
             // pbWeather
             // 
             pbWeather.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pbWeather.Location = new Point(292, 715);
+            pbWeather.Location = new Point(291, 650);
             pbWeather.Name = "pbWeather";
             pbWeather.Size = new Size(37, 34);
             pbWeather.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -585,9 +585,9 @@ namespace maverCalender
             // 
             btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnDelete.BackColor = Color.Transparent;
-            btnDelete.Location = new Point(433, 639);
+            btnDelete.Location = new Point(425, 10);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(44, 24);
+            btnDelete.Size = new Size(59, 36);
             btnDelete.TabIndex = 18;
             btnDelete.Text = "삭제";
             btnDelete.UseVisualStyleBackColor = false;
@@ -597,9 +597,9 @@ namespace maverCalender
             // 
             btnUpdate.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnUpdate.BackColor = Color.Transparent;
-            btnUpdate.Location = new Point(383, 639);
+            btnUpdate.Location = new Point(349, 10);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(44, 24);
+            btnUpdate.Size = new Size(59, 36);
             btnUpdate.TabIndex = 19;
             btnUpdate.Text = "수정";
             btnUpdate.UseVisualStyleBackColor = false;
@@ -624,7 +624,7 @@ namespace maverCalender
             btnColor.FlatStyle = FlatStyle.Flat;
             btnColor.Location = new Point(60, 103);
             btnColor.Name = "btnColor";
-            btnColor.Size = new Size(17, 17);
+            btnColor.Size = new Size(17, 0);
             btnColor.TabIndex = 21;
             btnColor.UseVisualStyleBackColor = false;
             btnColor.Click += btnColor_Click;
@@ -679,7 +679,7 @@ namespace maverCalender
             btnMinus.ForeColor = Color.DimGray;
             btnMinus.Location = new Point(451, 515);
             btnMinus.Name = "btnMinus";
-            btnMinus.Size = new Size(29, 30);
+            btnMinus.Size = new Size(29, 0);
             btnMinus.TabIndex = 0;
             btnMinus.Text = "-";
             btnMinus.UseVisualStyleBackColor = true;
@@ -697,7 +697,7 @@ namespace maverCalender
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FloralWhite;
-            ClientSize = new Size(534, 761);
+            ClientSize = new Size(534, 711);
             Controls.Add(lbStandardTime);
             Controls.Add(textBox2);
             Controls.Add(textBox1);

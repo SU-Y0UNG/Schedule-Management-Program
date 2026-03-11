@@ -39,8 +39,6 @@ namespace Project_Maver.View
             lbDetailMemo.Text = memo;
             lbDetailStartDate.Text = startDate;
             lbDetailEndDate.Text = endDate;
-            lbDetailStartTime.Text = startTime;
-            lbDetailEndTime.Text = endTime;
 
             this.Invalidate();
             this.Update();
@@ -63,9 +61,7 @@ namespace Project_Maver.View
                 lbDetailTitle.Text,     // 제목
                 lbDetailMemo.Text,      // 메모
                 lbDetailStartDate.Text, // 시작일
-                lbDetailEndDate.Text,   // 종료일
-                lbDetailStartTime.Text, // 시작시간
-                lbDetailEndTime.Text    // 종료시간
+                lbDetailEndDate.Text  // 종료일
             );
 
             if (popup.ShowDialog() == DialogResult.OK)

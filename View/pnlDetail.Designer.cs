@@ -33,9 +33,9 @@
             lbDetailTitle = new Label();
             lbDetailStartDate = new Label();
             lbDetailEndDate = new Label();
-            lbDetailStartTime = new Label();
-            lbDetailEndTime = new Label();
             lbDetailMemo = new Label();
+            label1 = new Label();
+            label2 = new Label();
             SuspendLayout();
             // 
             // btnSang
@@ -68,50 +68,56 @@
             // 
             lbDetailTitle.AutoSize = true;
             lbDetailTitle.BorderStyle = BorderStyle.FixedSingle;
+            lbDetailTitle.Font = new Font("맑은 고딕", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             lbDetailTitle.Location = new Point(14, 10);
             lbDetailTitle.Name = "lbDetailTitle";
-            lbDetailTitle.Size = new Size(2, 17);
+            lbDetailTitle.Size = new Size(2, 27);
             lbDetailTitle.TabIndex = 3;
             // 
             // lbDetailStartDate
             // 
             lbDetailStartDate.AutoSize = true;
-            lbDetailStartDate.Location = new Point(14, 38);
+            lbDetailStartDate.Font = new Font("맑은 고딕", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lbDetailStartDate.Location = new Point(68, 44);
             lbDetailStartDate.Name = "lbDetailStartDate";
-            lbDetailStartDate.Size = new Size(0, 15);
+            lbDetailStartDate.Size = new Size(0, 20);
             lbDetailStartDate.TabIndex = 3;
             // 
             // lbDetailEndDate
             // 
             lbDetailEndDate.AutoSize = true;
-            lbDetailEndDate.Location = new Point(14, 64);
+            lbDetailEndDate.Location = new Point(176, 44);
             lbDetailEndDate.Name = "lbDetailEndDate";
             lbDetailEndDate.Size = new Size(0, 15);
             lbDetailEndDate.TabIndex = 3;
             // 
-            // lbDetailStartTime
-            // 
-            lbDetailStartTime.AutoSize = true;
-            lbDetailStartTime.Location = new Point(133, 38);
-            lbDetailStartTime.Name = "lbDetailStartTime";
-            lbDetailStartTime.Size = new Size(0, 15);
-            lbDetailStartTime.TabIndex = 3;
-            // 
-            // lbDetailEndTime
-            // 
-            lbDetailEndTime.AutoSize = true;
-            lbDetailEndTime.Location = new Point(133, 64);
-            lbDetailEndTime.Name = "lbDetailEndTime";
-            lbDetailEndTime.Size = new Size(0, 15);
-            lbDetailEndTime.TabIndex = 3;
-            // 
             // lbDetailMemo
             // 
             lbDetailMemo.AutoSize = true;
-            lbDetailMemo.Location = new Point(225, 38);
+            lbDetailMemo.Location = new Point(39, 73);
             lbDetailMemo.Name = "lbDetailMemo";
             lbDetailMemo.Size = new Size(0, 15);
             lbDetailMemo.TabIndex = 3;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("맑은 고딕", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(150, 44);
+            label1.Name = "label1";
+            label1.Size = new Size(20, 20);
+            label1.TabIndex = 5;
+            label1.Text = "~";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("맑은 고딕", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(14, 44);
+            label2.Name = "label2";
+            label2.Size = new Size(48, 20);
+            label2.TabIndex = 6;
+            label2.Text = "기간 :";
             // 
             // pnlDetail
             // 
@@ -119,14 +125,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(lbDetailMemo);
-            Controls.Add(lbDetailEndTime);
-            Controls.Add(lbDetailStartTime);
             Controls.Add(lbDetailEndDate);
             Controls.Add(lbDetailStartDate);
             Controls.Add(lbDetailTitle);
             Controls.Add(btnClose);
             Controls.Add(btnSang);
+            Location = new Point(14, 10);
             Name = "pnlDetail";
             Size = new Size(298, 140);
             Load += pnlDetail_Load;
@@ -140,8 +147,8 @@
         private Label lbDetailTitle;
         private Label lbDetailStartDate;
         private Label lbDetailEndDate;
-        private Label lbDetailStartTime;
-        private Label lbDetailEndTime;
         private Label lbDetailMemo;
+        private Label label1;
+        private Label label2;
     }
 }

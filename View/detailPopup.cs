@@ -346,7 +346,7 @@ namespace maverCalender
             this.selectedScheduleId = id;
         }
         // 승환
-        public void setDetailData(string title, string memo, string sDate, string eDate, string sTime, string eTime)
+        public void setDetailData(string title, string memo, string sDate, string eDate)
         {
             // 1. 텍스트 정보 채우기
             this.txtTitle.Text = title;
@@ -358,14 +358,6 @@ namespace maverCalender
 
             if (DateTime.TryParse(eDate, out DateTime endDate))
                 this.dtpEndDate.Value = endDate;
-
-            // 3. 시간 정보 채우기
-            // dtpStartTime은 DateTime 타입이므로 오늘 날짜에 시간만 더하는 방식으로 세팅합니다.
-            if (DateTime.TryParse(sTime, out DateTime startTime))
-                this.dtpStartTime.Value = DateTime.Today.Add(startTime.TimeOfDay);
-
-            if (DateTime.TryParse(eTime, out DateTime endTime))
-                this.dtpEndTime.Value = DateTime.Today.Add(endTime.TimeOfDay);
         }
 
         // 승환,수영(반복부분 추가)
