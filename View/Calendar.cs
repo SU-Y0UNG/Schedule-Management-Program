@@ -502,18 +502,26 @@ namespace Maver_켈린더
             DataTable userEvents = null;
             if (UserSession.UserId != null)
             {
+                pbProfile.Visible = true;
+                lbID.Visible = true;
+                btnUpdatepw.Visible = true;
                 userEvents = select_events(UserSession.UserId);
             }
-
-            // 1. 달력 시작 전 빈칸 추가
-            for (int i = 0; i < startDayOfWeek; i++)
+            else
             {
-                UserControl day = new DayUserControl();
-                day.Margin = new Padding(0);
-                day.Padding = new Padding(3);
-                flpMain.Controls.Add(day);
-                day.BorderStyle = BorderStyle.None;
+                pbProfile.Visible = false;
+                lbID.Visible = false;
+                btnUpdatepw.Visible = false;
             }
+                // 1. 달력 시작 전 빈칸 추가
+                for (int i = 0; i < startDayOfWeek; i++)
+                {
+                    UserControl day = new DayUserControl();
+                    day.Margin = new Padding(0);
+                    day.Padding = new Padding(3);
+                    flpMain.Controls.Add(day);
+                    day.BorderStyle = BorderStyle.None;
+                }
 
             // 2. 실제 날짜 칸 생성
             for (int i = 1; i <= lastDay; i++)

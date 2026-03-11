@@ -53,16 +53,16 @@
             label7 = new Label();
             label8 = new Label();
             pnlHead = new Panel();
+            btnUpdatepw = new Button();
             btnSearch = new Button();
             txtSearch = new TextBox();
-            pictureBox1 = new PictureBox();
+            pbProfile = new PictureBox();
             lbID = new Label();
             btnLogInOut = new Button();
             btnBeforeDate = new Button();
             btnAfterDate = new Button();
             lbThisDate = new Label();
             flpMain = new FlowLayoutPanel();
-            btnUpdatepw = new Button();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             pnlCategori.SuspendLayout();
@@ -70,7 +70,7 @@
             cmsCalendar.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             pnlHead.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbProfile).BeginInit();
             SuspendLayout();
             // 
             // imageList1
@@ -312,7 +312,7 @@
             pnlHead.Controls.Add(btnUpdatepw);
             pnlHead.Controls.Add(btnSearch);
             pnlHead.Controls.Add(txtSearch);
-            pnlHead.Controls.Add(pictureBox1);
+            pnlHead.Controls.Add(pbProfile);
             pnlHead.Controls.Add(lbID);
             pnlHead.Controls.Add(btnLogInOut);
             pnlHead.Controls.Add(btnBeforeDate);
@@ -322,6 +322,20 @@
             pnlHead.Name = "pnlHead";
             pnlHead.Size = new Size(1488, 138);
             pnlHead.TabIndex = 2;
+            // 
+            // btnUpdatepw
+            // 
+            btnUpdatepw.BackColor = Color.FloralWhite;
+            btnUpdatepw.FlatAppearance.BorderSize = 0;
+            btnUpdatepw.FlatStyle = FlatStyle.Flat;
+            btnUpdatepw.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnUpdatepw.Location = new Point(1342, 64);
+            btnUpdatepw.Name = "btnUpdatepw";
+            btnUpdatepw.Size = new Size(127, 42);
+            btnUpdatepw.TabIndex = 12;
+            btnUpdatepw.Text = "비밀번호 변경";
+            btnUpdatepw.UseVisualStyleBackColor = false;
+            btnUpdatepw.Click += btnUpdatepw_Click;
             // 
             // btnSearch
             // 
@@ -346,32 +360,33 @@
             txtSearch.TabIndex = 3;
             txtSearch.MouseClick += txtSearch_MouseClick;
             // 
-            // pictureBox1
+            // pbProfile
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(1269, 7);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(41, 33);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 7;
-            pictureBox1.TabStop = false;
+            pbProfile.Image = (Image)resources.GetObject("pbProfile.Image");
+            pbProfile.Location = new Point(1172, 13);
+            pbProfile.Name = "pbProfile";
+            pbProfile.Size = new Size(59, 50);
+            pbProfile.SizeMode = PictureBoxSizeMode.Zoom;
+            pbProfile.TabIndex = 7;
+            pbProfile.TabStop = false;
             // 
             // lbID
             // 
             lbID.AutoSize = true;
-            lbID.Location = new Point(1316, 13);
+            lbID.Font = new Font("맑은 고딕", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lbID.Location = new Point(1237, 19);
             lbID.Name = "lbID";
-            lbID.Size = new Size(46, 15);
+            lbID.Size = new Size(63, 21);
             lbID.TabIndex = 5;
             lbID.Text = "label11";
             // 
             // btnLogInOut
             // 
             btnLogInOut.FlatStyle = FlatStyle.Flat;
-            btnLogInOut.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            btnLogInOut.Location = new Point(1395, 7);
+            btnLogInOut.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnLogInOut.Location = new Point(1361, 19);
             btnLogInOut.Name = "btnLogInOut";
-            btnLogInOut.Size = new Size(90, 25);
+            btnLogInOut.Size = new Size(108, 42);
             btnLogInOut.TabIndex = 3;
             btnLogInOut.Text = "로그인";
             btnLogInOut.UseVisualStyleBackColor = true;
@@ -428,20 +443,6 @@
             flpMain.Size = new Size(1278, 717);
             flpMain.TabIndex = 0;
             // 
-            // btnUpdatepw
-            // 
-            btnUpdatepw.BackColor = Color.FloralWhite;
-            btnUpdatepw.FlatAppearance.BorderSize = 0;
-            btnUpdatepw.FlatStyle = FlatStyle.Flat;
-            btnUpdatepw.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            btnUpdatepw.Location = new Point(1395, 38);
-            btnUpdatepw.Name = "btnUpdatepw";
-            btnUpdatepw.Size = new Size(90, 25);
-            btnUpdatepw.TabIndex = 12;
-            btnUpdatepw.Text = "비밀번호 변경";
-            btnUpdatepw.UseVisualStyleBackColor = false;
-            btnUpdatepw.Click += btnUpdatepw_Click;
-            // 
             // Calendar
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -462,7 +463,7 @@
             tableLayoutPanel1.PerformLayout();
             pnlHead.ResumeLayout(false);
             pnlHead.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbProfile).EndInit();
             ResumeLayout(false);
         }
 
@@ -487,7 +488,7 @@
         private Button btnBeforeDate;
         private Label lbID;
         private PictureBox pictureBox2;
-        private PictureBox pictureBox1;
+        private PictureBox pbProfile;
         private TreeView treeView1;
         private PictureBox CalenderPlus;
         private Project_Maver.Common.RoundButton btnGoToday;
