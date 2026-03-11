@@ -23,7 +23,7 @@ namespace maverCalender
                 return;
             }
 
-            bool isSuccess = JoinMember.LoginCheck(id, pw); 
+            bool isSuccess = JoinMember.LoginCheck(id, pw);
             //JoinMember 로직을 호출해서 DB에 일치하는 회원이 있는지 확인한다. 
 
             if (isSuccess)
@@ -86,7 +86,7 @@ namespace maverCalender
         }
 
         //비번 찾기 화면 이동
-        // 비번 찾기 링크버튼을 눌러서 실행한다.
+         // 비번 찾기 링크버튼을 눌러서 실행한다.
         private void lklPW_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // 1.비번 찾기 폼 객체를 생성
@@ -96,6 +96,7 @@ namespace maverCalender
             fpw.ShowDialog();
         }
 
+
         // 서현 - 3월 11일 아이디 입력 후 엔터 키를 눌러서 비밀번호 입력 칸으로 커서가 이동한다.
         private void txtIdEmail2_KeyDown(object sender, KeyEventArgs e)
         {
@@ -104,8 +105,9 @@ namespace maverCalender
                 txtPassword2.Focus(); // 비밀번호 칸으로 커서 이동
                 e.SuppressKeyPress = true;
             }
+
         }
-        // 비밀번호를 다 입력하고 엔터 키를 누르면 캘린더 화면으로 로그인한 상태로 이동한다.
+
         private void txtPassword2_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -115,5 +117,6 @@ namespace maverCalender
             }
 
         }
+        
     }
 }

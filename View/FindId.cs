@@ -46,12 +46,12 @@ namespace Project_Maver.View
                 {
                     MessageBox.Show("일치하는 회원 정보가 없습니다.");
                 }
-               
+
             }
 
         }
 
-        // 서현 - 3월 11일 이름 입력 후 엔터를 치면 이메일 입력 칸으로 이동하는 코드  
+        // 서현 - 3월 11일.
         private void txtName_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -61,7 +61,6 @@ namespace Project_Maver.View
             }
         }
 
-        // 이메일 입력 후 엔터 -> 핸드폰 입력 칸으로 이동
         private void txtEmail_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -71,16 +70,14 @@ namespace Project_Maver.View
             }
         }
 
-        // 핸드폰 번호까지 다 입력하면 엔터를 쳐서 아이디 찾기 버튼 기능을 수행한다.
         private void txtPhone_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 btnFindID_Click(sender, e); // 이메일 찾기 버튼 기능 수행
                 e.SuppressKeyPress = true;
+
             }
         }
-
-
     }
 }

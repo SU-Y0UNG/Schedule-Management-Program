@@ -95,6 +95,7 @@
             txtName.Name = "txtName";
             txtName.Size = new Size(324, 23);
             txtName.TabIndex = 4;
+            txtName.KeyDown += txtName_KeyDown;
             // 
             // txtEmail
             // 
@@ -102,6 +103,7 @@
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(324, 23);
             txtEmail.TabIndex = 4;
+            txtEmail.KeyDown += txtEmail_KeyDown;
             // 
             // btnFindID
             // 
@@ -130,6 +132,7 @@
             txtPhone.Name = "txtPhone";
             txtPhone.Size = new Size(324, 23);
             txtPhone.TabIndex = 4;
+            txtPhone.KeyDown += txtPhone_KeyDown;
             // 
             // FindId
             // 

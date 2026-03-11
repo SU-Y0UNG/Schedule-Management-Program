@@ -58,6 +58,7 @@
             txtId1.Name = "txtId1";
             txtId1.Size = new Size(324, 23);
             txtId1.TabIndex = 14;
+            txtId1.KeyDown += txtId1_KeyDown;
             // 
             // label3
             // 
@@ -112,6 +113,7 @@
             txtEmail1.Name = "txtEmail1";
             txtEmail1.Size = new Size(324, 23);
             txtEmail1.TabIndex = 14;
+            txtEmail1.KeyDown += txtEmail1_KeyDown;
             // 
             // Findpw
             // 

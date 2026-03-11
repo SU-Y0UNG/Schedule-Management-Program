@@ -21,7 +21,7 @@ namespace Project_Maver.View
     {
         public Findpw()
         {
-            InitializeComponent();  
+            InitializeComponent();
         }
 
         private void btnFindPW_Click(object sender, EventArgs e)
@@ -47,7 +47,7 @@ namespace Project_Maver.View
                 return;
             }
 
-           // DB 조회
+            // DB 조회
             string checkSql = "SELECT * FROM user WHERE id = @id AND email = @email";
             Dictionary<string, object> checkParams = new Dictionary<string, object>
             {
@@ -137,7 +137,7 @@ namespace Project_Maver.View
             StringBuilder result = new StringBuilder();
             Random rnd = new Random();
 
-            for(int i=0; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
                 result.Append(chars[rnd.Next(chars.Length)]);
             }
@@ -145,7 +145,7 @@ namespace Project_Maver.View
             return result.ToString();
         }
 
-        //서현 - 3월 11일 아이디 입력 후 엔터를 누르면 이메일 입력 칸으로 커서 이동
+        // 서현 - 3월 11일.
         private void txtId1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -155,7 +155,6 @@ namespace Project_Maver.View
             }
         }
 
-        // 이메일까지 입력을 다하고 엔터를 누르면 자동으로 이메일로 임시 비밀번호가 발송된다. 
         private void txtEmail1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -164,6 +163,5 @@ namespace Project_Maver.View
                 e.SuppressKeyPress = true;
             }
         }
-
     }
 }

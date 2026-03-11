@@ -48,7 +48,7 @@ namespace Project_Maver.Common
         {
             // DB에서 해당 아이디와 비밀번호가 일치하는 행이 있는지 개수를 센다.
             // SELECT COUNT(*)를 통해 입력받은 ID와 PW가 동시에 일치하는 데이터가 몇 개
-            string sql = "SELECT COUNT(*) FROM maverdb.user WHERE id = @id AND pw = @pw";
+            string sql = "SELECT id,name FROM maverdb.user WHERE id = @id AND pw = @pw";
             
 
             Dictionary<string, object> param = new Dictionary<string, object>()
@@ -66,6 +66,7 @@ namespace Project_Maver.Common
             {
                 //서현  : 3월 10일 로그인 성공시 아이디가 아닌 이름으로 환영합니다 라고 나오게 수정함
                 UserSession.UserName = dt.Rows[0]["name"].ToString();
+                return true;
             }
 
             return false;

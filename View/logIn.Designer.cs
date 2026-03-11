@@ -57,6 +57,7 @@
             txtIdEmail2.PlaceholderText = "아이디 또는 이메일";
             txtIdEmail2.Size = new Size(252, 23);
             txtIdEmail2.TabIndex = 0;
+            txtIdEmail2.KeyDown += txtIdEmail2_KeyDown;
             // 
             // txtPassword2
             // 
@@ -66,6 +67,7 @@
             txtPassword2.PlaceholderText = "비밀번호";
             txtPassword2.Size = new Size(252, 23);
             txtPassword2.TabIndex = 1;
+            txtPassword2.KeyDown += txtPassword2_KeyDown;
             // 
             // btnLogin
             // 
