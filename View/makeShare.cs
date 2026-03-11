@@ -43,7 +43,16 @@ namespace Project_Maver.View
                 }
 
                 // 2. 데이터 준비
-                string color = ColorTranslator.ToHtml(rbColor.BackColor);
+                Color selectedColor = Color.Black;
+                if (rbColor.Tag is Color c)
+                {
+                    selectedColor = c;
+                }
+                else
+                {
+                    selectedColor = rbColor.BackColor;
+                }
+                string color = ColorTranslator.ToHtml(selectedColor);
                 string currentUserId = UserSession.UserId;
 
                 // 3. share_group 데이터 삽입 (INSERT만 먼저 실행)
@@ -174,11 +183,18 @@ namespace Project_Maver.View
         }
         private void rbColor_Click(object sender, EventArgs e)
         {
-            ColorDialog cd = new ColorDialog();
-            if(cd.ShowDialog() == DialogResult.OK)
+            using (ColorDialog cd = new ColorDialog())
             {
-                rbColor.BackColor = cd.Color;
+                cd.FullOpen = true;
+                cd.Color = rbColor.BackColor;
+
+                if (cd.ShowDialog() == DialogResult.OK)
+                {
+                    rbColor.BackColor = cd.Color;
+                    rbColor.Tag = cd.Color;
+                }
             }
+
         }
 
 

@@ -167,8 +167,6 @@
             treeView1.Size = new Size(300, 862);
             treeView1.TabIndex = 0;
             treeView1.DrawNode += treeView1_DrawNode;
-            treeView1.BeforeSelect += cdMain_BeforeSelect;
-            treeView1.AfterSelect += treeView1_AfterSelect;
             treeView1.NodeMouseClick += treeView1_NodeMouseClick;
             // 
             // cmsCalendar

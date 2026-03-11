@@ -138,7 +138,7 @@ namespace Maver_켈린더
         // 2026-03-09 영현 추가
         //------------------------------------------------------------------------------------
         bool isMenuOpen = false;
-
+        private List<TreeNode> SelectedCalendars = new List<TreeNode>();
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             // 오버레이 패널과 사이드바 제어 시작
@@ -161,18 +161,6 @@ namespace Maver_켈린더
             isMenuOpen = false;
         }
 
-        private void cdMain_BeforeSelect(object sender, TreeViewCancelEventArgs e)
-        {
-            // 포커스 테두리나 배경색이 남지 않도록 선택 직후 다른 컨트롤로 포커스 이동
-            // 단, 이 방법은 키보드 방향키 조작이 어려워질 수 있습니다.
-            this.ActiveControl = null;
-        }
-
-        private void cdMain_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            pnlCategori.Focus();
-
-        }
 
         private void cdMain_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
@@ -180,7 +168,7 @@ namespace Maver_켈린더
             if ((e.State & TreeNodeStates.Selected) != 0)
             {
                 // 선택되었을 때 배경색 (예: 흰색이나 아주 연한 회색)
-                e.Graphics.FillRectangle(Brushes.WhiteSmoke, e.Bounds);
+                e.Graphics.FillRectangle(Brushes.SkyBlue, e.Bounds);
 
                 // 글자색을 검정으로 고정 (파란 배경일 때 흰색으로 변하는 것 방지)
                 TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.NodeFont ?? e.Node.TreeView.Font,
@@ -227,6 +215,7 @@ namespace Maver_켈린더
         // RefreshTreeView() >> 카테고리에 목록 집어넣음. 중요함!!!!!!!!!!!
         public void RefreshTreeView()
         {
+            // 트리뷰 노드 찾기
             TreeNode privateRoot = treeView1.Nodes.Find("ndPrivate", true).FirstOrDefault();
             TreeNode publicRoot = treeView1.Nodes.Find("ndPublic", true).FirstOrDefault();
             if (privateRoot == null || publicRoot == null) return;
@@ -238,7 +227,8 @@ namespace Maver_켈린더
             if (!string.IsNullOrEmpty(UserSession.UserId))
             {
                 TreeNode privateNode = new TreeNode("개인 캘린더");
-                privateNode.ForeColor = Color.DarkBlue;
+                privateNode.ForeColor = Color.WhiteSmoke;
+                privateNode.Tag = "FIXED_PRIVATE" + UserSession.UserId; //고정 노드임을 식별 위한 태그
                 privateRoot.Nodes.Add(privateNode);
             }
 
@@ -251,7 +241,8 @@ namespace Maver_켈린더
                     (SELECT COUNT(*) FROM share_member WHERE share_id = g.share_id) as member_count
                 FROM share_group g
                 JOIN share_member m ON g.share_id = m.share_id
-                WHERE m.user_id = @id";
+                WHERE m.user_id = @id
+                AND g.share_name != '개인 캘린더'"; // AND >> DB에 저장된 '개인 캘린더'는 무시
 
             var param = new Dictionary<string, object> { { "@id", UserSession.UserId } };
             try
@@ -263,7 +254,7 @@ namespace Maver_켈린더
                     foreach (DataRow row in dt.Rows)
                     {
                         int memberCount = Convert.ToInt32(row["member_count"]);
-                        string hexColor = row["color"]?.ToString() ?? "#000000"; ////DB에서 색상 코드 가져옴
+                        string hexColor = row["color"]?.ToString()?.Trim() ?? "#000000"; ////DB에서 색상 코드 가져옴
 
                         TreeNode sharedNode = new TreeNode(row["share_name"].ToString());
 
@@ -273,11 +264,13 @@ namespace Maver_켈린더
                         // DB에 저장된 HEX문자열을 Color객체로 변환하여 적용
                         try
                         {
+                            if (!hexColor.StartsWith("#") && hexColor.Length == 6 && IsHexString(hexColor))
+                                hexColor = "#" + hexColor;
                             sharedNode.ForeColor = ColorTranslator.FromHtml(hexColor);
                         }
                         catch
                         {
-                            sharedNode.ForeColor = Color.Black; //예외 발생시 기본색
+                            sharedNode.ForeColor = Color.DimGray; //예외 발생시 기본색
                         }
                         // 멤버가 나 포함 2명 이상일때만 '공용'목록에 추가
                         if (memberCount > 1)
@@ -297,32 +290,54 @@ namespace Maver_켈린더
             }
             treeView1.ExpandAll();
         }
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private bool IsHexString(string str)
         {
-            if (e.Node.Text == "개인캘린더")
-            {
-                e.Node.ForeColor = Color.DarkBlue;
-                treeView1.SelectedNode.BackColor = Color.WhiteSmoke;
-
-            }
+            return System.Text.RegularExpressions.Regex.IsMatch(str, @"\A\b[0-9a-fA-F]+\b\Z");
         }
+
         private void treeView1_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
             if (e.Node == null || e.Bounds.IsEmpty) return;
 
-            Color textColor = e.Node.ForeColor;
-            if (textColor == Color.Empty || textColor.Name == "0")
-                textColor = treeView1.ForeColor;
+            Color textColor = Color.Black;
 
-            if ((e.State & TreeNodeStates.Selected) != 0)
+            // 리스트에 포함되어 있는지 확인
+            Color backColor = Color.WhiteSmoke;
+            bool isCustomBrush = false;
+
+            if (SelectedCalendars.Contains(e.Node) && e.Node.Level == 2)
             {
-                e.Graphics.FillRectangle(Brushes.WhiteSmoke, e.Bounds);
-                TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.NodeFont ?? treeView1.Font, e.Bounds, textColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+                string parentText = e.Node.Parent?.Text ?? "";
+                if (parentText == "개인")
+                {
+                    backColor = Color.SkyBlue;
+                    isCustomBrush = true;
+                }
+                else if (parentText == "공용")
+                {
+                    Color dbColor = e.Node.ForeColor;
+                    // 공용 캘린더 생성시 지정햇던 ForeColor를 배경색으로 사용
+                    if (dbColor != Color.Empty && dbColor != Color.Transparent)
+                    {
+                        backColor = dbColor;
+
+                    }
+                }
+
+                if (backColor.GetBrightness() < 0.4)
+                {
+                    textColor = Color.White;
+                }
             }
-            else
+
+            using (SolidBrush brush = new SolidBrush(backColor))
             {
-                e.DrawDefault = true;
+                e.Graphics.FillRectangle(brush, e.Bounds);
             }
+
+            Rectangle textBounds = e.Bounds;
+            textBounds.Offset(2, 0);
+            TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.NodeFont ?? treeView1.Font, e.Bounds, textColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
         }
         private void cmsCalendar_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -379,6 +394,27 @@ namespace Maver_켈린더
             {
                 treeView1.SelectedNode = e.Node;
             }
+
+            if (e.Node.Level < 2) return;
+            // 선택 or 해제 캘린더
+            if (e.Button == MouseButtons.Left)
+            {
+                if (SelectedCalendars.Contains(e.Node))
+                {
+                    // 이미 선택된 노드 클릭 >>> 선택 해제
+                    SelectedCalendars.Remove(e.Node);
+                }
+                else
+                {
+                    // 새로운 노드 클릭 >> 선택
+                    SelectedCalendars.Add(e.Node);
+                }
+                treeView1.Invalidate();
+
+                // 선택된 캘린더들의 일정을 새로 불러오는 함수 호출
+                // ex)) DispalyDays (currentYear, currentMonth); 
+            }
+
         }
         // 그룹 제거
         private void tsmDelete_Click(object sender, EventArgs e)
@@ -684,13 +720,17 @@ namespace Maver_켈린더
                 // 1. 로그아웃 상태
                 lbID.Text = "로그인 해주세요";
                 btnLogInOut.Text = "로그인";
+
+                RefreshTreeView();
             }
             else
             {
                 lbID.Text = $"{UserSession.UserName}님 환영합니다!";
                 btnLogInOut.Text = "로그아웃";
+
+                RefreshTreeView(); //영현
             }
-            RefreshTreeView(); //영현
+            
 
             // 은비 - 로그인 로그아웃시에 캘린더 다시 불러오기
             int todayYear = DateTime.Today.Year;
