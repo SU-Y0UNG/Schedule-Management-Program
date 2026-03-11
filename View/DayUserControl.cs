@@ -101,7 +101,8 @@ namespace Project_Maver.View
 
             //this.flpEvent.Controls.Add(label);
             //label.BringToFront();
-
+            flpEvent.Controls.Add(label); // 자동으로 아래로 쌓입니다.
+            label.BringToFront();
 
             if (!isSingleDay)
             {

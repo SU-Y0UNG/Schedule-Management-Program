@@ -83,14 +83,14 @@ namespace maverCalender
 
             // 승환
             //LoadDetailData("user1");
-            textContent();
-            dtpStartTime.Format = DateTimePickerFormat.Custom;
-            dtpStartTime.CustomFormat = "HH:mm";
-            dtpStartDate.Value = selectedDate;
+            //textContent();
+            //dtpStartTime.Format = DateTimePickerFormat.Custom;
+            //dtpStartTime.CustomFormat = "HH:mm";
+            //dtpStartDate.Value = selectedDate;
 
-            dtpEndTime.Format = DateTimePickerFormat.Custom;
-            dtpEndTime.CustomFormat = "HH:mm";
-            dtpEndTime.Value = selectedDate;
+            //dtpEndTime.Format = DateTimePickerFormat.Custom;
+            //dtpEndTime.CustomFormat = "HH:mm";
+            //dtpEndTime.Value = selectedDate;
         }
 
         public void textContent()
@@ -449,9 +449,10 @@ namespace maverCalender
                                repeat_end_date = @rend,
                                repeat_start_date=@rstart,
                                color=@color
-                           WHERE user_id = @user_id"; // 여기서는 일단 기존처럼 user_id를 기준으로 합니다.
+                           WHERE title = @title"; // 여기서는 일단 기존처럼 user_id를 기준으로 합니다.
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.Clear(); // 파라미터 중복 방지
 
                 // 3. 파라미터 매핑 (화면의 컨트롤 값을 DB로 전달)
                 cmd.Parameters.AddWithValue("@title", txtTitle.Text);
@@ -475,7 +476,13 @@ namespace maverCalender
                 if (result > 0)
                 {
                     MessageBox.Show("일정이 성공적으로 수정되었습니다!");
+                    this.DialogResult = DialogResult.OK;
                     this.Close(); // 저장 후 팝업 닫기
+                }
+                else
+                {
+                    // 💡 아무 반응이 없었던 이유는 아마 이 조건문에서 0이 나왔기 때문일 것입니다.
+                    MessageBox.Show("수정된 내용이 없습니다. 입력 데이터(ID, 제목)를 확인하세요.");
                 }
             }
             catch (Exception ex)

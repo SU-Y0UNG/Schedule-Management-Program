@@ -41,6 +41,7 @@ namespace Project_Maver.View
             this.Invalidate();
             this.Update();
             this.Visible = true;
+            this.BringToFront();
         }
 
         private void btnSang_Click(object sender, EventArgs e)

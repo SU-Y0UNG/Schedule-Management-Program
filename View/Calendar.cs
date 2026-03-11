@@ -550,7 +550,7 @@ namespace Maver_켈린더
                     //===================================================
                     detailPopup popup = new detailPopup();
                     popup.selectedDate = dateForSlot; //선택한 날짜가 뜨도록
-
+                    popup.setMode("Add");
 
                     if (popup.ShowDialog() == DialogResult.OK)
                     {
@@ -561,6 +561,7 @@ namespace Maver_켈린더
                         
 
                         string title = popup.getDetailPopupTitle();
+                        duc.addTitleLabel(title, popup.selectedColor, true);
                         //수영 추가
                         Color color = popup.selectedColor;
                         //duc.addTitleLabel(title,color);
@@ -591,7 +592,7 @@ namespace Maver_켈린더
 
 
         }
-        // 승환
+        // 승환 aaa
         private DataTable GetScheduleDetail(string title, DateTime date)
         {
             // MySQL의 DATE() 함수를 사용하여 컬럼의 시간 부분을 제외하고 '날짜'만 비교합니다.
@@ -599,7 +600,7 @@ namespace Maver_켈린더
                    FROM events 
                    WHERE title = @title 
                    AND DATE(start_date) = @date
-                    ORDER By event_id DESC LIMIT 1";
+                    ORDER By event_id DESC";
 
             var param = new Dictionary<string, object>
             {
