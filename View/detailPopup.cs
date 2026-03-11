@@ -97,7 +97,6 @@ namespace maverCalender
         {
             txtMemo.Text = "";
             txtTitle.Text = "";
-            txtUserid.Text = "";
         }
 
 
@@ -199,7 +198,7 @@ namespace maverCalender
                 cmd = new MySqlCommand(query, conn);
 
                 // 3. 파라미터를 통해 값 할당 (보안을 위해 직접 대입 대신 이 방식을 권장합니다)
-                cmd.Parameters.AddWithValue("@UserId", txtUserid.Text);
+                cmd.Parameters.AddWithValue("@UserId", UserSession.UserId);
                 cmd.Parameters.AddWithValue("@Title", txtTitle.Text);
                 cmd.Parameters.AddWithValue("@StartDate", dtpStartDate.Value);
                 cmd.Parameters.AddWithValue("@EndDate", dtpEndDate.Value);
@@ -279,7 +278,7 @@ namespace maverCalender
                     conn.Open();
                     cmd = new MySqlCommand(query, conn);
                     // 삭제조건은 user_id와 title을 쓰면 그 행이 삭제
-                    cmd.Parameters.AddWithValue("@UserId", txtUserid.Text);
+                    cmd.Parameters.AddWithValue("@UserId", UserSession.UserId);
                     cmd.Parameters.AddWithValue("@Title", txtTitle.Text);
 
                     int result = cmd.ExecuteNonQuery();
@@ -371,7 +370,7 @@ namespace maverCalender
                 if (reader.Read())
                 {
                     // 문자열 데이터 (텍스트박스)
-                    txtUserid.Text = reader["user_id"].ToString();
+                    //txtUserid.Text = reader["user_id"].ToString();
                     txtTitle.Text = reader["title"].ToString();
                     txtMemo.Text = reader["memo"]?.ToString() ?? ""; // 메모가 비어있을 경우 대비
 
@@ -449,7 +448,8 @@ namespace maverCalender
                                repeat_end_date = @rend,
                                repeat_start_date=@rstart,
                                color=@color
-                           WHERE title = @title"; // 여기서는 일단 기존처럼 user_id를 기준으로 합니다.
+                           WHERE user_id = @user_id"; // 여기서는 일단 기존처럼 user_id를 기준으로 합니다.
+//************************************************************************** 이벤트 아이디 추가
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.Clear(); // 파라미터 중복 방지
@@ -460,7 +460,7 @@ namespace maverCalender
                 cmd.Parameters.AddWithValue("@end_date", dtpEndDate.Value.ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@start_time", dtpStartTime.Value.ToString("HH:mm:ss"));
                 cmd.Parameters.AddWithValue("@end_time", dtpEndTime.Value.ToString("HH:mm:ss"));
-                cmd.Parameters.AddWithValue("@user_id", txtUserid.Text); // 기준이 되는 ID
+                cmd.Parameters.AddWithValue("@user_id", UserSession.UserId); // 기준이 되는 ID
                 cmd.Parameters.AddWithValue("@memo", txtMemo.Text);
                 cmd.Parameters.AddWithValue("@rtype", repeat.RepeatType);
                 cmd.Parameters.AddWithValue("@rinter", repeat.RepeatInterval);
@@ -468,6 +468,7 @@ namespace maverCalender
                 cmd.Parameters.AddWithValue("@rstart", repeat.RepeatStartDate);
                 cmd.Parameters.AddWithValue("@rend", repeat.RepeatEndDate);
                 cmd.Parameters.AddWithValue("@color", btnColor.BackColor.Name);
+                //cmd.Parameters.AddWithValue("@event_id", event_id);
 
 
                 // 4. 실행

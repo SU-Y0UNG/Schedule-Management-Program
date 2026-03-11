@@ -142,7 +142,11 @@ namespace Project_Maver.View
 
                 }
             };
+<<<<<<< Updated upstream
             
+=======
+
+>>>>>>> Stashed changes
         }
 
         // 은비 추가

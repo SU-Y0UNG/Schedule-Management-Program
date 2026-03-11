@@ -1,7 +1,9 @@
 ﻿using maverCalender;
 using Project_Maver.Common;
 using Project_Maver.View;
+using System.ComponentModel;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Maver_켈린더
 {
@@ -446,41 +448,56 @@ namespace Maver_켈린더
 
         private void DisplayDays(int year, int month)
         {
+            
+            flpMain.SuspendLayout();
             flpMain.Controls.Clear();
 
-            // 이번달 1일이 무슨 요일인지
-            // 0:일요일 ~ 6:토요일
             DateTime startOfMonth = new DateTime(year, month, 1);
             int startDayOfWeek = (int)startOfMonth.DayOfWeek;
+            int lastDay = DateTime.DaysInMonth(year, month);
 
+            // 데이터 로딩
             Holidays holidays = new Holidays();
-            var holiday = holidays.getHolidays(year);
+            var holidayDict = holidays.getHolidays(year);
 
-            // 이번달의 마지막 날짜(28,30,31) 확인
-            int LastDayOfCurMonth = DateTime.DaysInMonth(year, month);
-
-            // 1일 시작 전 앞자리 빈칸 만들기
-            for (int i = 0; i < startDayOfWeek; i++)
+            DataTable userEvents = null;
+            if (UserSession.UserId != null)
             {
-                UserControl day = new DayUserControl();
-                flpMain.Controls.Add(day);
+                userEvents = select_events(UserSession.UserId);
             }
 
-            // 실제 날짜 칸 생성 시작
-            for (int i = 1; i <= LastDayOfCurMonth; i++)
+            // 1. 달력 시작 전 빈칸 추가
+            for (int i = 0; i < startDayOfWeek; i++)
             {
-                DateTime dateForSlot = new DateTime(year, month, i);
-                DateTime clickDate = dateForSlot;
-                DayUserControl duc = new DayUserControl(i, dateForSlot);
-                duc.Tag = dateForSlot;
+                flpMain.Controls.Add(new DayUserControl());
+            }
 
-                // 승환
-                duc.TitleLabelClicked += (string title) =>
+            // 2. 실제 날짜 칸 생성
+            for (int i = 1; i <= lastDay; i++)
+            {
+                DateTime currDate = new DateTime(year, month, i);
+                DayUserControl duc = new DayUserControl(i, currDate);
+                duc.Tag = currDate;
+
+                // 휴일 및 주말 색상 설정
+                if (holidayDict.ContainsKey(currDate)) duc.SetHoliday(holidayDict[currDate]);
+                else if (currDate.DayOfWeek == DayOfWeek.Sunday) duc.SetColorRed();
+                else if (currDate.DayOfWeek == DayOfWeek.Saturday) duc.SetColorBlue();
+
+                // 현재 날짜에 해당하는 일정만 메모리에서 필터링
+                if (userEvents != null && userEvents.Rows.Count > 0)
                 {
-                    DataTable dt = GetScheduleDetail(title, clickDate);
-                    if (dt != null && dt.Rows.Count > 0)
-                    {
+                    // 현재 날짜(currDate)가 시작~종료 범위에 있는지 확인
+                    var todayEvents = userEvents.AsEnumerable().Where(r =>
+                        currDate.Date >= Convert.ToDateTime(r["start_date"]).Date &&
+                        currDate.Date <= Convert.ToDateTime(r["end_date"]).Date);
 
+                    foreach (var row in todayEvents)
+                    {
+                        string title = row["title"].ToString();
+                        string dbEventColor = row["color"].ToString();
+
+<<<<<<< Updated upstream
                         //if (popup.ShowDialog() == DialogResult.OK)
                         //{
                         //    DisplayDays(currentYear, currentMonth); // 새로고침
@@ -564,30 +581,105 @@ namespace Maver_켈린더
                         Color color = popup.selectedColor;                        
                         DateTime start = popup.StartDate;
                         DateTime end = popup.EndDate;
+=======
+                        Color eventColor = StringToColor(dbEventColor);
+>>>>>>> Stashed changes
 
+                        DateTime start = Convert.ToDateTime(row["start_date"]);
+                        DateTime end = Convert.ToDateTime(row["end_date"]);
                         bool isSingleDay = (start.Date == end.Date);
 
-                        for (DateTime d = start; d <= end; d = d.AddDays(1))
-                        {
-                            foreach (Control c in flpMain.Controls)
-                            {
-                                DayUserControl control = c as DayUserControl;
-                                if (control != null && control._date.Date == d.Date)
-                                {
-                                    string labelText = (d.Date == start.Date) ? title : "";
-                                    control.addTitleLabel(labelText, color, isSingleDay);
-                                }
-                            }
-                        }
+                        // 시작일에만 제목 표시, 나머지는 빈 줄(막대) 표시
+                        string labelText = (currDate.Date == start.Date) ? title : "";
+                        duc.addTitleLabel(labelText, eventColor, isSingleDay);
+                    }
+                }
 
+                // 클릭 이벤트 연결
+                duc.Click += (s, e) => {
+                    detailPopup popup = new detailPopup { selectedDate = currDate };
+                    popup.setMode("Add");
+                    if (popup.ShowDialog() == DialogResult.OK) DisplayDays(currentYear, currentMonth);
+                };
+
+                // 승환 - 상세정보 이벤트
+                duc.TitleLabelClicked += (title) => {
+                    DataTable dt = GetScheduleDetail(title, currDate);
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        DataRow r = dt.Rows[0];
+                        pnlDt.setData(r["title"].ToString(), r["memo"].ToString(),
+                            Convert.ToDateTime(r["start_date"]).ToString("yyyy-MM-dd"),
+                            Convert.ToDateTime(r["end_date"]).ToString("yyyy-MM-dd"),
+                            r["start_time"].ToString(), r["end_time"].ToString());
+                        ShowDetailPanel(duc, title);
                     }
                 };
 
                 flpMain.Controls.Add(duc);
             }
 
+            flpMain.ResumeLayout();
+            lbThisDate.Text = $"{year}.{month}";
+
 
         }
+
+        //==========================================================================[
+
+        private DataTable select_events(string id)
+        {
+            string sql = "select * from events where user_id = @id ";
+            Dictionary<string, object> param = new Dictionary<string, object>();
+            param.Add("id", UserSession.UserId);
+
+            return DbManager.select_Query(sql, param);
+        }
+
+        public Color StringToColor(string colorString)
+        {
+            if (string.IsNullOrEmpty(colorString)) return Color.Coral;
+
+            try
+            {
+                // 1. "Color [SkyBlue]" 같은 이름 형식 처리
+                if (!colorString.Contains("=") && colorString.Contains("["))
+                {
+                    string colorName = colorString.Split('[', ']')[1];
+                    return Color.FromName(colorName);
+                }
+
+                // 2. "Color [A=255, R=255, G=128, B=128]" 같은 ARGB 형식 처리
+                // 정규식으로 숫자만 추출합니다.
+                MatchCollection matches = Regex.Matches(colorString, @"\d+");
+                if (matches.Count >= 3)
+                {
+                    int a = matches.Count == 4 ? int.Parse(matches[0].Value) : 255;
+                    int r = matches[matches.Count - 3].Value.GetHashCode(); // 안전하게 뒤에서부터 참조
+                    int g = matches[matches.Count - 2].Value.GetHashCode();
+                    int b = matches[matches.Count - 1].Value.GetHashCode();
+
+                    // 실제 숫자로 변환
+                    int finalA = matches.Count == 4 ? int.Parse(matches[0].Value) : 255;
+                    int finalR = int.Parse(matches[matches.Count - 3].Value);
+                    int finalG = int.Parse(matches[matches.Count - 2].Value);
+                    int finalB = int.Parse(matches[matches.Count - 1].Value);
+
+                    return Color.FromArgb(finalA, finalR, finalG, finalB);
+                }
+            }
+            catch
+            {
+                // 파싱 실패 시 기본색
+                return Color.Coral;
+            }
+
+            return Color.Coral;
+        }
+
+        //==========================================================================[
+
+
         // 승환 aaa
         private DataTable GetScheduleDetail(string title, DateTime date)
         {
@@ -660,21 +752,28 @@ namespace Maver_켈린더
         // 현재 UserSession에 저장된 아이디가 있는지 확인하여 화면의 글자들을 바꿔주는 역할을 한다.
         private void UpdateLoginLogout()
         {
+
             if (string.IsNullOrEmpty(UserSession.UserId))
             {
                 // 1. 로그아웃 상태
                 lbID.Text = "로그인 해주세요";
                 btnLogInOut.Text = "로그인";
-
-                RefreshTreeView(); //영현
             }
             else
             {
                 lbID.Text = $"{UserSession.UserId}님 환영합니다!";
                 btnLogInOut.Text = "로그아웃";
-
-                RefreshTreeView(); //영현
             }
+            RefreshTreeView(); //영현
+
+            // 은비 - 로그인 로그아웃시에 캘린더 다시 불러오기
+            int todayYear = DateTime.Today.Year;
+            int todayMonth = DateTime.Today.Month;
+
+            currentYear = todayYear;
+            currentMonth = todayMonth;
+
+            DisplayDays(currentYear, currentMonth);
         }
 
         //시작하고 로그인 버튼 누를 시 발생하는 이벤트, 로그인 화면 이동

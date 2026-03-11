@@ -1,10 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Compile Update="Common\buttonRound.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Main.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="View\Calendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\DayUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="View\detailPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\FindId.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Findpw.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\JoinMembership.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\logIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\makeShare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\pnlDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="View\pnlRepeat.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="View\SearchEventForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="View\TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Updatepw.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

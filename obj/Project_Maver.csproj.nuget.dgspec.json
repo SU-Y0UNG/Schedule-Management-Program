@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Project_Maver\\Project_Maver\\Project_Maver\\Project_Maver.csproj": {}
+    "C:\\workspace\\maver\\Project_Maver.csproj": {}
   },
   "projects": {
-    "C:\\Project_Maver\\Project_Maver\\Project_Maver\\Project_Maver.csproj": {
+    "C:\\workspace\\maver\\Project_Maver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Project_Maver\\Project_Maver\\Project_Maver\\Project_Maver.csproj",
+        "projectUniqueName": "C:\\workspace\\maver\\Project_Maver.csproj",
         "projectName": "Project_Maver",
-        "projectPath": "C:\\Project_Maver\\Project_Maver\\Project_Maver\\Project_Maver.csproj",
-        "packagesPath": "C:\\Users\\moble\\.nuget\\packages\\",
-        "outputPath": "C:\\Project_Maver\\Project_Maver\\Project_Maver\\obj\\",
+        "projectPath": "C:\\workspace\\maver\\Project_Maver.csproj",
+        "packagesPath": "C:\\Users\\tqkf1\\.nuget\\packages\\",
+        "outputPath": "C:\\workspace\\maver\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\moble\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tqkf1\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -46,9 +46,21 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.73.0, )"
+            },
+            "Google.Apis.Calendar.v3": {
+              "target": "Package",
+              "version": "[1.73.0.4063, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[9.6.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
             }
           },
           "imports": [

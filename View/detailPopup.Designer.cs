@@ -75,8 +75,6 @@ namespace maverCalender
             txtTitle = new TextBox();
             cbWorldTime = new ComboBox();
             txtMemo = new TextBox();
-            lbUserid = new Label();
-            txtUserid = new TextBox();
             btnDelete = new Button();
             btnUpdate = new Button();
             cbRepeat = new ComboBox();
@@ -564,7 +562,6 @@ namespace maverCalender
             txtTitle.Name = "txtTitle";
             txtTitle.Size = new Size(332, 23);
             txtTitle.TabIndex = 14;
-            txtTitle.Text = " ";
             // 
             // cbWorldTime
             // 
@@ -583,28 +580,6 @@ namespace maverCalender
             txtMemo.Name = "txtMemo";
             txtMemo.Size = new Size(352, 23);
             txtMemo.TabIndex = 16;
-            txtMemo.Text = " ";
-            // 
-            // lbUserid
-            // 
-            lbUserid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lbUserid.AutoSize = true;
-            lbUserid.Font = new Font("맑은 고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            lbUserid.ForeColor = Color.Gray;
-            lbUserid.Location = new Point(54, 41);
-            lbUserid.Name = "lbUserid";
-            lbUserid.Size = new Size(21, 17);
-            lbUserid.TabIndex = 4;
-            lbUserid.Text = "ID";
-            // 
-            // txtUserid
-            // 
-            txtUserid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtUserid.Location = new Point(77, 38);
-            txtUserid.Name = "txtUserid";
-            txtUserid.Size = new Size(83, 23);
-            txtUserid.TabIndex = 17;
-            txtUserid.Text = " ";
             // 
             // btnDelete
             // 
@@ -730,7 +705,6 @@ namespace maverCalender
             Controls.Add(cbRepeat);
             Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
-            Controls.Add(txtUserid);
             Controls.Add(txtMemo);
             Controls.Add(cbWorldTime);
             Controls.Add(pbWeather);
@@ -760,7 +734,6 @@ namespace maverCalender
             Controls.Add(lbWorldTime);
             Controls.Add(lbReply);
             Controls.Add(lbToday);
-            Controls.Add(lbUserid);
             Controls.Add(lbPlan);
             Controls.Add(lbLine9);
             Controls.Add(lbLine8);
@@ -844,8 +817,6 @@ namespace maverCalender
         private RoundButton btnSelectColor;
         private ComboBox cbWorldTime;
         private TextBox txtMemo;
-        private Label lbUserid;
-        private TextBox txtUserid;
         private Button btnDelete;
         private Button btnUpdate;
         private RoundButton btnColor;
