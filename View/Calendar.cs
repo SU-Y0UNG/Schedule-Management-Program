@@ -559,13 +559,9 @@ namespace Maver_켈린더
                         //popup.ShowDialog();
                         popup.setMode("Add");
                         
-
-                        string title = popup.getDetailPopupTitle();
-                        duc.addTitleLabel(title, popup.selectedColor, true);
+                        string title = popup.getDetailPopupTitle();                       
                         //수영 추가
-                        Color color = popup.selectedColor;
-                        //duc.addTitleLabel(title,color);
-
+                        Color color = popup.selectedColor;                        
                         DateTime start = popup.StartDate;
                         DateTime end = popup.EndDate;
 

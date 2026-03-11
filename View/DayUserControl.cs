@@ -142,8 +142,7 @@ namespace Project_Maver.View
 
                 }
             };
-            this.Controls.Add(label);
-            label.BringToFront();
+            
         }
 
         // 은비 추가
