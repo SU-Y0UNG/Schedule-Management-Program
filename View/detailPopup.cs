@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Maver_켈린더.Calendar;
 
 
 
@@ -28,6 +29,18 @@ namespace maverCalender
 {
     public partial class detailPopup : Form
     {
+        // 승환(3월10)
+        public string title { get; set; }
+        public string memo { get; set; }
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
+        public DateTime startTime { get; set; }
+        public DateTime endTime { get; set; }
+        public ScheduleData SelectedSchedule { get; set; }
+
+        public event Action<detailPopup> ScheduleSaved;
+
+
         public DateTime StartDate
         {
             get { return dtpStartDate.Value; }
@@ -42,8 +55,8 @@ namespace maverCalender
         public DateTime selectedDate;
 
         // 승환(3월10)
-        public string title {  get; set; }
-        public event Action<detailPopup> ScheduleSaved;
+        //public string title {  get; set; }
+        //public event Action<detailPopup> ScheduleSaved;
 
         pnlRepeat repeat = new pnlRepeat();
         public detailPopup()
@@ -69,7 +82,7 @@ namespace maverCalender
             worldTime();
 
             // 승환
-            LoadDetailData("user1");
+            //LoadDetailData("user1");
             textContent();
             dtpStartTime.Format = DateTimePickerFormat.Custom;
             dtpStartTime.CustomFormat = "HH:mm";
@@ -169,12 +182,12 @@ namespace maverCalender
         private void btnSave_Click(object sender, EventArgs e)
         {
             var dates = GenerateRepeatDates(
-    repeat.RepeatType,
-    repeat.RepeatInterval,
-    repeat.RepeatDays,
-    repeat.RepeatStartDate,
-    repeat.RepeatEndDate
-);//반복 일정을 달력에 효과적으로 표시하기 위해 DB에 저장된 "반복 규칙"을 실제 "날짜 목록"으로 펼치기 위해서
+                repeat.RepeatType,
+                repeat.RepeatInterval,
+                repeat.RepeatDays,
+                repeat.RepeatStartDate,
+                repeat.RepeatEndDate
+            );//반복 일정을 달력에 효과적으로 표시하기 위해 DB에 저장된 "반복 규칙"을 실제 "날짜 목록"으로 펼치기 위해서
             string connectionString = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
             string query = @"INSERT INTO events (user_id, title, start_date, end_date, start_time, end_time, memo, repeat_type, repeat_interval, repeat_start_date, repeat_end_date, repeat_days, color) 
                      VALUES (@UserId, @Title, @StartDate, @EndDate, @StartTime, @EndTime, @Memo, @rType, @rInterval,@rStart, @rEnd, @rDays, @color)";
@@ -227,12 +240,15 @@ namespace maverCalender
                 MessageBox.Show(ex.ToString());
             }
             // 승환(3.10)
-            //detailPopup popup = new detailPopup()
-            //{
-            //    title = txtTitle.Text
-            //};
-            //ScheduleSaved?.Invoke(popup);
-            //this.Hide();
+            SelectedSchedule = new ScheduleData
+            {
+                title = txtTitle.Text,
+                memo = txtMemo.Text,
+                startDate = dtpStartDate.Value,
+                endDate = dtpEndDate.Value,
+                startTime = dtpStartTime.Value,
+                endTime = dtpEndTime.Value
+            };
             this.DialogResult = DialogResult.OK;
             this.Close();
 
@@ -285,11 +301,51 @@ namespace maverCalender
             }
         }
         // 승환
+        public void setMode(string mode)
+        {
+            if (mode == "Add")
+            {
+                btnSave.Visible = true;    // 저장 버튼 보임
+                btnUpdate.Visible = false; // 수정 버튼 숨김
+                btnDelete.Visible = false; // 삭제 버튼 숨김
+                //lblHeader.Text = "새 일정 등록"; // 제목도 바꿔주면 좋음
+            }
+            else if (mode == "View")
+            {
+                btnSave.Visible = false;   // 저장 버튼 숨김
+                btnUpdate.Visible = true;  // 수정 버튼 보임
+                btnDelete.Visible = true;  // 삭제 버튼 보임
+                //lblHeader.Text = "일정 상세보기";
+            }
+        }
+        // 승환
         private string selectedScheduleId;
         public detailPopup(string id)
         {
             InitializeComponent();
             this.selectedScheduleId = id;
+        }
+        // 승환
+        public void setDetailData(string title, string memo, string sDate, string eDate, string sTime, string eTime)
+        {
+            // 1. 텍스트 정보 채우기
+            this.txtTitle.Text = title;
+            this.txtMemo.Text = memo;
+
+            // 2. 날짜 정보 채우기 (문자열을 DateTime으로 변환)
+            if (DateTime.TryParse(sDate, out DateTime startDate))
+                this.dtpStartDate.Value = startDate;
+
+            if (DateTime.TryParse(eDate, out DateTime endDate))
+                this.dtpEndDate.Value = endDate;
+
+            // 3. 시간 정보 채우기
+            // dtpStartTime은 DateTime 타입이므로 오늘 날짜에 시간만 더하는 방식으로 세팅합니다.
+            if (DateTime.TryParse(sTime, out DateTime startTime))
+                this.dtpStartTime.Value = DateTime.Today.Add(startTime.TimeOfDay);
+
+            if (DateTime.TryParse(eTime, out DateTime endTime))
+                this.dtpEndTime.Value = DateTime.Today.Add(endTime.TimeOfDay);
         }
 
         // 승환,수영(반복부분 추가)
@@ -604,7 +660,15 @@ namespace maverCalender
             btnMinus.Visible = true;
             cbAlert.Visible = true;
         }
+        public class ScheduleData
+        {
+            public string title { get; set; }
+            public string memo { get; set; }
+            public DateTime startDate { get; set; }
+            public DateTime endDate { get; set; }
+            public DateTime startTime { get; set; }
+            public DateTime endTime { get; set; }
+        }
 
-      
     }
 }

@@ -23,8 +23,12 @@ namespace Maver_켈린더
             currentYear = DateTime.Now.Year;
             currentMonth = DateTime.Now.Month;
 
+            // 승환
             lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
-            pnlDt.Visible = false;
+            if (pnlDt != null)
+            {
+                pnlDt.Visible = false;
+            }
         }
 
 
@@ -434,6 +438,7 @@ namespace Maver_켈린더
                 }
             }
         }
+        
         //---------------------------------------------------
         // 2026-03-09 은비 - 캘린더 화면구현
         // 2026-03-10 은비 - 공휴일 추가
@@ -465,10 +470,43 @@ namespace Maver_켈린더
             for (int i = 1; i <= LastDayOfCurMonth; i++)
             {
                 DateTime dateForSlot = new DateTime(year, month, i);
-
+                DateTime clickDate = dateForSlot;
                 DayUserControl duc = new DayUserControl(i, dateForSlot);
                 duc.Tag = dateForSlot;
 
+                // 승환
+                duc.TitleLabelClicked += (string title) =>
+                {
+                    DataTable dt = GetScheduleDetail(title, clickDate);
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+
+                        //if (popup.ShowDialog() == DialogResult.OK)
+                        //{
+                        //    DisplayDays(currentYear, currentMonth); // 새로고침
+                        //}
+
+                        DataRow row = dt.Rows[0];
+
+                        // pnlDetail.cs에 정의된 setData 호출
+                        pnlDt.setData(
+                            row["title"].ToString(),
+                            row["memo"].ToString(),
+                            Convert.ToDateTime(row["start_date"]).ToString("yyyy-MM-dd"),
+                            Convert.ToDateTime(row["end_date"]).ToString("yyyy-MM-dd"),
+                            row["start_time"].ToString(),
+                            row["end_time"].ToString()
+                        );
+
+                        // 위치 잡고 보여주기
+                        ShowDetailPanel(duc, title);
+                    }
+                    else
+                    {
+                        // 데이터가 없는 경우를 대비한 디버깅용 알림
+                        MessageBox.Show("해당 일정의 상세 정보를 찾을 수 없습니다.");
+                    }
+                };
 
                 // 공휴일 이름까지 함께 처리
                 if (holiday.ContainsKey(dateForSlot))
@@ -516,6 +554,12 @@ namespace Maver_켈린더
 
                     if (popup.ShowDialog() == DialogResult.OK)
                     {
+                        //승환 추가
+                        //detailPopup popup = new detailPopup();
+                        //popup.ShowDialog();
+                        popup.setMode("Add");
+                        
+
                         string title = popup.getDetailPopupTitle();
                         //수영 추가
                         Color color = popup.selectedColor;
@@ -546,6 +590,32 @@ namespace Maver_켈린더
             }
 
 
+        }
+        // 승환
+        private DataTable GetScheduleDetail(string title, DateTime date)
+        {
+            // MySQL의 DATE() 함수를 사용하여 컬럼의 시간 부분을 제외하고 '날짜'만 비교합니다.
+            string sql = @"SELECT title, memo, start_date, end_date, start_time, end_time 
+                   FROM events 
+                   WHERE title = @title 
+                   AND DATE(start_date) = @date
+                    ORDER By event_id DESC LIMIT 1";
+
+            var param = new Dictionary<string, object>
+            {
+                { "@title", title },
+                { "@date", date.ToString("yyyy-MM-dd") } // '2026-03-10' 형식으로 전달
+            };
+
+            DataTable dt = DbManager.select_Query(sql, param);
+
+            // 디버깅용: 데이터가 왜 안 나오는지 확실히 알기 위해 메시지를 구체화합니다.
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                MessageBox.Show($"DB 조회 실패!\n찾는 제목: {title}\n찾는 날짜: {date.ToString("yyyy-MM-dd")}\n\nDB에 이 제목과 날짜가 정확히 있는지 확인하세요.");
+            }
+
+            return dt;
         }
 
         // 전 달로 가는버튼 <
@@ -700,7 +770,16 @@ namespace Maver_켈린더
             searchForm.ShowDialog();
 
         }
+        public class ScheduleData
+        {
+            public string title { get; set; }
+            public string memo { get; set; }
+            public DateTime startDate { get; set; }
+            public DateTime endDate { get; set; }
+            public DateTime startTime { get; set; }
+            public DateTime endTime { get; set; }
+            public DateTime ScheduleDate { get; set; }
+        }
 
-       
     }
 }

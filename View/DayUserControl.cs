@@ -47,8 +47,8 @@ namespace Project_Maver.View
                 this.BorderStyle = BorderStyle.FixedSingle;
             }
         }
-     
-        
+        public event Action<string> TitleLabelClicked;
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -129,6 +129,9 @@ namespace Project_Maver.View
 
             label.Click += (s, e) =>
             {
+                // 승환 ////////////////////////////
+                TitleLabelClicked?.Invoke(text);
+                ////////////////////////////////////
                 Maver_켈린더.Calendar calendar = this.FindForm() as Maver_켈린더.Calendar;
 
                 if (calendar != null)
@@ -138,6 +141,8 @@ namespace Project_Maver.View
 
                 }
             };
+            this.Controls.Add(label);
+            label.BringToFront();
         }
 
         // 은비 추가

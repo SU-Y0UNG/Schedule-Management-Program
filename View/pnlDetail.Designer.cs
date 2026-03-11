@@ -28,20 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
+            btnSang = new Button();
             btnClose = new Button();
+            lbDetailTitle = new Label();
+            lbDetailStartDate = new Label();
+            lbDetailEndDate = new Label();
+            lbDetailStartTime = new Label();
+            lbDetailEndTime = new Label();
+            lbDetailMemo = new Label();
             SuspendLayout();
             // 
-            // button1
+            // btnSang
             // 
-            button1.BackColor = Color.White;
-            button1.FlatStyle = FlatStyle.Popup;
-            button1.Location = new Point(108, 106);
-            button1.Name = "button1";
-            button1.Size = new Size(95, 23);
-            button1.TabIndex = 1;
-            button1.Text = "상세정보확인";
-            button1.UseVisualStyleBackColor = false;
+            btnSang.BackColor = Color.White;
+            btnSang.FlatStyle = FlatStyle.Popup;
+            btnSang.Location = new Point(108, 106);
+            btnSang.Name = "btnSang";
+            btnSang.Size = new Size(95, 23);
+            btnSang.TabIndex = 1;
+            btnSang.Text = "상세정보확인";
+            btnSang.UseVisualStyleBackColor = false;
+            btnSang.Click += btnSang_Click;
             // 
             // btnClose
             // 
@@ -57,21 +64,84 @@
             btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += btnClose_Click;
             // 
+            // lbDetailTitle
+            // 
+            lbDetailTitle.AutoSize = true;
+            lbDetailTitle.BorderStyle = BorderStyle.FixedSingle;
+            lbDetailTitle.Location = new Point(14, 10);
+            lbDetailTitle.Name = "lbDetailTitle";
+            lbDetailTitle.Size = new Size(2, 17);
+            lbDetailTitle.TabIndex = 3;
+            // 
+            // lbDetailStartDate
+            // 
+            lbDetailStartDate.AutoSize = true;
+            lbDetailStartDate.Location = new Point(14, 38);
+            lbDetailStartDate.Name = "lbDetailStartDate";
+            lbDetailStartDate.Size = new Size(0, 15);
+            lbDetailStartDate.TabIndex = 3;
+            // 
+            // lbDetailEndDate
+            // 
+            lbDetailEndDate.AutoSize = true;
+            lbDetailEndDate.Location = new Point(14, 64);
+            lbDetailEndDate.Name = "lbDetailEndDate";
+            lbDetailEndDate.Size = new Size(0, 15);
+            lbDetailEndDate.TabIndex = 3;
+            // 
+            // lbDetailStartTime
+            // 
+            lbDetailStartTime.AutoSize = true;
+            lbDetailStartTime.Location = new Point(133, 38);
+            lbDetailStartTime.Name = "lbDetailStartTime";
+            lbDetailStartTime.Size = new Size(0, 15);
+            lbDetailStartTime.TabIndex = 3;
+            // 
+            // lbDetailEndTime
+            // 
+            lbDetailEndTime.AutoSize = true;
+            lbDetailEndTime.Location = new Point(133, 64);
+            lbDetailEndTime.Name = "lbDetailEndTime";
+            lbDetailEndTime.Size = new Size(0, 15);
+            lbDetailEndTime.TabIndex = 3;
+            // 
+            // lbDetailMemo
+            // 
+            lbDetailMemo.AutoSize = true;
+            lbDetailMemo.Location = new Point(225, 38);
+            lbDetailMemo.Name = "lbDetailMemo";
+            lbDetailMemo.Size = new Size(0, 15);
+            lbDetailMemo.TabIndex = 3;
+            // 
             // pnlDetail
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(lbDetailMemo);
+            Controls.Add(lbDetailEndTime);
+            Controls.Add(lbDetailStartTime);
+            Controls.Add(lbDetailEndDate);
+            Controls.Add(lbDetailStartDate);
+            Controls.Add(lbDetailTitle);
             Controls.Add(btnClose);
-            Controls.Add(button1);
+            Controls.Add(btnSang);
             Name = "pnlDetail";
             Size = new Size(298, 140);
+            Load += pnlDetail_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-        private Button button1;
+        private Button btnSang;
         private Button btnClose;
+        private Label lbDetailTitle;
+        private Label lbDetailStartDate;
+        private Label lbDetailEndDate;
+        private Label lbDetailStartTime;
+        private Label lbDetailEndTime;
+        private Label lbDetailMemo;
     }
 }
