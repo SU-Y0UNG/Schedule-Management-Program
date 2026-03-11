@@ -267,36 +267,41 @@ namespace maverCalender
         // 승환
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            // 사용자에게 정말 삭제할지 확인 (실수 방지)
-            DialogResult confirm = MessageBox.Show("이 일정을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (confirm == DialogResult.Yes)
+            if (MessageBox.Show("이 일정을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string connectionString = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
-                string query = "DELETE FROM events WHERE user_Id = @UserId AND title = @Title";
-                conn = new MySqlConnection(connectionString);
                 try
                 {
+                    // 2. DB 연결 (MySQL/MariaDB 기준)
+                    conn = new MySqlConnection("Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;");
+
                     conn.Open();
-                    cmd = new MySqlCommand(query, conn);
-                    // 삭제조건은 user_id와 title을 쓰면 그 행이 삭제
-                    cmd.Parameters.AddWithValue("@UserId", UserSession.UserId);
-                    cmd.Parameters.AddWithValue("@Title", txtTitle.Text);
 
-                    int result = cmd.ExecuteNonQuery();
+                    // 3. event_id를 조건으로 삭제 쿼리 작성
+                    // image_df9ae7.png의 public string event_id를 사용합니다.
+                    string sql = "DELETE FROM events WHERE event_id = @eventId";
 
-                    if (result > 0)
+                    cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@eventId", this.event_id);
+
+                    int rows = cmd.ExecuteNonQuery();
+
+                    if (rows > 0)
                     {
-                        MessageBox.Show("일정이 삭제되었습니다.");
-                        this.Close(); // 팝업 닫기
+                        MessageBox.Show("삭제되었습니다.");
+                        // 4. 삭제 성공 시 팝업을 닫고 부모 창에 OK를 보냄 (새로고침 용도)
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
                     }
                     else
                     {
-                        MessageBox.Show("삭제할 일정을 찾을 수 없습니다.");
+                        MessageBox.Show("삭제할 데이터를 찾지 못했습니다. (ID: " + this.event_id + ")");
                     }
+
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    // image_e07c66.png에서 보셨던 Fatal error 등을 여기서 잡습니다.
+                    MessageBox.Show("삭제 실패: " + ex.Message);
                 }
             }
         }
