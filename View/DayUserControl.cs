@@ -60,7 +60,10 @@ namespace Project_Maver.View
                 e.Graphics.DrawLine(pen, this.Width - 1, 0, this.Width - 1, this.Height);
 
                 // 2. 아래쪽 가로선 그리기
-                e.Graphics.DrawLine(pen, 0, this.Height - 1, this.Width, this.Height - 1);
+                if (_date != DateTime.MinValue)
+                {
+                    e.Graphics.DrawLine(pen, 0, this.Height - 1, this.Width, this.Height - 1);
+                }
 
                 // 2. [추가] 맨 왼쪽 칸들만 왼쪽 선을 그립니다.
                 // 일요일이거나, X 좌표가 0인 위치에 배치된다면 왼쪽 선을 추가합니다.
@@ -97,7 +100,7 @@ namespace Project_Maver.View
             //label.MaximumSize = new Size(this.Width, 100); // 칸 너비를 넘지 않게 설정
             label.Font = new Font("맑은 고딕", 9, FontStyle.Regular);
             label.BackColor = color; // 구분하기 쉽게 색상 지정
-            label.Margin = new Padding(0, 1, 0, 0);
+            label.Margin = new Padding(0, 3, 0, 0);
 
             //this.flpEvent.Controls.Add(label);
             //label.BringToFront();

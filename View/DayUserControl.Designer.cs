@@ -56,7 +56,7 @@
             flpEvent.Location = new Point(1, 29);
             flpEvent.Margin = new Padding(0);
             flpEvent.Name = "flpEvent";
-            flpEvent.Size = new Size(208, 105);
+            flpEvent.Size = new Size(213, 105);
             flpEvent.TabIndex = 2;
             flpEvent.WrapContents = false;
             // 
@@ -70,7 +70,7 @@
             Controls.Add(lbHolidayName);
             Controls.Add(lbDay);
             Name = "DayUserControl";
-            Size = new Size(210, 135);
+            Size = new Size(215, 135);
             ResumeLayout(false);
             PerformLayout();
         }

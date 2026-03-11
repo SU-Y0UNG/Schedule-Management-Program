@@ -469,7 +469,11 @@ namespace Maver_켈린더
             // 1. 달력 시작 전 빈칸 추가
             for (int i = 0; i < startDayOfWeek; i++)
             {
-                flpMain.Controls.Add(new DayUserControl());
+                UserControl day = new DayUserControl();
+                day.Margin = new Padding(0);
+                day.Padding = new Padding(3);
+                flpMain.Controls.Add(day);
+                day.BorderStyle = BorderStyle.None;
             }
 
             // 2. 실제 날짜 칸 생성
