@@ -440,7 +440,7 @@ namespace Maver_켈린더
                 }
             }
         }
-        
+
         //---------------------------------------------------
         // 2026-03-09 은비 - 캘린더 화면구현
         // 2026-03-10 은비 - 공휴일 추가
@@ -448,7 +448,7 @@ namespace Maver_켈린더
 
         private void DisplayDays(int year, int month)
         {
-            
+
             flpMain.SuspendLayout();
             flpMain.Controls.Clear();
 
@@ -514,14 +514,16 @@ namespace Maver_켈린더
                 }
 
                 // 클릭 이벤트 연결
-                duc.Click += (s, e) => {
+                duc.Click += (s, e) =>
+                {
                     detailPopup popup = new detailPopup { selectedDate = currDate };
                     popup.setMode("Add");
                     if (popup.ShowDialog() == DialogResult.OK) DisplayDays(currentYear, currentMonth);
                 };
 
                 // 승환 - 상세정보 이벤트
-                duc.TitleLabelClicked += (title) => {
+                duc.TitleLabelClicked += (title) =>
+                {
                     DataTable dt = GetScheduleDetail(title, currDate);
                     if (dt != null && dt.Rows.Count > 0)
                     {
@@ -679,7 +681,7 @@ namespace Maver_켈린더
             }
             else
             {
-                lbID.Text = $"{UserSession.UserId}님 환영합니다!";
+                lbID.Text = $"{UserSession.UserName}님 환영합니다!";
                 btnLogInOut.Text = "로그아웃";
             }
             RefreshTreeView(); //영현
@@ -795,5 +797,17 @@ namespace Maver_켈린더
             public DateTime ScheduleDate { get; set; }
         }
 
+        // 서현 - 비밀번호 변경화면으로 이동
+        private void btnUpdatepw_Click(object sender, EventArgs e)
+        {
+            if(string.IsNullOrEmpty(UserSession.UserId))
+            {
+                MessageBox.Show("로그인이 필요합니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Updatepw upw = new Updatepw(UserSession.UserId);
+            upw.ShowDialog();
+        }
     }
 }

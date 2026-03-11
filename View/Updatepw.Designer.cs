@@ -57,6 +57,7 @@
             txtNewPw.Name = "txtNewPw";
             txtNewPw.Size = new Size(324, 23);
             txtNewPw.TabIndex = 20;
+            txtNewPw.KeyDown += txtNewPw_KeyDown;
             // 
             // label3
             // 
@@ -102,6 +103,7 @@
             txtCheckNewPw.Name = "txtCheckNewPw";
             txtCheckNewPw.Size = new Size(324, 23);
             txtCheckNewPw.TabIndex = 20;
+            txtCheckNewPw.KeyDown += txtCheckNewPw_KeyDown;
             // 
             // Updatepw
             // 

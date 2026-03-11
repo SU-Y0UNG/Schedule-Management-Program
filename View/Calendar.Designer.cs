@@ -41,6 +41,9 @@
             pnlCategori = new Panel();
             CalenderPlus = new PictureBox();
             treeView1 = new TreeView();
+            cmsCalendar = new ContextMenuStrip(components);
+            tsmDelete = new ToolStripMenuItem();
+            tsmExit = new ToolStripMenuItem();
             tableLayoutPanel1 = new TableLayoutPanel();
             label2 = new Label();
             label3 = new Label();
@@ -59,17 +62,15 @@
             btnAfterDate = new Button();
             lbThisDate = new Label();
             flpMain = new FlowLayoutPanel();
-            cmsCalendar = new ContextMenuStrip(components);
-            tsmDelete = new ToolStripMenuItem();
-            tsmExit = new ToolStripMenuItem();
+            btnUpdatepw = new Button();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             pnlCategori.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CalenderPlus).BeginInit();
+            cmsCalendar.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            cmsCalendar.SuspendLayout();
             SuspendLayout();
             // 
             // imageList1
@@ -153,14 +154,14 @@
             treeNode1.Name = "ndPrivate1";
             treeNode1.Text = "개인 캘린더";
             treeNode2.Name = "ndPrivate";
-            treeNode2.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            treeNode2.NodeFont = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             treeNode2.Text = "개인";
             treeNode3.Name = "ndPublic";
-            treeNode3.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            treeNode3.NodeFont = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             treeNode3.Text = "공용";
             treeNode4.BackColor = Color.White;
             treeNode4.Name = "ndMain";
-            treeNode4.NodeFont = new Font("함초롬돋움", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            treeNode4.NodeFont = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             treeNode4.Text = "캘린더";
             treeView1.Nodes.AddRange(new TreeNode[] { treeNode4 });
             treeView1.Size = new Size(300, 862);
@@ -169,6 +170,27 @@
             treeView1.BeforeSelect += cdMain_BeforeSelect;
             treeView1.AfterSelect += treeView1_AfterSelect;
             treeView1.NodeMouseClick += treeView1_NodeMouseClick;
+            // 
+            // cmsCalendar
+            // 
+            cmsCalendar.Items.AddRange(new ToolStripItem[] { tsmDelete, tsmExit });
+            cmsCalendar.Name = "contextMenuStrip1";
+            cmsCalendar.Size = new Size(99, 48);
+            cmsCalendar.Opening += cmsCalendar_Opening;
+            // 
+            // tsmDelete
+            // 
+            tsmDelete.Name = "tsmDelete";
+            tsmDelete.Size = new Size(98, 22);
+            tsmDelete.Text = "제거";
+            tsmDelete.Click += tsmDelete_Click;
+            // 
+            // tsmExit
+            // 
+            tsmExit.Name = "tsmExit";
+            tsmExit.Size = new Size(98, 22);
+            tsmExit.Text = "탈퇴";
+            tsmExit.Click += tsmExit_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -199,7 +221,7 @@
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Fill;
-            label2.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = Color.IndianRed;
             label2.Location = new Point(3, 0);
             label2.Name = "label2";
@@ -212,7 +234,7 @@
             // 
             label3.AutoSize = true;
             label3.Dock = DockStyle.Fill;
-            label3.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
             label3.ForeColor = Color.FromArgb(64, 64, 64);
             label3.Location = new Point(217, 0);
             label3.Name = "label3";
@@ -225,7 +247,7 @@
             // 
             label4.AutoSize = true;
             label4.Dock = DockStyle.Fill;
-            label4.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
             label4.ForeColor = Color.FromArgb(64, 64, 64);
             label4.Location = new Point(431, 0);
             label4.Name = "label4";
@@ -238,7 +260,7 @@
             // 
             label5.AutoSize = true;
             label5.Dock = DockStyle.Fill;
-            label5.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
             label5.ForeColor = Color.FromArgb(64, 64, 64);
             label5.Location = new Point(645, 0);
             label5.Name = "label5";
@@ -251,7 +273,7 @@
             // 
             label6.AutoSize = true;
             label6.Dock = DockStyle.Fill;
-            label6.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
             label6.ForeColor = Color.FromArgb(64, 64, 64);
             label6.Location = new Point(859, 0);
             label6.Name = "label6";
@@ -264,7 +286,7 @@
             // 
             label7.AutoSize = true;
             label7.Dock = DockStyle.Fill;
-            label7.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label7.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
             label7.ForeColor = Color.FromArgb(64, 64, 64);
             label7.Location = new Point(1073, 0);
             label7.Name = "label7";
@@ -277,7 +299,7 @@
             // 
             label8.AutoSize = true;
             label8.Dock = DockStyle.Fill;
-            label8.Font = new Font("함초롬돋움", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label8.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
             label8.ForeColor = Color.RoyalBlue;
             label8.Location = new Point(1287, 0);
             label8.Name = "label8";
@@ -289,6 +311,7 @@
             // pnlHead
             // 
             pnlHead.Anchor = AnchorStyles.Top;
+            pnlHead.Controls.Add(btnUpdatepw);
             pnlHead.Controls.Add(btnSearch);
             pnlHead.Controls.Add(txtSearch);
             pnlHead.Controls.Add(pictureBox1);
@@ -316,12 +339,12 @@
             // 
             txtSearch.BackColor = SystemColors.ButtonHighlight;
             txtSearch.Cursor = Cursors.Hand;
-            txtSearch.Font = new Font("함초롬돋움", 8.999999F, FontStyle.Regular, GraphicsUnit.Point);
+            txtSearch.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Regular, GraphicsUnit.Point);
             txtSearch.Location = new Point(8, 109);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "검색할 일정명을 입력하세요";
             txtSearch.ShortcutsEnabled = false;
-            txtSearch.Size = new Size(227, 23);
+            txtSearch.Size = new Size(227, 21);
             txtSearch.TabIndex = 3;
             txtSearch.MouseClick += txtSearch_MouseClick;
             // 
@@ -362,7 +385,7 @@
             btnBeforeDate.BackColor = Color.Transparent;
             btnBeforeDate.FlatAppearance.BorderSize = 0;
             btnBeforeDate.FlatStyle = FlatStyle.Flat;
-            btnBeforeDate.Font = new Font("함초롬돋움", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnBeforeDate.Font = new Font("Microsoft Sans Serif", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
             btnBeforeDate.Location = new Point(540, 47);
             btnBeforeDate.Name = "btnBeforeDate";
             btnBeforeDate.Size = new Size(37, 59);
@@ -377,7 +400,7 @@
             btnAfterDate.BackColor = Color.Transparent;
             btnAfterDate.FlatAppearance.BorderSize = 0;
             btnAfterDate.FlatStyle = FlatStyle.Flat;
-            btnAfterDate.Font = new Font("함초롬돋움", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnAfterDate.Font = new Font("Microsoft Sans Serif", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
             btnAfterDate.Location = new Point(881, 47);
             btnAfterDate.Name = "btnAfterDate";
             btnAfterDate.Size = new Size(37, 59);
@@ -390,10 +413,10 @@
             // 
             lbThisDate.Anchor = AnchorStyles.Top;
             lbThisDate.AutoSize = true;
-            lbThisDate.Font = new Font("함초롬돋움", 35.9999962F, FontStyle.Bold, GraphicsUnit.Point);
+            lbThisDate.Font = new Font("Microsoft Sans Serif", 35.9999962F, FontStyle.Bold, GraphicsUnit.Point);
             lbThisDate.Location = new Point(643, 47);
             lbThisDate.Name = "lbThisDate";
-            lbThisDate.Size = new Size(170, 62);
+            lbThisDate.Size = new Size(178, 55);
             lbThisDate.TabIndex = 0;
             lbThisDate.Text = "2026.3";
             // 
@@ -407,26 +430,19 @@
             flpMain.Size = new Size(1278, 717);
             flpMain.TabIndex = 0;
             // 
-            // cmsCalendar
+            // btnUpdatepw
             // 
-            cmsCalendar.Items.AddRange(new ToolStripItem[] { tsmDelete, tsmExit });
-            cmsCalendar.Name = "contextMenuStrip1";
-            cmsCalendar.Size = new Size(99, 48);
-            cmsCalendar.Opening += cmsCalendar_Opening;
-            // 
-            // tsmDelete
-            // 
-            tsmDelete.Name = "tsmDelete";
-            tsmDelete.Size = new Size(98, 22);
-            tsmDelete.Text = "제거";
-            tsmDelete.Click += tsmDelete_Click;
-            // 
-            // tsmExit
-            // 
-            tsmExit.Name = "tsmExit";
-            tsmExit.Size = new Size(98, 22);
-            tsmExit.Text = "탈퇴";
-            tsmExit.Click += tsmExit_Click;
+            btnUpdatepw.BackColor = Color.FloralWhite;
+            btnUpdatepw.FlatAppearance.BorderSize = 0;
+            btnUpdatepw.FlatStyle = FlatStyle.Flat;
+            btnUpdatepw.Font = new Font("맑은 고딕", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            btnUpdatepw.Location = new Point(1395, 38);
+            btnUpdatepw.Name = "btnUpdatepw";
+            btnUpdatepw.Size = new Size(90, 25);
+            btnUpdatepw.TabIndex = 12;
+            btnUpdatepw.Text = "비밀번호 변경";
+            btnUpdatepw.UseVisualStyleBackColor = false;
+            btnUpdatepw.Click += btnUpdatepw_Click;
             // 
             // Calendar
             // 
@@ -443,12 +459,12 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             pnlCategori.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)CalenderPlus).EndInit();
+            cmsCalendar.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             pnlHead.ResumeLayout(false);
             pnlHead.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            cmsCalendar.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -482,5 +498,6 @@
         private ContextMenuStrip cmsCalendar;
         private ToolStripMenuItem tsmDelete;
         private ToolStripMenuItem tsmExit;
+        private Button btnUpdatepw;
     }
 }

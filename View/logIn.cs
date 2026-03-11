@@ -33,7 +33,12 @@ namespace maverCalender
                 // 로그인에 성공하면 현재 사용자의 아이디를 UserSession을 통해 전역 변수로 저장된다.
                 // 이러면 다른 화면에서도 누가 로그인 했는지 알 수 있다.
                 UserSession.UserId = id;
-                MessageBox.Show($"{UserSession.UserId}님, 환영합니다!");
+
+                if(string.IsNullOrEmpty(UserSession.UserName))
+                {
+                    UserSession.UserName = id;
+                }
+                MessageBox.Show($"{UserSession.UserName}님, 환영합니다!");
 
 
                 // 현재 로그인 창을 닫으면서 성공신호를 보낸다.

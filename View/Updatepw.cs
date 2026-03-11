@@ -34,13 +34,32 @@ namespace Project_Maver.View
             // JoinMember클래스 안에 있는 UpdatePassword 로직을 실행한다.
             if (JoinMember.UpdatePassword(targetId, txtNewPw.Text))
             {
-                MessageBox.Show("비밀번호가 성공적으로 변경되었습니다. 로그인 화면으로 돌아갑니다.");
+                MessageBox.Show("비밀번호가 성공적으로 변경되었습니다.");
                 this.Close();
             }
 
             else
             {
                 MessageBox.Show("변경에 실패했습니다. 다시 시도해주세요");
+            }
+        }
+        // 서현 - 엔터를 누르면 다음 커서로 이동
+        private void txtNewPw_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtCheckNewPw.Focus(); // 비밀번호 확인 커서로 이동
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        // 다 입력하고 엔터를 누르면 비밀번호 수정 버튼 이벤트 실행
+        private void txtCheckNewPw_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnFindPW_Click(sender, e);
+                e.SuppressKeyPress = true;
             }
         }
     }
