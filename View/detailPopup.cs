@@ -85,13 +85,13 @@ namespace maverCalender
             // 승환
             //LoadDetailData("user1");
             //textContent();
-            //dtpStartTime.Format = DateTimePickerFormat.Custom;
-            //dtpStartTime.CustomFormat = "HH:mm";
-            //dtpStartDate.Value = selectedDate;
+            dtpStartTime.Format = DateTimePickerFormat.Custom;
+            dtpStartTime.CustomFormat = "HH:mm";
+            dtpStartDate.Value = selectedDate;
 
-            //dtpEndTime.Format = DateTimePickerFormat.Custom;
-            //dtpEndTime.CustomFormat = "HH:mm";
-            //dtpEndDate.Value = selectedDate;
+            dtpEndTime.Format = DateTimePickerFormat.Custom;
+            dtpEndTime.CustomFormat = "HH:mm";
+            dtpEndDate.Value = selectedDate;
         }
 
         public void textContent()
@@ -181,6 +181,21 @@ namespace maverCalender
         private MySqlCommand cmd;
         private void btnSave_Click(object sender, EventArgs e)
         {
+            DateTime start = dtpStartDate.Value.Date;
+            DateTime end = dtpEndDate.Value.Date;
+
+            if (start > end)
+            {
+                MessageBox.Show("시작 날짜가 끝 날짜보다 늦습니다.\n날짜를 수정하세요.",
+                                "날짜 오류",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return;
+            }
+
+
+
+
             var dates = GenerateRepeatDates(
                 repeat.RepeatType,
                 repeat.RepeatInterval,

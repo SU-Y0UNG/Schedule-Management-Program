@@ -531,9 +531,20 @@ namespace Maver_켈린더
                 if (userEvents != null && userEvents.Rows.Count > 0)
                 {
                     // 현재 날짜(currDate)가 시작~종료 범위에 있는지 확인
+                    //var todayEvents = userEvents.AsEnumerable().Where(r =>
+                    //    currDate.Date >= Convert.ToDateTime(r["start_date"]).Date &&
+                    //    currDate.Date <= Convert.ToDateTime(r["end_date"]).Date);
+
                     var todayEvents = userEvents.AsEnumerable().Where(r =>
-                        currDate.Date >= Convert.ToDateTime(r["start_date"]).Date &&
-                        currDate.Date <= Convert.ToDateTime(r["end_date"]).Date);
+                    {
+                        if (r["repeat_type"] != DBNull.Value && r["repeat_type"].ToString() != "")
+                        {
+                            return IsRepeatEvent(r, currDate);
+                        }
+
+                        return currDate.Date >= Convert.ToDateTime(r["start_date"]).Date &&
+                               currDate.Date <= Convert.ToDateTime(r["end_date"]).Date;
+                    });
 
                     foreach (var row in todayEvents)
                     {
@@ -545,9 +556,17 @@ namespace Maver_켈린더
                         DateTime start = Convert.ToDateTime(row["start_date"]);
                         DateTime end = Convert.ToDateTime(row["end_date"]);
                         bool isSingleDay = (start.Date == end.Date);
-
+                        bool isStartDay = currDate.Date == start.Date;
                         // 시작일에만 제목 표시, 나머지는 빈 줄(막대) 표시
-                        string labelText = (currDate.Date == start.Date) ? title : "";
+                        //string labelText = (currDate.Date == start.Date) ? title : "";
+                        if (!isStartDay && IsRepeatEvent(row, currDate))
+                        {
+                            isStartDay = true;
+                        }
+
+                        string labelText = isStartDay ? title : "";
+
+
                         duc.addTitleLabel(labelText, eventColor, isSingleDay);
                         //duc.Tag = row
                     }
@@ -588,7 +607,52 @@ namespace Maver_켈린더
         }
 
         //==========================================================================[
+        //수영 추가
+        private bool IsRepeatEvent(DataRow row, DateTime currDate)
+        {
+            if (row["repeat_type"] == DBNull.Value || row["repeat_type"].ToString() == "")
+                return false;
 
+            string type = row["repeat_type"].ToString();
+
+            DateTime start = Convert.ToDateTime(row["repeat_start_date"]);
+
+            DateTime end = DateTime.MaxValue;
+            if (row["repeat_end_date"] != DBNull.Value)
+                end = Convert.ToDateTime(row["repeat_end_date"]);
+
+            if (currDate < start || currDate > end)
+                return false;
+
+            // 매주 반복
+            if (type == "매주")
+            {
+                int repeatDays = Convert.ToInt32(row["repeat_days"]);
+                int dayBit = 1 << (int)currDate.DayOfWeek;
+
+
+                if ((repeatDays & dayBit) == 0)
+                    return false;
+
+                return currDate >= start;
+            }
+
+            // 매월 반복
+            if (type == "매월")
+            {
+                return currDate.Day == start.Day;
+            }
+
+            // 매년 반복
+            if (type == "매년")
+            {
+                return currDate.Month == start.Month &&
+                      currDate.Day == start.Day &&
+                       currDate >= start;
+            }
+
+            return false;
+        }
         private DataTable select_events(string id)
         {
             string sql = "select * from events where user_id = @id ";
