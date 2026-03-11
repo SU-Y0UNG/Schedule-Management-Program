@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace Project_Maver.View
 {
     public partial class pnlDetail : UserControl
     {
+        public event Action OnUpdateParent;
+        private int currentEventId;
         public pnlDetail()
         {
             InitializeComponent();
@@ -28,8 +31,9 @@ namespace Project_Maver.View
 
         }
         // 승환(3/10)
-        public void setData(string title, string memo, string startDate, string endDate, string startTime, string endTime)
+        public void setData(int event_id, string title, string memo, string startDate, string endDate, string startTime, string endTime)
         {
+            this.currentEventId = event_id;
             MessageBox.Show($"데이터 확인: {title} / {memo}");
             lbDetailTitle.Text = title;
             lbDetailMemo.Text = memo;
@@ -51,6 +55,7 @@ namespace Project_Maver.View
 
             // 2. '보기' 모드로 설정 (수정/삭제 버튼 활성화)
             popup.setMode("View");
+            popup.event_id = this.currentEventId;
 
             // 3. 현재 요약창에 떠 있는 텍스트들을 상세 팝업으로 전달 (매우 중요!)
             // 아래 레이블 이름(lbDetailTitle 등)은 실제 사용하시는 이름으로 확인하세요.
@@ -63,8 +68,12 @@ namespace Project_Maver.View
                 lbDetailEndTime.Text    // 종료시간
             );
 
-            // 4. 팝업 띄우기
-            popup.ShowDialog();
+            if (popup.ShowDialog() == DialogResult.OK)
+            {
+                // 2. 부모에게 "새로고침해!"라고 신호 보냄
+                OnUpdateParent?.Invoke();
+                this.Hide(); // 수정 후 요약창은 닫아주는 게 깔끔합니다.
+            }
         }
     }
 }

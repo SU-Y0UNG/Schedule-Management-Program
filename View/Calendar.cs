@@ -31,6 +31,9 @@ namespace Maver_켈린더
             {
                 pnlDt.Visible = false;
             }
+            pnlDt.OnUpdateParent += () => {
+                DisplayDays(currentYear, currentMonth); // 캘린더 새로고침
+            };
         }
 
 
@@ -510,31 +513,34 @@ namespace Maver_켈린더
                         // 시작일에만 제목 표시, 나머지는 빈 줄(막대) 표시
                         string labelText = (currDate.Date == start.Date) ? title : "";
                         duc.addTitleLabel(labelText, eventColor, isSingleDay);
+                        //duc.Tag = row
                     }
                 }
 
-                // 클릭 이벤트 연결
-                duc.Click += (s, e) =>
+                if (UserSession.UserId != null)
                 {
-                    detailPopup popup = new detailPopup { selectedDate = currDate };
-                    popup.setMode("Add");
-                    if (popup.ShowDialog() == DialogResult.OK) DisplayDays(currentYear, currentMonth);
-                };
+                    // 클릭 이벤트 연결
+                    duc.Click += (s, e) => {
+                        detailPopup popup = new detailPopup { selectedDate = currDate };
+                        popup.setMode("Add");
+                        if (popup.ShowDialog() == DialogResult.OK) DisplayDays(currentYear, currentMonth);
+                    };
 
-                // 승환 - 상세정보 이벤트
-                duc.TitleLabelClicked += (title) =>
-                {
-                    DataTable dt = GetScheduleDetail(title, currDate);
-                    if (dt != null && dt.Rows.Count > 0)
-                    {
-                        DataRow r = dt.Rows[0];
-                        pnlDt.setData(r["title"].ToString(), r["memo"].ToString(),
-                            Convert.ToDateTime(r["start_date"]).ToString("yyyy-MM-dd"),
-                            Convert.ToDateTime(r["end_date"]).ToString("yyyy-MM-dd"),
-                            r["start_time"].ToString(), r["end_time"].ToString());
-                        ShowDetailPanel(duc, title);
-                    }
-                };
+                    // 승환 - 상세정보 이벤트
+                    duc.TitleLabelClicked += (title) => {
+                        DataTable dt = GetScheduleDetail(title, currDate);
+                        if (dt != null && dt.Rows.Count > 0)
+                        {
+                            DataRow r = dt.Rows[0];
+                            pnlDt.setData(Convert.ToInt32(r["event_id"]), r["title"].ToString(), r["memo"].ToString(),
+                                Convert.ToDateTime(r["start_date"]).ToString("yyyy-MM-dd"),
+                                Convert.ToDateTime(r["end_date"]).ToString("yyyy-MM-dd"),
+                                r["start_time"].ToString(), r["end_time"].ToString());
+                            ShowDetailPanel(duc, title);
+                        }
+                    };
+                }
+
 
                 flpMain.Controls.Add(duc);
             }
@@ -604,7 +610,7 @@ namespace Maver_켈린더
         private DataTable GetScheduleDetail(string title, DateTime date)
         {
             // MySQL의 DATE() 함수를 사용하여 컬럼의 시간 부분을 제외하고 '날짜'만 비교합니다.
-            string sql = @"SELECT title, memo, start_date, end_date, start_time, end_time 
+            string sql = @"SELECT event_id, title, memo, start_date, end_date, start_time, end_time 
                    FROM events 
                    WHERE title = @title 
                    AND DATE(start_date) = @date
@@ -778,6 +784,18 @@ namespace Maver_켈린더
                 }
             }
         }
+        // 서현 - 비밀번호 변경화면으로 이동
+        private void btnUpdatepw_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(UserSession.UserId))
+            {
+                MessageBox.Show("로그인이 필요합니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Updatepw upw = new Updatepw(UserSession.UserId);
+            upw.ShowDialog();
+        }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -797,17 +815,5 @@ namespace Maver_켈린더
             public DateTime ScheduleDate { get; set; }
         }
 
-        // 서현 - 비밀번호 변경화면으로 이동
-        private void btnUpdatepw_Click(object sender, EventArgs e)
-        {
-            if(string.IsNullOrEmpty(UserSession.UserId))
-            {
-                MessageBox.Show("로그인이 필요합니다", "알림", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            Updatepw upw = new Updatepw(UserSession.UserId);
-            upw.ShowDialog();
-        }
     }
 }

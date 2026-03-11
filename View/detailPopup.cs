@@ -30,6 +30,7 @@ namespace maverCalender
     public partial class detailPopup : Form
     {
         // 승환(3월10)
+        public int event_id { get; set; }
         public string title { get; set; }
         public string memo { get; set; }
         public DateTime startDate { get; set; }
@@ -84,13 +85,13 @@ namespace maverCalender
             // 승환
             //LoadDetailData("user1");
             //textContent();
-            dtpStartTime.Format = DateTimePickerFormat.Custom;
-            dtpStartTime.CustomFormat = "HH:mm";
-            dtpStartDate.Value = selectedDate;
+            //dtpStartTime.Format = DateTimePickerFormat.Custom;
+            //dtpStartTime.CustomFormat = "HH:mm";
+            //dtpStartDate.Value = selectedDate;
 
-            dtpEndTime.Format = DateTimePickerFormat.Custom;
-            dtpEndTime.CustomFormat = "HH:mm";
-            dtpEndDate.Value = selectedDate;
+            //dtpEndTime.Format = DateTimePickerFormat.Custom;
+            //dtpEndTime.CustomFormat = "HH:mm";
+            //dtpEndDate.Value = selectedDate;
         }
 
         public void textContent()
@@ -427,68 +428,135 @@ namespace maverCalender
         // 승환
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            string connStr = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
-            conn = new MySqlConnection(connStr);
-            try
+            //            string connStr = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
+            //            conn = new MySqlConnection(connStr);
+            //            try
+            //            {
+            //                conn.Open();
+
+            //                // 2. UPDATE 쿼리 (화면의 입력값을 DB에 반영)
+            //                // 주의: WHERE 절에는 'user_id'가 아닌 고유 키인 'event_id'를 쓰는 것이 안전합니다.
+            //                string sql = @"UPDATE events 
+            //                           SET title = @title, 
+            //                               start_date = @start_date, 
+            //                               end_date = @end_date, 
+            //                               start_time = @start_time, 
+            //                               end_time = @end_time,
+            //                               memo = @memo,
+            //                               repeat_type = @rtype, 
+            //                               repeat_interval = @rinter, 
+            //                               repeat_days = @rdays, 
+            //                               repeat_end_date = @rend,
+            //                               repeat_start_date=@rstart,
+            //                               color=@color
+            //                           WHERE user_id = @user_id and event_id = @event_id"; // 여기서는 일단 기존처럼 user_id를 기준으로 합니다.
+            ////************************************************************************** 이벤트 아이디 추가
+
+            //                MySqlCommand cmd = new MySqlCommand(sql, conn);
+            //                cmd.Parameters.Clear(); // 파라미터 중복 방지
+
+            //                // 3. 파라미터 매핑 (화면의 컨트롤 값을 DB로 전달)
+            //                cmd.Parameters.AddWithValue("@title", txtTitle.Text);
+            //                cmd.Parameters.AddWithValue("@start_date", dtpStartDate.Value.ToString("yyyy-MM-dd"));
+            //                cmd.Parameters.AddWithValue("@end_date", dtpEndDate.Value.ToString("yyyy-MM-dd"));
+            //                cmd.Parameters.AddWithValue("@start_time", dtpStartTime.Value.ToString("HH:mm:ss"));
+            //                cmd.Parameters.AddWithValue("@end_time", dtpEndTime.Value.ToString("HH:mm:ss"));
+            //                cmd.Parameters.AddWithValue("@user_id", UserSession.UserId); // 기준이 되는 ID
+            //                cmd.Parameters.AddWithValue("@memo", txtMemo.Text);
+            //                cmd.Parameters.AddWithValue("@rtype", repeat.RepeatType);
+            //                cmd.Parameters.AddWithValue("@rinter", repeat.RepeatInterval);
+            //                cmd.Parameters.AddWithValue("@rdays", repeat.RepeatDays);
+            //                cmd.Parameters.AddWithValue("@rstart", repeat.RepeatStartDate);
+            //                cmd.Parameters.AddWithValue("@rend", repeat.RepeatEndDate);
+            //                cmd.Parameters.AddWithValue("@color", btnColor.BackColor.Name);
+            //                cmd.Parameters.AddWithValue("@event_id", event_id);
+
+
+            //                // 4. 실행
+            //                int result = cmd.ExecuteNonQuery();
+
+            //                if (result > 0)
+            //                {
+            //                    MessageBox.Show("일정이 성공적으로 수정되었습니다!");
+            //                    this.DialogResult = DialogResult.OK;
+            //                    this.Close(); // 저장 후 팝업 닫기
+            //                }
+            //                else
+            //                {
+            //                    // 💡 아무 반응이 없었던 이유는 아마 이 조건문에서 0이 나왔기 때문일 것입니다.
+            //                    MessageBox.Show("수정된 내용이 없습니다. 입력 데이터(ID, 제목)를 확인하세요.");
+            //                }
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show("저장 중 오류 발생: " + ex.Message);
+            //            }
+            // event_id가 비어있는지 먼저 체크 (사진 3의 '수정 내용 없음' 방지)
+            if (this.event_id <= 0)
             {
-                conn.Open();
-
-                // 2. UPDATE 쿼리 (화면의 입력값을 DB에 반영)
-                // 주의: WHERE 절에는 'user_id'가 아닌 고유 키인 'event_id'를 쓰는 것이 안전합니다.
-                string sql = @"UPDATE events 
-                           SET title = @title, 
-                               start_date = @start_date, 
-                               end_date = @end_date, 
-                               start_time = @start_time, 
-                               end_time = @end_time,
-                               memo = @memo,
-                               repeat_type = @rtype, 
-                               repeat_interval = @rinter, 
-                               repeat_days = @rdays, 
-                               repeat_end_date = @rend,
-                               repeat_start_date=@rstart,
-                               color=@color
-                           WHERE user_id = @user_id"; // 여기서는 일단 기존처럼 user_id를 기준으로 합니다.
-//************************************************************************** 이벤트 아이디 추가
-
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.Clear(); // 파라미터 중복 방지
-
-                // 3. 파라미터 매핑 (화면의 컨트롤 값을 DB로 전달)
-                cmd.Parameters.AddWithValue("@title", txtTitle.Text);
-                cmd.Parameters.AddWithValue("@start_date", dtpStartDate.Value.ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("@end_date", dtpEndDate.Value.ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("@start_time", dtpStartTime.Value.ToString("HH:mm:ss"));
-                cmd.Parameters.AddWithValue("@end_time", dtpEndTime.Value.ToString("HH:mm:ss"));
-                cmd.Parameters.AddWithValue("@user_id", UserSession.UserId); // 기준이 되는 ID
-                cmd.Parameters.AddWithValue("@memo", txtMemo.Text);
-                cmd.Parameters.AddWithValue("@rtype", repeat.RepeatType);
-                cmd.Parameters.AddWithValue("@rinter", repeat.RepeatInterval);
-                cmd.Parameters.AddWithValue("@rdays", repeat.RepeatDays);
-                cmd.Parameters.AddWithValue("@rstart", repeat.RepeatStartDate);
-                cmd.Parameters.AddWithValue("@rend", repeat.RepeatEndDate);
-                cmd.Parameters.AddWithValue("@color", btnColor.BackColor.Name);
-                //cmd.Parameters.AddWithValue("@event_id", event_id);
-
-
-                // 4. 실행
-                int result = cmd.ExecuteNonQuery();
-
-                if (result > 0)
-                {
-                    MessageBox.Show("일정이 성공적으로 수정되었습니다!");
-                    this.DialogResult = DialogResult.OK;
-                    this.Close(); // 저장 후 팝업 닫기
-                }
-                else
-                {
-                    // 💡 아무 반응이 없었던 이유는 아마 이 조건문에서 0이 나왔기 때문일 것입니다.
-                    MessageBox.Show("수정된 내용이 없습니다. 입력 데이터(ID, 제목)를 확인하세요.");
-                }
+                MessageBox.Show("오류: 일정을 식별할 수 있는 ID가 없습니다.");
+                return;
             }
-            catch (Exception ex)
+
+            string connStr = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
+            using (MySqlConnection conn = new MySqlConnection(connStr)) // using 사용 권장
             {
-                MessageBox.Show("저장 중 오류 발생: " + ex.Message);
+                try
+                {
+                    conn.Open();
+                    string sql = @"UPDATE events 
+                           SET title = @title, 
+                               start_date = @start_date, end_date = @end_date, 
+                               start_time = @start_time, end_time = @end_time,
+                               memo = @memo, repeat_type = @rtype, 
+                               repeat_interval = @rinter, repeat_days = @rdays, 
+                               repeat_end_date = @rend, repeat_start_date = @rstart,
+                               color = @color
+                           WHERE event_id = @eid"; // WHERE 조건 확인
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    // 파라미터 추가
+                    cmd.Parameters.AddWithValue("@title", txtTitle.Text);
+                    cmd.Parameters.AddWithValue("@start_date", dtpStartDate.Value.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@end_date", dtpEndDate.Value.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@start_time", dtpStartTime.Value.ToString("HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@end_time", dtpEndTime.Value.ToString("HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@memo", txtMemo.Text ?? "");
+                    cmd.Parameters.AddWithValue("@rtype", repeat.RepeatType ?? "none");
+                    cmd.Parameters.AddWithValue("@rinter", repeat.RepeatInterval);
+                    cmd.Parameters.AddWithValue("@rdays", repeat.RepeatDays);
+                    cmd.Parameters.AddWithValue("@color", selectedColor.ToString());
+                    cmd.Parameters.AddWithValue("@eid", this.event_id);
+
+                    // 반복 날짜 처리 (0001-01-01 방어)
+                    if (repeat.RepeatStartDate.Year <= 1753)
+                        cmd.Parameters.AddWithValue("@rstart", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@rstart", repeat.RepeatStartDate.ToString("yyyy-MM-dd"));
+
+                    if (repeat.RepeatEndDate.Year <= 1753)
+                        cmd.Parameters.AddWithValue("@rend", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@rend", repeat.RepeatEndDate.ToString("yyyy-MM-dd"));
+
+                    int result = cmd.ExecuteNonQuery();
+
+                    if (result > 0)
+                    {
+                        MessageBox.Show("일정이 성공적으로 수정되었습니다!");
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"수정 실패: ID {this.event_id}에 해당하는 데이터가 없습니다.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Fatal Error 상세내용:\n" + ex.Message);
+                }
             }
         }
 
