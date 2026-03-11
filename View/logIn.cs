@@ -95,5 +95,25 @@ namespace maverCalender
             // 창 띄우기
             fpw.ShowDialog();
         }
+
+        // 서현 - 3월 11일 아이디 입력 후 엔터 키를 눌러서 비밀번호 입력 칸으로 커서가 이동한다.
+        private void txtIdEmail2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtPassword2.Focus(); // 비밀번호 칸으로 커서 이동
+                e.SuppressKeyPress = true;
+            }
+        }
+        // 비밀번호를 다 입력하고 엔터 키를 누르면 캘린더 화면으로 로그인한 상태로 이동한다.
+        private void txtPassword2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnLogin_Click(sender, e); // 로그인 버튼 클릭 호출
+                e.SuppressKeyPress = true;
+            }
+
+        }
     }
 }

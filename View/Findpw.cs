@@ -145,5 +145,25 @@ namespace Project_Maver.View
             return result.ToString();
         }
 
+        //서현 - 3월 11일 아이디 입력 후 엔터를 누르면 이메일 입력 칸으로 커서 이동
+        private void txtId1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtEmail1.Focus();
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        // 이메일까지 입력을 다하고 엔터를 누르면 자동으로 이메일로 임시 비밀번호가 발송된다. 
+        private void txtEmail1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnFindPW_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+
     }
 }

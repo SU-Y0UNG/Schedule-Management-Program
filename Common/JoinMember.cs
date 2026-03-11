@@ -64,8 +64,8 @@ namespace Project_Maver.Common
 
             if (dt != null && dt.Rows.Count > 0)
             {
-                // COUNT(*) 결과값이 0보다 크면 일치하는 회원이 있는 것임
-                return Convert.ToInt32(dt.Rows[0][0]) > 0;
+                //서현  : 3월 10일 로그인 성공시 아이디가 아닌 이름으로 환영합니다 라고 나오게 수정함
+                UserSession.UserName = dt.Rows[0]["name"].ToString();
             }
 
             return false;
