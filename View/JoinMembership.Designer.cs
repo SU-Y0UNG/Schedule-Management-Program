@@ -108,6 +108,7 @@
             txtName.Name = "txtName";
             txtName.Size = new Size(280, 23);
             txtName.TabIndex = 3;
+            txtName.KeyDown += txtName_KeyDown;
             // 
             // txtPassWord
             // 
@@ -116,6 +117,7 @@
             txtPassWord.Size = new Size(280, 23);
             txtPassWord.TabIndex = 3;
             txtPassWord.UseSystemPasswordChar = true;
+            txtPassWord.KeyDown += txtPassWord_KeyDown;
             // 
             // txtPwCheck
             // 
@@ -125,6 +127,7 @@
             txtPwCheck.Size = new Size(280, 23);
             txtPwCheck.TabIndex = 3;
             txtPwCheck.UseSystemPasswordChar = true;
+            txtPwCheck.KeyDown += txtPwCheck_KeyDown;
             // 
             // chkInfo
             // 
@@ -173,6 +176,7 @@
             txtId.Name = "txtId";
             txtId.Size = new Size(280, 23);
             txtId.TabIndex = 3;
+            txtId.KeyDown += txtId_KeyDown;
             // 
             // label8
             // 
@@ -225,6 +229,7 @@
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(280, 23);
             txtEmail.TabIndex = 3;
+            txtEmail.KeyDown += txtEmail_KeyDown;
             // 
             // label9
             // 
@@ -241,6 +246,7 @@
             txtPhone.Name = "txtPhone";
             txtPhone.Size = new Size(280, 23);
             txtPhone.TabIndex = 3;
+            txtPhone.KeyDown += txtPhone_KeyDown;
             // 
             // JoinMembership
             // 

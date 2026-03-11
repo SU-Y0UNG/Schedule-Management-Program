@@ -165,7 +165,7 @@ namespace Maver_켈린더
 
         }
 
-      
+
         // 사용자가 연도를 클릭해서 다른 연도로 바꾸는 순간 실행
         private void cbYear_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -179,6 +179,62 @@ namespace Maver_켈린더
             UpdateDays(); // 월이 바뀌면 (28, 30, 31일 중 하나로) 날짜 목록을 갱신합니다.
         }
 
-       
+        // *********서현 3월 11일 텍스트 박스에 정보를 입력하고 엔터를 누르면 밑의 입력 칸으로 커서가 바뀌는 코드 
+
+        private void txtId_KeyDown(object sender, KeyEventArgs e) // 아이디 입력을 다하고 다음 커서로 이동
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtName.Focus(); // 이메일 입력 칸으로 이동
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void txtName_KeyDown(object sender, KeyEventArgs e)// 이름 입력 다하고 다음 커서로 이동
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtEmail.Focus();
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void txtEmail_KeyDown(object sender, KeyEventArgs e) // 이메일 입력 다하고 다음 커서로 이동
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtPassWord.Focus();
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void txtPassWord_KeyDown(object sender, KeyEventArgs e) // 비밀번호 입력 다하고 다음 커서로 이동
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtPwCheck.Focus();
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void txtPwCheck_KeyDown(object sender, KeyEventArgs e) // 비밀번호 확인 입력 다하고 다음 커서로 이동
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtPhone.Focus();
+                e.SuppressKeyPress = true;
+            }
+        }
+        
+        // 생년월일과 개인정보 체크박스는 사용자가 직접 눌러도 무방함
+
+        private void txtPhone_KeyDown(object sender, KeyEventArgs e) // 생년월일과 폰 번호까지 입력 다하고 엔터를 누르면 자동으로 버튼 클릭 이벤트가 실행된다. 
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                btnJoin_Click(sender, e); // 가입하기 버튼 이벤트
+               e.SuppressKeyPress = true;
+            }
+        }
     }
 }
