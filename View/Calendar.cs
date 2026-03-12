@@ -70,8 +70,8 @@ namespace Maver_켈린더
             }
 
             // 은비 - 캘린더 그리기
-            lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
-            //DisplayDays(currentYear, currentMonth);
+            //lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
+            DisplayDays(currentYear, currentMonth);
 
             //수영 폰트 디wkdls
             string fontPath = Path.Combine(Application.StartupPath, "Fonts", "BMJUA_ttf.ttf");
@@ -952,8 +952,8 @@ namespace Maver_켈린더
                 currentMonth = 12;
                 currentYear--;
             }
-            lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
-            //DisplayDays(currentYear, currentMonth);
+            //lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
+            DisplayDays(currentYear, currentMonth);
         }
 
         // 다음 달로 가는버튼 >
@@ -965,8 +965,8 @@ namespace Maver_켈린더
                 currentMonth = 1;
                 currentYear++;
             }
-            lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
-            //DisplayDays(currentYear, currentMonth);
+            //lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
+            DisplayDays(currentYear, currentMonth);
         }
 
 
@@ -999,8 +999,8 @@ namespace Maver_켈린더
 
             currentYear = todayYear;
             currentMonth = todayMonth;
-            lbThisDate.Text = "🌼" + currentYear.ToString() + "." + currentMonth.ToString() + "🌼";
-            // DisplayDays(currentYear, currentMonth);
+           //lbThisDate.Text = "🌼" + currentYear.ToString() + "." + currentMonth.ToString() + "🌼";
+            DisplayDays(currentYear, currentMonth);
         }
 
 
@@ -1073,8 +1073,8 @@ namespace Maver_켈린더
             currentMonth = targetDate.Month;
 
             // 2. 화면 다시 그리기
-            lbThisDate.Text = "🌼" + currentYear.ToString() + "." + currentMonth.ToString() + "🌼";
-            //DisplayDays(currentYear, currentMonth);
+            //lbThisDate.Text = "🌼" + currentYear.ToString() + "." + currentMonth.ToString() + "🌼";
+            DisplayDays(currentYear, currentMonth);
 
             // 3. 생성된 날짜 칸(DayUserControl)들 중에서 해당 날짜 찾아서 포커스
             foreach (Control control in flpMain.Controls)
