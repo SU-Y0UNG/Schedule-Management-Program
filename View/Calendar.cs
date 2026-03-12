@@ -583,6 +583,11 @@ namespace Maver_켈린더
                 day.BorderStyle = BorderStyle.None;
             }
 
+            //수영 0312추가--------------------------------------------------------
+            Dictionary<string, int> multiDaySlots = new Dictionary<string, int>();
+            int nextSlot = 0;
+            //----------------------------------------------------------
+
             // 2. 실제 날짜 칸 생성
             for (int i = 1; i <= lastDay; i++)
             {
@@ -611,35 +616,65 @@ namespace Maver_켈린더
 
 
                     });
-
-
+                    //수영 0312추가---------------------------------------------------------------
+                    
                     foreach (var row in todayEvents)
                     {
-
                         string title = row["title"].ToString();
-
-                        string dbEventColor = row["color"].ToString();
-                        Color eventColor = StringToColor(dbEventColor);
-
+                        Color eventColor = StringToColor(row["color"].ToString());
                         DateTime start = Convert.ToDateTime(row["start_date"]).Date;
                         DateTime end = Convert.ToDateTime(row["end_date"]).Date;
-
                         string repeatType = row["repeat_type"]?.ToString();
                         bool hasRepeat = !string.IsNullOrEmpty(repeatType);
-
-                        // 1. 오늘이 실제 데이터상의 시작일(startDate)이거나
-                        // 2. 오늘이 반복 일정 규칙에 의해 나타나는 날이라면 제목을 표시한다.
-                        bool isStartDay = (currDate.Date == start.Date) || (hasRepeat && IsRepeatEvent(row, currDate)); ;
-
-                        string labelText = isStartDay ? title : "";
-
-                        // 반복 일정은 보통 하루 단위로 끊기게 표시 (isSingleDay = true)
-                        // 일반 일정은 시작/종료일이 같을 때만 true
                         bool isSingleDay = hasRepeat ? true : (start == end);
 
-                        duc.addTitleLabel(labelText, eventColor, isSingleDay);
-                        //duc.Tag = row
+                        if (!isSingleDay)
+                        {
+                            // 처음 등장하는 연속일정이면 슬롯 번호 부여
+                            if (!multiDaySlots.ContainsKey(title))
+                                multiDaySlots[title] = nextSlot++;
+
+                            int slot = multiDaySlots[title];
+
+                            // 이 칸에 slot번째 줄까지 placeholder 채우기
+                            while (duc.GetMultiSlotCount() < slot)
+                                duc.addPlaceholder();
+                        }
+
+                        bool isStartDay = (currDate.Date == start) || (hasRepeat && IsRepeatEvent(row, currDate));
+                        duc.addTitleLabel(isStartDay ? title : "", eventColor, isSingleDay);
                     }
+                    //-----------------------------------------------------------------
+
+
+
+                    //foreach (var row in todayEvents)
+                    //{
+
+                    //    string title = row["title"].ToString();
+
+                    //    string dbEventColor = row["color"].ToString();
+                    //    Color eventColor = StringToColor(dbEventColor);
+
+                    //    DateTime start = Convert.ToDateTime(row["start_date"]).Date;
+                    //    DateTime end = Convert.ToDateTime(row["end_date"]).Date;
+
+                    //    string repeatType = row["repeat_type"]?.ToString();
+                    //    bool hasRepeat = !string.IsNullOrEmpty(repeatType);
+
+                    //    // 1. 오늘이 실제 데이터상의 시작일(startDate)이거나
+                    //    // 2. 오늘이 반복 일정 규칙에 의해 나타나는 날이라면 제목을 표시한다.
+                    //    bool isStartDay = (currDate.Date == start.Date) || (hasRepeat && IsRepeatEvent(row, currDate)); ;
+
+                    //    string labelText = isStartDay ? title : "";
+
+                    //    // 반복 일정은 보통 하루 단위로 끊기게 표시 (isSingleDay = true)
+                    //    // 일반 일정은 시작/종료일이 같을 때만 true
+                    //    bool isSingleDay = hasRepeat ? true : (start == end);
+
+                    //    duc.addTitleLabel(labelText, eventColor, isSingleDay);
+                    //    //duc.Tag = row
+                    //}
                 }
 
                 if(UserSession.UserId != null)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,13 @@ namespace Project_Maver.View
 {
     public partial class DayUserControl : UserControl
     {
-        PrivateFontCollection fonts = new PrivateFontCollection();
+        
         public enum ScheduleType
         {
             Single, Start, Middle, End
         }
 
-        public ScheduleType scheduleType= ScheduleType.Single;
+        public ScheduleType scheduleType = ScheduleType.Single;
 
 
         // 이 칸의 날짜
@@ -41,21 +42,22 @@ namespace Project_Maver.View
             get { return flpEvent; }
         }
         // day = 요일, thisDate = 이 칸에 들어올 날짜
-        public DayUserControl(int day, DateTime thisDate) 
+        public DayUserControl(int day, DateTime thisDate)
         {
             InitializeComponent();
             flpEvent.Click += ForwardClick;
             lbDay.Click += ForwardClick;
+            lbDay.Font = new Font("Noto Sans KR", 10, FontStyle.Bold);
 
-            this.Margin = new Padding(0);
-            this.Padding = new Padding(3);
+            this.Margin = new Padding(0,1,0,1);
+            this.Padding = new Padding(8);
             _date = thisDate;
             lbDay.Text = day.ToString();
             this.BorderStyle = BorderStyle.None;
             if (_date.Date == DateTime.Today)
             {
-                this.BackColor = Color.LightSteelBlue;
-                this.BorderStyle = BorderStyle.FixedSingle;
+                this.BackColor = Color.Pink;
+                             
             }
         }
         public event Action<string> TitleLabelClicked;
@@ -64,95 +66,106 @@ namespace Project_Maver.View
         {
             base.OnPaint(e);
 
-            // 진한 검정색 펜 생성 (두께 1)
-            using (Pen pen = new Pen(Color.Black, 1))
+            int radius = 20;
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            //e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
+
+            Rectangle rect = new Rectangle(0, 0, this.Width - 1, this.Height - 1);
+
+            GraphicsPath roundPath = GetRoundRect(rect, radius);
+            this.Region = new Region(roundPath);
+
+            // 배경
+            using (SolidBrush brush = new SolidBrush(this.BackColor))
+                e.Graphics.FillPath(brush, roundPath);
+            using (SolidBrush brush = new SolidBrush(this.BackColor))
             {
-                // 1. 오른쪽 세로선 그리기
-                e.Graphics.DrawLine(pen, this.Width - 1, 0, this.Width - 1, this.Height);
-
-                // 2. 아래쪽 가로선 그리기
-                if (_date != DateTime.MinValue)
-                {
-                    e.Graphics.DrawLine(pen, 0, this.Height - 1, this.Width, this.Height - 1);
-                }
-
-                // 2. [추가] 맨 왼쪽 칸들만 왼쪽 선을 그립니다.
-                // 일요일이거나, X 좌표가 0인 위치에 배치된다면 왼쪽 선을 추가합니다.
-                if (this.Left == 0 || _date.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    e.Graphics.DrawLine(pen, 0, 0, 0, this.Height);
-                }
-
-                // 3. [추가] 맨 윗줄 칸들만 위쪽 선을 그립니다.
-                // 1일부터 7일까지(첫째 줄)라면 위쪽 선을 추가합니다.
-                // 또는 부모 컨테이너에서의 Top 좌표가 0인 경우로 체크해도 됩니다.
-                if (_date.Day <= 7) // 캘린더 배치 로직에 따라 숫자는 조정될 수 있어요!
-                {
-                    e.Graphics.DrawLine(pen, 0, 0, this.Width, 0);
-                }
+                e.Graphics.FillPath(brush, roundPath);
             }
+
         }
+
+
+        private static GraphicsPath GetRoundRect(Rectangle rect, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+
+            int d = radius * 2;
+
+            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
+            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
+            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
+
+            path.CloseFigure();
+
+            return path;
+        }
+
+        public int GetMultiSlotCount() =>
+        flpEvent.Controls.Cast<Control>()
+            .Count(c => c.Tag?.ToString().Contains("연속") == true ||
+                        c.Tag?.ToString() == "_placeholder");
+
+        public void addPlaceholder()
+        {
+            flpEvent.Controls.Add(new Label
+            {
+                Height = 23,
+                Width = flpEvent.Width,
+                Margin = new Padding(0, 0, 0, 0),
+                BackColor = Color.Transparent,
+                Tag = "_placeholder"
+            });
+        }
+
 
         // 승환(3/10) + 수영 (색상, 연속색상)
         public void setDetailPopupText(string text)
         {
             //lbText.Text = text;
         }
-
         public void addTitleLabel(string text, Color color, bool isSingleDay)
         {
-            
 
             Label label = new Label();
             label.Text = text;
             label.AutoSize = false;
-            label.Width = this.flpEvent.Width;
-            label.Height = 23; //라벨 크기(높이 조정)
-            //label.Dock = DockStyle.Right;
-            //label.MaximumSize = new Size(this.Width, 100); // 칸 너비를 넘지 않게 설정            
-            label.BackColor = color; // 구분하기 쉽게 색상 지정
-            label.Margin = new Padding(0, 5, 0, 0);
-            string fontPath = Path.Combine(Application.StartupPath, "Fonts", "NanumSquareRoundL.ttf.ttf");
-
-            if (File.Exists(fontPath))
-            {
-                fonts.AddFontFile(fontPath);
-
-                FontFamily nanumFamily = fonts.Families
-                    .First(f => f.Name.Contains("Nanum"));
-
-                Font nanum = new Font(nanumFamily, 13, FontStyle.Regular);
-
-                label.Font = nanum;
-            }
-
-            //this.flpEvent.Controls.Add(label);
-            //label.BringToFront();
-            flpEvent.Controls.Add(label); // 자동으로 아래로 쌓입니다.
-            label.BringToFront();
+            label.Width = this.flpEvent.Width+2;
+            label.Height = 23;
+            label.MaximumSize = new Size(flpEvent.Width, 100);
+            label.BackColor = color;
+            label.Margin = new Padding(0, 0, 0, 0);
+            label.Font = new Font("Noto Sans KR", 10, FontStyle.Bold);
+            label.TextAlign = ContentAlignment.MiddleLeft;
+            label.Padding = new Padding(6, 0, 0, 0);
 
             if (!isSingleDay)
             {
-                int multiDayCount = 0;
-                foreach (Control c in this.flpEvent.Controls)
-                {
-                    if (c.Tag != null && c.Tag.ToString().Contains("연속"))
-                        multiDayCount++;
-                }
-                label.Tag = text + "_연속";
-                label.BringToFront();
+                int slotIndex = this.flpEvent.Controls.Cast<Control>()
+                    .Count(c => c.Tag != null &&
+                    (c.Tag.ToString().Contains("연속") || c.Tag.ToString() == "_placeholder"));
+
+                // Start/Middle/End는 같은 title이 이미 있는지로 판단
+                bool alreadyExists = this.flpEvent.Controls.Cast<Control>()
+                    .Any(c => c.Tag != null && c.Tag.ToString().StartsWith(text + "_연속"));
+
+                if (!alreadyExists)
+                    label.Tag = text + "_연속Start";
+                else if (text == "")  // 중간 빈 칸
+                    label.Tag = text + "_연속Middle";
+                else
+                    label.Tag = text + "_연속End";
+
+                label.Width = this.flpEvent.Width;
                 this.flpEvent.Controls.Add(label);
-                // 여러 날짜 걸친 일정은 맨 위로 보내기 위해 가장 먼저 추가
-                this.flpEvent.Controls.SetChildIndex(label, multiDayCount);
             }
             else
             {
-                label.Tag = text;
-                label.BringToFront();
-                // 단일 일정은 기본적으로 맨 뒤에 추가
-                this.flpEvent.Controls.Add(label);
+                label.Tag = text + "_단일";
+                this.flpEvent.Controls.Add(label);           
             }
-
 
 
             label.Click += (s, e) =>
@@ -169,7 +182,7 @@ namespace Project_Maver.View
 
                 }
             };
-            label.Paint += BorderHelper.EventLabel_Paint;
+
 
         }
 
@@ -185,6 +198,8 @@ namespace Project_Maver.View
             {
                 lbHolidayName.Text = holidayName;
                 lbHolidayName.ForeColor = Color.Red; // 이름도 빨간색으로
+                lbHolidayName.Font = new Font("Noto Sans KR", 9, FontStyle.Bold);
+                lbHolidayName.ImageAlign = ContentAlignment.TopLeft;
             }
         }
 
@@ -207,5 +222,9 @@ namespace Project_Maver.View
             }
         }
 
+        private void DayUserControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

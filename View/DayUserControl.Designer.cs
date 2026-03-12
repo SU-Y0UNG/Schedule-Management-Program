@@ -45,7 +45,7 @@
             // lbHolidayName
             // 
             lbHolidayName.AutoSize = true;
-            lbHolidayName.Location = new Point(29, 4);
+            lbHolidayName.Location = new Point(29, 2);
             lbHolidayName.Name = "lbHolidayName";
             lbHolidayName.Size = new Size(0, 15);
             lbHolidayName.TabIndex = 1;
@@ -54,10 +54,10 @@
             // 
             flpEvent.AutoScroll = true;
             flpEvent.FlowDirection = FlowDirection.TopDown;
-            flpEvent.Location = new Point(1, 29);
+            flpEvent.Location = new Point(1, 28);
             flpEvent.Margin = new Padding(0);
             flpEvent.Name = "flpEvent";
-            flpEvent.Size = new Size(213, 105);
+            flpEvent.Size = new Size(215, 105);
             flpEvent.TabIndex = 2;
             flpEvent.WrapContents = false;
             // 
@@ -65,13 +65,14 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Control;
+            BackColor = Color.MistyRose;
             BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(flpEvent);
             Controls.Add(lbHolidayName);
             Controls.Add(lbDay);
             Name = "DayUserControl";
-            Size = new Size(215, 135);
+            Size = new Size(215, 131);
+            Load += DayUserControl_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -105,7 +105,7 @@
             btnGoToday.FlatStyle = FlatStyle.Flat;
             btnGoToday.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnGoToday.ForeColor = Color.Black;
-            btnGoToday.Location = new Point(831, 921);
+            btnGoToday.Location = new Point(909, 910);
             btnGoToday.Name = "btnGoToday";
             btnGoToday.Size = new Size(115, 44);
             btnGoToday.TabIndex = 13;
@@ -226,7 +226,7 @@
             tableLayoutPanel1.Controls.Add(label6, 4, 0);
             tableLayoutPanel1.Controls.Add(label7, 5, 0);
             tableLayoutPanel1.Controls.Add(label8, 6, 0);
-            tableLayoutPanel1.Location = new Point(29, 175);
+            tableLayoutPanel1.Location = new Point(29, 170);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
