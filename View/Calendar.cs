@@ -12,7 +12,7 @@ namespace Maver_켈린더
 {
     public partial class Calendar : Form
     {
- 
+
         PrivateFontCollection fonts = new PrivateFontCollection(); //폰트
 
         private int currentYear;        // 현재년도
@@ -36,7 +36,8 @@ namespace Maver_켈린더
             {
                 pnlDt.Visible = false;
             }
-            pnlDt.OnUpdateParent += () => {
+            pnlDt.OnUpdateParent += () =>
+            {
                 DisplayDays(currentYear, currentMonth); // 캘린더 새로고침
             };
         }
@@ -73,7 +74,7 @@ namespace Maver_켈린더
 
             //수영 폰트 디wkdls
             string fontPath = Path.Combine(Application.StartupPath, "Fonts", "BMJUA_ttf.ttf");
-            
+
             if (File.Exists(fontPath))
             {
                 fonts.AddFontFile(fontPath);
@@ -88,14 +89,14 @@ namespace Maver_켈린더
                 {
                     SetRoundRegion(lbl, 10);
                     lbl.Font = jua1;
-                    lbl.Padding = new Padding(10,5,10,5);
+                    lbl.Padding = new Padding(10, 5, 10, 5);
                     lbl.TextAlign = ContentAlignment.MiddleCenter;
                 }
                 btnLogInOut.Font = jua2;
                 SetRoundRegion(btnLogInOut, 10);
                 ApplyDotBorder(btnLogInOut);
-                btnLogInOut.TextAlign=ContentAlignment.MiddleCenter;
-                lbID.Font= jua2;
+                btnLogInOut.TextAlign = ContentAlignment.MiddleCenter;
+                lbID.Font = jua2;
             }
 
         }
@@ -135,7 +136,7 @@ namespace Maver_켈린더
             // 바깥 둥근 테두리
             using (Pen border = new Pen(Color.Silver, 2))
             {
-                GraphicsPath path = GetRoundRect(new Rectangle(1, 1, ctrl.Width - 3, ctrl.Height -3), 15);
+                GraphicsPath path = GetRoundRect(new Rectangle(1, 1, ctrl.Width - 3, ctrl.Height - 3), 15);
                 e.Graphics.DrawPath(border, path);
             }
 
@@ -617,15 +618,15 @@ namespace Maver_켈린더
                 lbID.Visible = false;
                 btnUpdatepw.Visible = false;
             }
-                // 1. 달력 시작 전 빈칸 추가
-                for (int i = 0; i < startDayOfWeek; i++)
-                {
-                    UserControl day = new DayUserControl();
-                    day.Margin = new Padding(0);
-                    day.Padding = new Padding(3);
-                    flpMain.Controls.Add(day);
-                    day.BorderStyle = BorderStyle.None;
-                }
+            // 1. 달력 시작 전 빈칸 추가
+            for (int i = 0; i < startDayOfWeek; i++)
+            {
+                UserControl day = new DayUserControl();
+                day.Margin = new Padding(0);
+                day.Padding = new Padding(3);
+                flpMain.Controls.Add(day);
+                day.BorderStyle = BorderStyle.None;
+            }
 
             // 2. 실제 날짜 칸 생성
             for (int i = 1; i <= lastDay; i++)
@@ -689,14 +690,16 @@ namespace Maver_켈린더
                 if (UserSession.UserId != null)
                 {
                     // 클릭 이벤트 연결
-                    duc.Click += (s, e) => {
+                    duc.Click += (s, e) =>
+                    {
                         detailPopup popup = new detailPopup { selectedDate = currDate };
                         popup.setMode("Add");
                         if (popup.ShowDialog() == DialogResult.OK) DisplayDays(currentYear, currentMonth);
                     };
 
                     // 승환 - 상세정보 이벤트
-                    duc.TitleLabelClicked += (title) => {
+                    duc.TitleLabelClicked += (title) =>
+                    {
                         DataTable dt = GetScheduleDetail(title, currDate);
                         if (dt != null && dt.Rows.Count > 0)
                         {
@@ -853,7 +856,7 @@ namespace Maver_켈린더
                     // 일반 일정인 경우: DB의 날짜와 클릭한 날짜가 같아야 함
                     if (string.IsNullOrEmpty(rType) || rType == "none")
                     {
-                        if (dbStartDate.Date == date.Date) 
+                        if (dbStartDate.Date == date.Date)
                             return CreateSingleRowTable(row);
                     }
                     // 반복 일정인 경우: IsRepeatEvent 로직을 통과하면 클릭한 날짜로 날짜를 바꿔서 반환
@@ -964,7 +967,7 @@ namespace Maver_켈린더
 
                 RefreshTreeView(); //영현
             }
-            
+
 
             // 은비 - 로그인 로그아웃시에 캘린더 다시 불러오기
             int todayYear = DateTime.Today.Year;
@@ -1030,11 +1033,12 @@ namespace Maver_켈린더
             pnlDt.BringToFront();
         }
 
-        private void txtSearch_MouseClick(object sender, MouseEventArgs e)
+        ////// 영현이가 검색버튼 햇서여
+        private void pbSearch_Click(object sender, EventArgs e)
         {
-
+            SearchEventForm searchForm = new SearchEventForm();
+            searchForm.ShowDialog();
         }
-
 
         // 일정 검색해서 찾은 날 포커싱
         public void focusSearchEvents(DateTime targetDate)
@@ -1076,13 +1080,6 @@ namespace Maver_켈린더
             upw.ShowDialog();
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            // 창 띄우기
-            SearchEventForm searchForm = new SearchEventForm(txtSearch.Text);
-            searchForm.ShowDialog();
-
-        }
 
         public class ScheduleData
         {
@@ -1095,5 +1092,6 @@ namespace Maver_켈린더
             public DateTime ScheduleDate { get; set; }
         }
 
+        
     }
 }

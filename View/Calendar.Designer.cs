@@ -36,6 +36,7 @@
             TreeNode treeNode4 = new TreeNode("캘린더", new TreeNode[] { treeNode2, treeNode3 });
             imageList1 = new ImageList(components);
             pnlMain = new Panel();
+            btnUpdatepw = new Button();
             btnGoToday = new Project_Maver.Common.RoundButton();
             pictureBox2 = new PictureBox();
             pnlCategori = new Panel();
@@ -53,9 +54,7 @@
             label7 = new Label();
             label8 = new Label();
             pnlHead = new Panel();
-            btnUpdatepw = new Button();
-            btnSearch = new Button();
-            txtSearch = new TextBox();
+            pbSearch = new PictureBox();
             pbProfile = new PictureBox();
             lbID = new Label();
             btnLogInOut = new Button();
@@ -70,6 +69,7 @@
             cmsCalendar.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             pnlHead.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbSearch).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbProfile).BeginInit();
             SuspendLayout();
             // 
@@ -96,6 +96,20 @@
             pnlMain.Size = new Size(1584, 1061);
             pnlMain.TabIndex = 0;
             // 
+            // btnUpdatepw
+            // 
+            btnUpdatepw.BackColor = Color.FloralWhite;
+            btnUpdatepw.FlatAppearance.BorderSize = 0;
+            btnUpdatepw.FlatStyle = FlatStyle.Flat;
+            btnUpdatepw.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnUpdatepw.Location = new Point(32, 893);
+            btnUpdatepw.Name = "btnUpdatepw";
+            btnUpdatepw.Size = new Size(127, 42);
+            btnUpdatepw.TabIndex = 12;
+            btnUpdatepw.Text = "비밀번호 변경";
+            btnUpdatepw.UseVisualStyleBackColor = false;
+            btnUpdatepw.Click += btnUpdatepw_Click;
+            // 
             // btnGoToday
             // 
             btnGoToday.BackColor = SystemColors.ActiveCaption;
@@ -114,9 +128,9 @@
             // 
             pictureBox2.BackColor = Color.White;
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(6, 21);
+            pictureBox2.Location = new Point(0, 12);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(27, 28);
+            pictureBox2.Size = new Size(40, 37);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 8;
             pictureBox2.TabStop = false;
@@ -317,8 +331,7 @@
             // pnlHead
             // 
             pnlHead.Anchor = AnchorStyles.Top;
-            pnlHead.Controls.Add(btnSearch);
-            pnlHead.Controls.Add(txtSearch);
+            pnlHead.Controls.Add(pbSearch);
             pnlHead.Controls.Add(pbProfile);
             pnlHead.Controls.Add(lbID);
             pnlHead.Controls.Add(btnLogInOut);
@@ -330,42 +343,16 @@
             pnlHead.Size = new Size(1488, 138);
             pnlHead.TabIndex = 2;
             // 
-            // btnUpdatepw
+            // pbSearch
             // 
-            btnUpdatepw.BackColor = Color.FloralWhite;
-            btnUpdatepw.FlatAppearance.BorderSize = 0;
-            btnUpdatepw.FlatStyle = FlatStyle.Flat;
-            btnUpdatepw.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnUpdatepw.Location = new Point(32, 893);
-            btnUpdatepw.Name = "btnUpdatepw";
-            btnUpdatepw.Size = new Size(127, 42);
-            btnUpdatepw.TabIndex = 12;
-            btnUpdatepw.Text = "비밀번호 변경";
-            btnUpdatepw.UseVisualStyleBackColor = false;
-            btnUpdatepw.Click += btnUpdatepw_Click;
-            // 
-            // btnSearch
-            // 
-            btnSearch.Location = new Point(241, 104);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(64, 29);
-            btnSearch.TabIndex = 10;
-            btnSearch.Text = "검색";
-            btnSearch.UseVisualStyleBackColor = true;
-            btnSearch.Click += btnSearch_Click;
-            // 
-            // txtSearch
-            // 
-            txtSearch.BackColor = SystemColors.ButtonHighlight;
-            txtSearch.Cursor = Cursors.Hand;
-            txtSearch.Font = new Font("Microsoft Sans Serif", 8.999999F, FontStyle.Regular, GraphicsUnit.Point);
-            txtSearch.Location = new Point(8, 109);
-            txtSearch.Name = "txtSearch";
-            txtSearch.PlaceholderText = "검색할 일정명을 입력하세요";
-            txtSearch.ShortcutsEnabled = false;
-            txtSearch.Size = new Size(227, 21);
-            txtSearch.TabIndex = 3;
-            txtSearch.MouseClick += txtSearch_MouseClick;
+            pbSearch.Image = (Image)resources.GetObject("pbSearch.Image");
+            pbSearch.Location = new Point(1367, 100);
+            pbSearch.Name = "pbSearch";
+            pbSearch.Size = new Size(118, 38);
+            pbSearch.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbSearch.TabIndex = 13;
+            pbSearch.TabStop = false;
+            pbSearch.Click += pbSearch_Click;
             // 
             // pbProfile
             // 
@@ -472,6 +459,7 @@
             tableLayoutPanel1.PerformLayout();
             pnlHead.ResumeLayout(false);
             pnlHead.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbSearch).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbProfile).EndInit();
             ResumeLayout(false);
         }
@@ -501,11 +489,10 @@
         private TreeView treeView1;
         private PictureBox CalenderPlus;
         private Project_Maver.Common.RoundButton btnGoToday;
-        private Button btnSearch;
-        private TextBox txtSearch;
         private ContextMenuStrip cmsCalendar;
         private ToolStripMenuItem tsmDelete;
         private ToolStripMenuItem tsmExit;
         private Button btnUpdatepw;
+        private PictureBox pbSearch;
     }
 }
