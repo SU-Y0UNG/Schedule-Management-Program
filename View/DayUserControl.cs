@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Project_Maver.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,15 @@ namespace Project_Maver.View
 {
     public partial class DayUserControl : UserControl
     {
+        PrivateFontCollection fonts = new PrivateFontCollection();
+        public enum ScheduleType
+        {
+            Single, Start, Middle, End
+        }
+
+        public ScheduleType scheduleType= ScheduleType.Single;
+
+
         // 이 칸의 날짜
         public DateTime _date;
 
@@ -90,17 +101,30 @@ namespace Project_Maver.View
 
         public void addTitleLabel(string text, Color color, bool isSingleDay)
         {
+            
 
             Label label = new Label();
             label.Text = text;
             label.AutoSize = false;
             label.Width = this.flpEvent.Width;
-            label.Height = 16; //라벨 크기(높이 조정)
+            label.Height = 23; //라벨 크기(높이 조정)
             //label.Dock = DockStyle.Right;
-            //label.MaximumSize = new Size(this.Width, 100); // 칸 너비를 넘지 않게 설정
-            label.Font = new Font("맑은 고딕", 9, FontStyle.Regular);
+            //label.MaximumSize = new Size(this.Width, 100); // 칸 너비를 넘지 않게 설정            
             label.BackColor = color; // 구분하기 쉽게 색상 지정
-            label.Margin = new Padding(0, 3, 0, 0);
+            label.Margin = new Padding(0, 5, 0, 0);
+            string fontPath = Path.Combine(Application.StartupPath, "Fonts", "NanumSquareRoundL.ttf.ttf");
+
+            if (File.Exists(fontPath))
+            {
+                fonts.AddFontFile(fontPath);
+
+                FontFamily nanumFamily = fonts.Families
+                    .First(f => f.Name.Contains("Nanum"));
+
+                Font nanum = new Font(nanumFamily, 13, FontStyle.Regular);
+
+                label.Font = nanum;
+            }
 
             //this.flpEvent.Controls.Add(label);
             //label.BringToFront();
@@ -145,6 +169,7 @@ namespace Project_Maver.View
 
                 }
             };
+            label.Paint += BorderHelper.EventLabel_Paint;
 
         }
 

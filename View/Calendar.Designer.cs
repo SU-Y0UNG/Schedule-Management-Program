@@ -383,7 +383,7 @@
             btnBeforeDate.FlatAppearance.BorderSize = 0;
             btnBeforeDate.FlatStyle = FlatStyle.Flat;
             btnBeforeDate.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point);
-            btnBeforeDate.Location = new Point(508, 45);
+            btnBeforeDate.Location = new Point(581, 48);
             btnBeforeDate.Name = "btnBeforeDate";
             btnBeforeDate.Size = new Size(37, 59);
             btnBeforeDate.TabIndex = 1;
@@ -398,7 +398,7 @@
             btnAfterDate.FlatAppearance.BorderSize = 0;
             btnAfterDate.FlatStyle = FlatStyle.Flat;
             btnAfterDate.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAfterDate.Location = new Point(936, 45);
+            btnAfterDate.Location = new Point(870, 48);
             btnAfterDate.Name = "btnAfterDate";
             btnAfterDate.Size = new Size(37, 59);
             btnAfterDate.TabIndex = 1;
@@ -411,7 +411,7 @@
             lbThisDate.Anchor = AnchorStyles.Top;
             lbThisDate.AutoSize = true;
             lbThisDate.Font = new Font("Comic Sans MS", 36F, FontStyle.Bold, GraphicsUnit.Point);
-            lbThisDate.Location = new Point(563, 45);
+            lbThisDate.Location = new Point(652, 43);
             lbThisDate.Name = "lbThisDate";
             lbThisDate.Size = new Size(195, 67);
             lbThisDate.TabIndex = 0;

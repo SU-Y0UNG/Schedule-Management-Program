@@ -88,7 +88,7 @@ namespace Maver_켈린더
 
                 foreach (Label lbl in weekLabels)
                 {
-                    SetRoundRegion(lbl, 10);
+                    BorderHelper.SetRoundRegion(lbl, 10);
                     lbl.Font = jua1;
                     lbl.Padding = new Padding(10, 5, 10, 5);
                     lbl.TextAlign = ContentAlignment.MiddleCenter;
@@ -97,20 +97,20 @@ namespace Maver_켈린더
                
 
                 btnLogInOut.Font = jua2;
-                SetRoundRegion(btnLogInOut, 18);
-                ApplyDotBorder(btnLogInOut);
+                BorderHelper.SetRoundRegion(btnLogInOut, 18);
+                BorderHelper.ApplyDotBorder(btnLogInOut);
                 //btnLogInOut.Tag = Color.Silver;
 
                 lbID.Font = jua2;
 
                 btnUpdatepw.Font = jua2;
-                SetRoundRegion(btnUpdatepw, 18);
-                ApplyDotBorder(btnUpdatepw);
+                BorderHelper.SetRoundRegion(btnUpdatepw, 18);
+                BorderHelper.ApplyDotBorder(btnUpdatepw);
                 //btnUpdatepw.Tag = Color.Silver;
 
                 btnGoToday.Font = jua2;
-                SetRoundRegion (btnGoToday, 18);
-                ApplyDotBorder (btnGoToday);
+                BorderHelper.SetRoundRegion (btnGoToday, 18);
+                BorderHelper.ApplyDotBorder (btnGoToday);
                 btnGoToday.Tag = new Tuple<Color, Color>(Color.Purple, Color.White);
                
                 
@@ -121,83 +121,7 @@ namespace Maver_켈린더
 
 
         //둥근 테두리 함수 만들기용
-        private void SetRoundRegion(Control ctrl, int radius)
-        {
-            GraphicsPath path = new GraphicsPath();
-            Rectangle rect = new Rectangle(0, 0, ctrl.Width, ctrl.Height);
-
-            int d = radius * 2;
-
-            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
-            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
-            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
-            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
-            path.CloseFigure();
-
-            ctrl.Region = new Region(path);
-        }
-
-
-        // 점선 테두리 함수 만들기
-        private void ApplyDotBorder(Control ctrl)
-        {
-            ctrl.Paint += Ctrl_Paint;
-        }
-
-
-        public void Ctrl_Paint(object sender, PaintEventArgs e)
-        {
-            Control ctrl = sender as Control;
-            Color borderColor = Color.Silver;
-            Color dotColor = Color.DarkGray;
-
-            if (ctrl.Tag is Tuple<Color, Color> colors)
-            {
-                borderColor = colors.Item1;
-                dotColor = colors.Item2;
-            }
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-            // 바깥 둥근 테두리
-            using (Pen border = new Pen(borderColor, 2))
-            {
-                GraphicsPath path = GetRoundRect(new Rectangle(1, 1, ctrl.Width - 3, ctrl.Height - 3), 18);
-                e.Graphics.DrawPath(border, path);
-            }
-
-            // 안쪽 둥근 점선
-            using (Pen pen = new Pen(dotColor, 1))
-            {
-                pen.DashStyle = DashStyle.Custom;
-                pen.DashPattern = new float[] { 1, 2 };
-
-                pen.StartCap = LineCap.Round;
-                pen.EndCap = LineCap.Round;
-
-                GraphicsPath path = GetRoundRect(
-                    new Rectangle(5, 5, ctrl.Width - 11, ctrl.Height - 11), 13);
-
-                e.Graphics.DrawPath(pen, path);
-            }
-        }
-
-        private GraphicsPath GetRoundRect(Rectangle rect, int radius)
-        {
-            GraphicsPath path = new GraphicsPath();
-
-            int d = radius * 2;
-
-            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
-            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
-            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
-            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
-
-            path.CloseFigure();
-
-            return path;
-        }
-
+        
         private void CreateDefaultCalendar()
         {
             // 로그인 정보가 없으면 캘린더 데이터 생성 X

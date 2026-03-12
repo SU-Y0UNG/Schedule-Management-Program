@@ -213,8 +213,8 @@ namespace maverCalender
                 repeat.RepeatEndDate
             );//반복 일정을 달력에 효과적으로 표시하기 위해 DB에 저장된 "반복 규칙"을 실제 "날짜 목록"으로 펼치기 위해서
             string connectionString = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
-            string query = @"INSERT INTO events (user_id, title, start_date, end_date, start_time, end_time, memo, repeat_type, repeat_interval, repeat_start_date, repeat_end_date, repeat_days, color) 
-                     VALUES (@UserId, @Title, @StartDate, @EndDate, @StartTime, @EndTime, @Memo, @rType, @rInterval,@rStart, @rEnd, @rDays, @color)";
+            string query = @"INSERT INTO events (user_id, title,share_id, start_date, end_date, start_time, end_time, memo, repeat_type, repeat_interval, repeat_start_date, repeat_end_date, repeat_days, color) 
+                     VALUES (@UserId, @Title,@ShareId, @StartDate, @EndDate, @StartTime, @EndTime, @Memo, @rType, @rInterval,@rStart, @rEnd, @rDays, @color)";
             conn = new MySqlConnection(connectionString);
 
             try
@@ -231,6 +231,7 @@ namespace maverCalender
                 cmd.Parameters.AddWithValue("@StartTime", dtpStartTime.Value);
                 cmd.Parameters.AddWithValue("@EndTime", dtpEndTime.Value);
                 cmd.Parameters.AddWithValue("@rType", repeat.RepeatType);
+                cmd.Parameters.AddWithValue("@ShareId", DBNull.Value);
                 if (repeat.RepeatType == "none")
                 {
                     cmd.Parameters.AddWithValue("@rInterval", DBNull.Value);
