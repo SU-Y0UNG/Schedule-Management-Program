@@ -713,7 +713,7 @@ namespace Maver_켈린더
                     }
                 }
 
-
+                if(UserSession.UserId != null)
                 {
                     // 클릭 이벤트 연결
                     duc.Click += (s, e) =>
