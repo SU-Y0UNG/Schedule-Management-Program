@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Project_Maver.View
 {
     public partial class makeShare : Form
     {
+        PrivateFontCollection fonts = new PrivateFontCollection();
         public makeShare()
         {
             InitializeComponent();
@@ -120,6 +122,20 @@ namespace Project_Maver.View
         {
             cbCalendarSelect.SelectedItem = _mode;
             UpdateLayoutByMode();
+
+            string fontPath = Path.Combine(Application.StartupPath, "Fonts", "BMJUA_ttf.ttf");
+
+            if (File.Exists(fontPath))
+            {
+                fonts.AddFontFile(fontPath);
+                Font jua1 = new Font(fonts.Families[0], 16, FontStyle.Regular);
+                Font jua2 = new Font(fonts.Families[0], 12, FontStyle.Regular);
+
+
+                btnSharePlus.Font = jua2;
+                BorderHelper.SetRoundRegion(btnSharePlus, 18);
+                BorderHelper.ApplyDotBorder(btnSharePlus);
+            }
         }
         private void UpdateLayoutByMode()
         {
