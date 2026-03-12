@@ -101,6 +101,9 @@ namespace maverCalender
             dtpEndTime.Format = DateTimePickerFormat.Custom;
             dtpEndTime.CustomFormat = "HH:mm";
             dtpEndDate.Value = selectedDate;
+
+            // 개인인지 그룹으로 만들지 지정하는 콤보박스 세팅
+            setShareCombobox();
         }
 
         public void textContent()
@@ -109,6 +112,79 @@ namespace maverCalender
             txtTitle.Text = "";
         }
 
+        public class ComboItem
+        {
+            public string share_name { get; set; }
+            public int share_id { get; set; }
+
+            public override string ToString()
+            {
+                return share_name;
+            }
+        }
+
+        public void setShareCombobox()
+        {
+            string sql = " select 0 as share_id, \"개인 캘린더\" as share_name "
+                       + " from dual "
+                       + " union "
+                       + " select distinct a.share_id,a.share_name "
+                       + " from share_group a join share_member b on a.share_id = b.share_id "
+                       + " where b.user_id = @userId";
+
+            Dictionary<string, object> param = new Dictionary<string, object>();
+            param.Add("userId", UserSession.UserId);
+
+            DataTable comboData = DbManager.select_Query(sql, param);
+
+            if (comboData.Rows.Count > 0)
+            {
+                cbChoice.Items.Clear();
+
+                for (int i = 0; i < comboData.Rows.Count; i++)
+                {
+                    DataRow r = comboData.Rows[i];
+                    int id = Convert.ToInt32(r["share_id"]);
+                    cbChoice.Items.Add(new ComboItem { share_id = id, share_name = r["share_name"].ToString() });
+                }
+            }
+
+            if(event_id == 0)
+            {
+                cbChoice.SelectedIndex = 0;
+            }
+            else
+            {
+                // 1. 해당 일정의 share_id를 가져오는 쿼리 (NULL이면 0으로 치환)
+                string sharesql = "SELECT IFNULL(share_id, 0) as share_id FROM events WHERE event_id = @eventId";
+
+                Dictionary<string, object> p = new Dictionary<string, object>();
+                p.Add("eventId", event_id);
+
+                DataTable dt = DbManager.select_Query(sharesql, p);
+
+                if (dt.Rows.Count > 0)
+                {
+                    // DB에서 가져온 share_id (개인이면 0, 그룹이면 해당 숫자)
+                    int targetShareId = Convert.ToInt32(dt.Rows[0]["share_id"]);
+
+                    // 2. 콤보박스 아이템 중 targetShareId와 일치하는 것을 찾아 선택
+                    for (int i = 0; i < cbChoice.Items.Count; i++)
+                    {
+                        if (cbChoice.Items[i] is ComboItem item)
+                        {
+                            if (item.share_id == targetShareId)
+                            {
+                                cbChoice.SelectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
 
 
         //날씨(수영)       
@@ -231,7 +307,23 @@ namespace maverCalender
                 cmd.Parameters.AddWithValue("@StartTime", dtpStartTime.Value);
                 cmd.Parameters.AddWithValue("@EndTime", dtpEndTime.Value);
                 cmd.Parameters.AddWithValue("@rType", repeat.RepeatType);
-                cmd.Parameters.AddWithValue("@ShareId", DBNull.Value);
+
+                if (cbChoice.SelectedItem is ComboItem selected)
+                {
+                    int selectedId = (int)selected.share_id;
+
+                    if (selectedId == 0)
+                    {
+                        // 개인 캘린더일 경우 DB에 NULL로 저장
+                        cmd.Parameters.AddWithValue("@ShareId", DBNull.Value);
+                    }
+                    else
+                    {
+                        // 그룹일 경우 해당 ID 저장
+                        cmd.Parameters.AddWithValue("@ShareId", selectedId);
+                    }
+                }
+
                 if (repeat.RepeatType == "none")
                 {
                     cmd.Parameters.AddWithValue("@rInterval", DBNull.Value);

@@ -6,6 +6,8 @@ using System.Data;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 
 namespace Maver_켈린더
@@ -726,7 +728,8 @@ namespace Maver_켈린더
         }
         private DataTable select_events(string id)
         {
-            string sql = "select * from events where user_id = @id ";
+            string sql = " select * from events where user_id = @id or share_id in(select share_id from share_member where user_id = @id) ";
+
             Dictionary<string, object> param = new Dictionary<string, object>();
             param.Add("id", UserSession.UserId);
 
