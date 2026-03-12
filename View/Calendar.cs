@@ -538,42 +538,44 @@ namespace Maver_켈린더
                 // 현재 날짜에 해당하는 일정만 메모리에서 필터링
                 if (userEvents != null && userEvents.Rows.Count > 0)
                 {
-                    // 현재 날짜(currDate)가 시작~종료 범위에 있는지 확인
-                    //var todayEvents = userEvents.AsEnumerable().Where(r =>
-                    //    currDate.Date >= Convert.ToDateTime(r["start_date"]).Date &&
-                    //    currDate.Date <= Convert.ToDateTime(r["end_date"]).Date);
-
                     var todayEvents = userEvents.AsEnumerable().Where(r =>
                     {
-                        if (r["repeat_type"] != DBNull.Value && r["repeat_type"].ToString() != "")
-                        {
-                            return IsRepeatEvent(r, currDate);
-                        }
+                        DateTime start = Convert.ToDateTime(r["start_date"]).Date;
+                        DateTime end = Convert.ToDateTime(r["end_date"]).Date;
+                        string repeatType = r["repeat_type"]?.ToString();
 
-                        return currDate.Date >= Convert.ToDateTime(r["start_date"]).Date &&
-                               currDate.Date <= Convert.ToDateTime(r["end_date"]).Date;
+                        bool isInRange = currDate.Date >= start && currDate.Date <= end;
+                        bool isReapeatDay = !string.IsNullOrEmpty(repeatType) && IsRepeatEvent(r, currDate);
+
+                        return isInRange || isReapeatDay;
+
+
                     });
+
 
                     foreach (var row in todayEvents)
                     {
-                        string title = row["title"].ToString();
-                        string dbEventColor = row["color"].ToString();
 
+                        string title = row["title"].ToString();
+
+                        string dbEventColor = row["color"].ToString();
                         Color eventColor = StringToColor(dbEventColor);
 
-                        DateTime start = Convert.ToDateTime(row["start_date"]);
-                        DateTime end = Convert.ToDateTime(row["end_date"]);
-                        bool isSingleDay = (start.Date == end.Date);
-                        bool isStartDay = currDate.Date == start.Date;
-                        // 시작일에만 제목 표시, 나머지는 빈 줄(막대) 표시
-                        //string labelText = (currDate.Date == start.Date) ? title : "";
-                        if (!isStartDay && IsRepeatEvent(row, currDate))
-                        {
-                            isStartDay = true;
-                        }
+                        DateTime start = Convert.ToDateTime(row["start_date"]).Date;
+                        DateTime end = Convert.ToDateTime(row["end_date"]).Date;
+
+                        string repeatType = row["repeat_type"]?.ToString();
+                        bool hasRepeat = !string.IsNullOrEmpty(repeatType);
+
+                        // 1. 오늘이 실제 데이터상의 시작일(startDate)이거나
+                        // 2. 오늘이 반복 일정 규칙에 의해 나타나는 날이라면 제목을 표시한다.
+                        bool isStartDay = (currDate.Date == start.Date) || (hasRepeat && IsRepeatEvent(row, currDate)); ;
 
                         string labelText = isStartDay ? title : "";
 
+                        // 반복 일정은 보통 하루 단위로 끊기게 표시 (isSingleDay = true)
+                        // 일반 일정은 시작/종료일이 같을 때만 true
+                        bool isSingleDay = hasRepeat ? true : (start == end);
 
                         duc.addTitleLabel(labelText, eventColor, isSingleDay);
                         //duc.Tag = row

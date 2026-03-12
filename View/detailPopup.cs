@@ -81,17 +81,6 @@ namespace maverCalender
             //수영
             GetWeather();
             worldTime();
-
-            // 승환
-            //LoadDetailData("user1");
-            //textContent();
-            dtpStartTime.Format = DateTimePickerFormat.Custom;
-            dtpStartTime.CustomFormat = "HH:mm";
-            dtpStartDate.Value = selectedDate;
-
-            dtpEndTime.Format = DateTimePickerFormat.Custom;
-            dtpEndTime.CustomFormat = "HH:mm";
-            dtpEndDate.Value = selectedDate;
         }
 
         public void textContent()
