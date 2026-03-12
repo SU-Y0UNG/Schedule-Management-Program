@@ -83,6 +83,7 @@
             // 
             // pnlMain
             // 
+            pnlMain.Controls.Add(btnUpdatepw);
             pnlMain.Controls.Add(btnGoToday);
             pnlMain.Controls.Add(pictureBox2);
             pnlMain.Controls.Add(pnlCategori);
@@ -208,108 +209,114 @@
             tableLayoutPanel1.Controls.Add(label6, 4, 0);
             tableLayoutPanel1.Controls.Add(label7, 5, 0);
             tableLayoutPanel1.Controls.Add(label8, 6, 0);
-            tableLayoutPanel1.Location = new Point(36, 182);
+            tableLayoutPanel1.Location = new Point(29, 175);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1500, 30);
+            tableLayoutPanel1.Size = new Size(1511, 36);
             tableLayoutPanel1.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
+            label2.BackColor = Color.Pink;
             label2.Dock = DockStyle.Fill;
-            label2.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = Color.IndianRed;
             label2.Location = new Point(3, 0);
             label2.Name = "label2";
-            label2.Size = new Size(208, 30);
+            label2.Size = new Size(209, 36);
             label2.TabIndex = 0;
-            label2.Text = "일요일";
+            label2.Text = "☀️ 일요일";
             label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label3
             // 
             label3.AutoSize = true;
+            label3.BackColor = Color.Linen;
             label3.Dock = DockStyle.Fill;
-            label3.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.ForeColor = Color.FromArgb(64, 64, 64);
-            label3.Location = new Point(217, 0);
+            label3.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.ForeColor = Color.DimGray;
+            label3.Location = new Point(218, 0);
             label3.Name = "label3";
-            label3.Size = new Size(208, 30);
+            label3.Size = new Size(209, 36);
             label3.TabIndex = 1;
-            label3.Text = "월요일";
+            label3.Text = "🌙 월요일";
             label3.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label4
             // 
             label4.AutoSize = true;
+            label4.BackColor = Color.Linen;
             label4.Dock = DockStyle.Fill;
-            label4.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.ForeColor = Color.FromArgb(64, 64, 64);
-            label4.Location = new Point(431, 0);
+            label4.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.ForeColor = Color.DarkOrange;
+            label4.Location = new Point(433, 0);
             label4.Name = "label4";
-            label4.Size = new Size(208, 30);
+            label4.Size = new Size(209, 36);
             label4.TabIndex = 1;
-            label4.Text = "화요일";
+            label4.Text = "🔥 화요일";
             label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label5
             // 
             label5.AutoSize = true;
+            label5.BackColor = Color.Linen;
             label5.Dock = DockStyle.Fill;
-            label5.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
-            label5.ForeColor = Color.FromArgb(64, 64, 64);
-            label5.Location = new Point(645, 0);
+            label5.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.ForeColor = Color.DodgerBlue;
+            label5.Location = new Point(648, 0);
             label5.Name = "label5";
-            label5.Size = new Size(208, 30);
+            label5.Size = new Size(209, 36);
             label5.TabIndex = 1;
-            label5.Text = "수요일";
+            label5.Text = "💧 수요일";
             label5.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label6
             // 
             label6.AutoSize = true;
+            label6.BackColor = Color.Linen;
             label6.Dock = DockStyle.Fill;
-            label6.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
-            label6.ForeColor = Color.FromArgb(64, 64, 64);
-            label6.Location = new Point(859, 0);
+            label6.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.ForeColor = Color.MediumSeaGreen;
+            label6.Location = new Point(863, 0);
             label6.Name = "label6";
-            label6.Size = new Size(208, 30);
+            label6.Size = new Size(209, 36);
             label6.TabIndex = 1;
-            label6.Text = "목요일";
+            label6.Text = "🌳 목요일";
             label6.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label7
             // 
             label7.AutoSize = true;
+            label7.BackColor = Color.Linen;
             label7.Dock = DockStyle.Fill;
-            label7.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
-            label7.ForeColor = Color.FromArgb(64, 64, 64);
-            label7.Location = new Point(1073, 0);
+            label7.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.ForeColor = Color.MediumPurple;
+            label7.Location = new Point(1078, 0);
             label7.Name = "label7";
-            label7.Size = new Size(208, 30);
+            label7.Size = new Size(209, 36);
             label7.TabIndex = 1;
-            label7.Text = "금요일";
+            label7.Text = "❤️ 금요일";
             label7.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label8
             // 
             label8.AutoSize = true;
+            label8.BackColor = Color.LightBlue;
             label8.Dock = DockStyle.Fill;
-            label8.Font = new Font("Microsoft Sans Serif", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point);
+            label8.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label8.ForeColor = Color.RoyalBlue;
-            label8.Location = new Point(1287, 0);
+            label8.Location = new Point(1293, 0);
             label8.Name = "label8";
-            label8.Size = new Size(210, 30);
+            label8.Size = new Size(215, 36);
             label8.TabIndex = 1;
-            label8.Text = "토요일";
+            label8.Text = "🎈 토요일";
             label8.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pnlHead
             // 
             pnlHead.Anchor = AnchorStyles.Top;
-            pnlHead.Controls.Add(btnUpdatepw);
             pnlHead.Controls.Add(btnSearch);
             pnlHead.Controls.Add(txtSearch);
             pnlHead.Controls.Add(pbProfile);
@@ -329,7 +336,7 @@
             btnUpdatepw.FlatAppearance.BorderSize = 0;
             btnUpdatepw.FlatStyle = FlatStyle.Flat;
             btnUpdatepw.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnUpdatepw.Location = new Point(1342, 64);
+            btnUpdatepw.Location = new Point(32, 893);
             btnUpdatepw.Name = "btnUpdatepw";
             btnUpdatepw.Size = new Size(127, 42);
             btnUpdatepw.TabIndex = 12;
@@ -363,9 +370,9 @@
             // pbProfile
             // 
             pbProfile.Image = (Image)resources.GetObject("pbProfile.Image");
-            pbProfile.Location = new Point(1172, 13);
+            pbProfile.Location = new Point(1233, 13);
             pbProfile.Name = "pbProfile";
-            pbProfile.Size = new Size(59, 50);
+            pbProfile.Size = new Size(44, 36);
             pbProfile.SizeMode = PictureBoxSizeMode.Zoom;
             pbProfile.TabIndex = 7;
             pbProfile.TabStop = false;
@@ -374,19 +381,21 @@
             // 
             lbID.AutoSize = true;
             lbID.Font = new Font("맑은 고딕", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbID.Location = new Point(1237, 19);
+            lbID.Location = new Point(1283, 21);
             lbID.Name = "lbID";
-            lbID.Size = new Size(63, 21);
+            lbID.Size = new Size(94, 21);
             lbID.TabIndex = 5;
-            lbID.Text = "label11";
+            lbID.Text = "환영합니다.";
             // 
             // btnLogInOut
             // 
+            btnLogInOut.FlatAppearance.BorderColor = Color.Gray;
+            btnLogInOut.FlatAppearance.BorderSize = 0;
             btnLogInOut.FlatStyle = FlatStyle.Flat;
             btnLogInOut.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnLogInOut.Location = new Point(1361, 19);
+            btnLogInOut.Location = new Point(1358, 12);
             btnLogInOut.Name = "btnLogInOut";
-            btnLogInOut.Size = new Size(108, 42);
+            btnLogInOut.Size = new Size(97, 46);
             btnLogInOut.TabIndex = 3;
             btnLogInOut.Text = "로그인";
             btnLogInOut.UseVisualStyleBackColor = true;
@@ -398,12 +407,12 @@
             btnBeforeDate.BackColor = Color.Transparent;
             btnBeforeDate.FlatAppearance.BorderSize = 0;
             btnBeforeDate.FlatStyle = FlatStyle.Flat;
-            btnBeforeDate.Font = new Font("Microsoft Sans Serif", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnBeforeDate.Location = new Point(540, 47);
+            btnBeforeDate.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            btnBeforeDate.Location = new Point(586, 45);
             btnBeforeDate.Name = "btnBeforeDate";
             btnBeforeDate.Size = new Size(37, 59);
             btnBeforeDate.TabIndex = 1;
-            btnBeforeDate.Text = "<";
+            btnBeforeDate.Text = "◀";
             btnBeforeDate.UseVisualStyleBackColor = false;
             btnBeforeDate.Click += btnBeforeDate_Click;
             // 
@@ -413,12 +422,12 @@
             btnAfterDate.BackColor = Color.Transparent;
             btnAfterDate.FlatAppearance.BorderSize = 0;
             btnAfterDate.FlatStyle = FlatStyle.Flat;
-            btnAfterDate.Font = new Font("Microsoft Sans Serif", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAfterDate.Location = new Point(881, 47);
+            btnAfterDate.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            btnAfterDate.Location = new Point(853, 45);
             btnAfterDate.Name = "btnAfterDate";
             btnAfterDate.Size = new Size(37, 59);
             btnAfterDate.TabIndex = 1;
-            btnAfterDate.Text = ">";
+            btnAfterDate.Text = "▶";
             btnAfterDate.UseVisualStyleBackColor = false;
             btnAfterDate.Click += btnAfterDate_Click;
             // 
@@ -426,10 +435,10 @@
             // 
             lbThisDate.Anchor = AnchorStyles.Top;
             lbThisDate.AutoSize = true;
-            lbThisDate.Font = new Font("Microsoft Sans Serif", 35.9999962F, FontStyle.Bold, GraphicsUnit.Point);
-            lbThisDate.Location = new Point(643, 47);
+            lbThisDate.Font = new Font("Comic Sans MS", 36F, FontStyle.Bold, GraphicsUnit.Point);
+            lbThisDate.Location = new Point(638, 37);
             lbThisDate.Name = "lbThisDate";
-            lbThisDate.Size = new Size(178, 55);
+            lbThisDate.Size = new Size(195, 67);
             lbThisDate.TabIndex = 0;
             lbThisDate.Text = "2026.3";
             // 

@@ -3,12 +3,17 @@ using Project_Maver.Common;
 using Project_Maver.View;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Text.RegularExpressions;
+
 
 namespace Maver_켈린더
 {
     public partial class Calendar : Form
     {
+ 
+        PrivateFontCollection fonts = new PrivateFontCollection(); //폰트
 
         private int currentYear;        // 현재년도
         private int currentMonth;       // 현재 달
@@ -65,6 +70,105 @@ namespace Maver_켈린더
 
             // 은비 - 캘린더 그리기
             DisplayDays(currentYear, currentMonth);
+
+            //수영 폰트 디wkdls
+            string fontPath = Path.Combine(Application.StartupPath, "Fonts", "BMJUA_ttf.ttf");
+            
+            if (File.Exists(fontPath))
+            {
+                fonts.AddFontFile(fontPath);
+                Font jua1 = new Font(fonts.Families[0], 16, FontStyle.Regular);
+                Font jua2 = new Font(fonts.Families[0], 14, FontStyle.Regular);
+
+                Label[] weekLabels = {
+                    label2, label3, label4, label5, label6, label7, label8
+                };
+
+                foreach (Label lbl in weekLabels)
+                {
+                    SetRoundRegion(lbl, 10);
+                    lbl.Font = jua1;
+                    lbl.Padding = new Padding(10,5,10,5);
+                    lbl.TextAlign = ContentAlignment.MiddleCenter;
+                }
+                btnLogInOut.Font = jua2;
+                SetRoundRegion(btnLogInOut, 10);
+                ApplyDotBorder(btnLogInOut);
+                btnLogInOut.TextAlign=ContentAlignment.MiddleCenter;
+                lbID.Font= jua2;
+            }
+
+        }
+
+
+        //둥근 테두리 함수 만들기용
+        private void SetRoundRegion(Control ctrl, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+            Rectangle rect = new Rectangle(0, 0, ctrl.Width, ctrl.Height);
+
+            int d = radius * 2;
+
+            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
+            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
+            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
+            path.CloseFigure();
+
+            ctrl.Region = new Region(path);
+        }
+
+
+        // 점선 테두리 함수 만들기
+        private void ApplyDotBorder(Control ctrl)
+        {
+            ctrl.Paint += Ctrl_Paint;
+        }
+
+        private void Ctrl_Paint(object sender, PaintEventArgs e)
+        {
+            Control ctrl = sender as Control;
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            // 바깥 둥근 테두리
+            using (Pen border = new Pen(Color.Silver, 2))
+            {
+                GraphicsPath path = GetRoundRect(new Rectangle(1, 1, ctrl.Width - 3, ctrl.Height -3), 15);
+                e.Graphics.DrawPath(border, path);
+            }
+
+            // 안쪽 둥근 점선
+            using (Pen pen = new Pen(Color.DarkGray, 1))
+            {
+                pen.DashStyle = DashStyle.Custom;
+                pen.DashPattern = new float[] { 1, 3 };
+
+                pen.StartCap = LineCap.Round;
+                pen.EndCap = LineCap.Round;
+
+                GraphicsPath path = GetRoundRect(
+                    new Rectangle(5, 5, ctrl.Width - 11, ctrl.Height - 11), 14);
+
+                e.Graphics.DrawPath(pen, path);
+            }
+        }
+
+        private GraphicsPath GetRoundRect(Rectangle rect, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+
+            int d = radius * 2;
+
+            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
+            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
+            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
+
+            path.CloseFigure();
+
+            return path;
         }
 
         private void CreateDefaultCalendar()
@@ -884,6 +988,9 @@ namespace Maver_켈린더
                 //로그인 창이 닫히면(성공/실패 여부 상관없이) 새로고침
                 //UI 새로고침
                 UpdateLoginLogout();
+                btnLogInOut.Location = new Point(
+    btnLogInOut.Location.X,
+    btnLogInOut.Location.Y + 20);
             }
 
             else
@@ -893,6 +1000,8 @@ namespace Maver_켈린더
                 {
                     // 세션 정보 초기화 및 UI복구
                     UserSession.UserId = null;
+
+
                     UpdateLoginLogout();
                     MessageBox.Show("성공적으로 로그아웃되었습니다.");
                 }
@@ -974,6 +1083,7 @@ namespace Maver_켈린더
             searchForm.ShowDialog();
 
         }
+
         public class ScheduleData
         {
             public string title { get; set; }
