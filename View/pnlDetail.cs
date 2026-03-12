@@ -34,7 +34,7 @@ namespace Project_Maver.View
         public void setData(int event_id, string title, string memo, string startDate, string endDate, string startTime, string endTime)
         {
             this.currentEventId = event_id;
-            MessageBox.Show($"데이터 확인: {title} / {memo}");
+            // MessageBox.Show($"데이터 확인: {title} / {memo}");
             lbDetailTitle.Text = title;
             lbDetailMemo.Text = memo;
             lbDetailStartDate.Text = startDate;

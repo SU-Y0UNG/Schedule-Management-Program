@@ -856,67 +856,58 @@ namespace Maver_켈린더
         // 승환 aaa
         private DataTable GetScheduleDetail(string title, DateTime date)
         {
-            // MySQL의 DATE() 함수를 사용하여 컬럼의 시간 부분을 제외하고 '날짜'만 비교합니다.
             string sql = @"SELECT event_id, title, memo, start_date, end_date, start_time, end_time, 
-                          repeat_type, repeat_start_date, repeat_end_date, repeat_days, repeat_interval,color
+                   repeat_type, repeat_start_date, repeat_end_date, repeat_days, repeat_interval, color
                    FROM events 
-                   WHERE title = @title                    
-                    ORDER By event_id DESC";
+                   WHERE TRIM(title) = @title 
+                   ORDER By event_id DESC";
 
-            var param = new Dictionary<string, object>
-            {
-                { "@title", title },
-                //{ "@date", date.ToString("yyyy-MM-dd") } // '2026-03-10' 형식으로 전달
-            };
-
+            var param = new Dictionary<string, object> { { "@title", title.Trim() } };
             DataTable dt = DbManager.select_Query(sql, param);
+
+            string debugInfo = ""; // 디버깅용 텍스트 저장
 
             if (dt != null && dt.Rows.Count > 0)
             {
-                // 2. 검색된 데이터들 중 현재 클릭한 날짜(date)에 해당하는 놈을 찾습니다.
                 foreach (DataRow row in dt.Rows)
                 {
-                    string rType = row["repeat_type"]?.ToString();
+                    string rType = row["repeat_type"]?.ToString().Trim().ToLower() ?? "";
                     DateTime dbStartDate = Convert.ToDateTime(row["start_date"]);
 
-                    // 일반 일정인 경우: DB의 날짜와 클릭한 날짜가 같아야 함
-                    if (string.IsNullOrEmpty(rType) || rType == "none")
-                    {
-                        if (dbStartDate.Date == date.Date)
-                            return CreateSingleRowTable(row);
-                    }
-                    // 반복 일정인 경우: IsRepeatEvent 로직을 통과하면 클릭한 날짜로 날짜를 바꿔서 반환
-                    else
-                    {
-                        if (IsRepeatEvent(row, date))
-                        {
-                            DataRow newRow = row.Table.NewRow();
-                            newRow.ItemArray = row.ItemArray.Clone() as object[];
+                    string dbDateStr = dbStartDate.ToString("yyyy-MM-dd");
+                    string clickDateStr = date.ToString("yyyy-MM-dd");
 
-                            newRow["start_date"] = date.Date;
-                            newRow["end_date"] = date.Date;
-                            // [핵심] DB 날짜가 아닌 사용자가 '클릭한 날짜'로 데이터를 변조해서 넘겨줌
-                            newRow["start_date"] = date.Date;
-                            newRow["end_date"] = date.Date;
+                    // 디버깅 정보 쌓기
+                    debugInfo += $"- DB날짜: [{dbDateStr}], 반복타입: [{rType}]\n";
+
+                    // 1. 일반 일정 (타입이 없거나, none이거나, 공백일 때)
+                    if (string.IsNullOrEmpty(rType) || rType == "none" || rType == "-") // [수정됨: "-" 추가]
+                    {
+                        if (dbDateStr == clickDateStr)
+                        {
                             return CreateSingleRowTable(row);
                         }
+                    }
+                    // 2. 반복 일정
+                    else if (IsRepeatEvent(row, date))
+                    {
+                        DataTable copyTable = row.Table.Clone();
+                        DataRow newRow = copyTable.NewRow();
+                        newRow.ItemArray = row.ItemArray.Clone() as object[];
+                        newRow["start_date"] = date.Date;
+                        newRow["end_date"] = date.Date;
+                        copyTable.Rows.Add(newRow);
+                        return copyTable;
                     }
                 }
             }
 
-            // 디버깅용: 데이터가 왜 안 나오는지 확실히 알기 위해 메시지를 구체화합니다.
-            //if (dt == null || dt.Rows.Count == 0)
-            //{
-            //    MessageBox.Show($"DB 조회 실패!\n찾는 제목: {title}\n찾는 날짜: {date.ToString("yyyy-MM-dd")}\n\nDB에 이 제목과 날짜가 정확히 있는지 확인하세요.");
-            //}
-            //
-            //return dt;
+            // [중요] 여기까지 왔다는 건 루프를 다 돌았는데 if문에 한 번도 안 걸렸다는 뜻!
             MessageBox.Show(
-                $"DB 조회 실패!\n찾는 제목: {title}\n찾는 날짜: {date:yyyy-MM-dd}\n\nDB에 이 제목과 날짜가 정확히 있는지 확인하세요.",
-                "조회 오류",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-                );
+                $"조회된 {dt?.Rows.Count ?? 0}건 중 일치하는 항목 없음\n\n" +
+                $"[사용자가 클릭한 정보]\n제목: [{title}]\n날짜: [{date:yyyy-MM-dd}]\n\n" +
+                $"[DB에서 가져온 실제 데이터들]\n{debugInfo}",
+                "디버깅 모드", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             return null;
         }
