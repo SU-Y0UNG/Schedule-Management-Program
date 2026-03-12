@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Project_Maver.View
 
     public partial class SearchEventForm : Form
     {
+        PrivateFontCollection fonts = new PrivateFontCollection();
         public SearchEventForm()
         {
             init();
@@ -38,7 +40,7 @@ namespace Project_Maver.View
             searchData();
         }
 
-        private void searchData(string titleParam=null)
+        private void searchData(string titleParam = null)
         {
 
             string title = "";
@@ -65,7 +67,7 @@ namespace Project_Maver.View
 
             }
 
-            if(fromDate != null || toDate != null)
+            if (fromDate != null || toDate != null)
             {
                 // 시작날짜를 선택
                 if (rbStartDate.Checked)
@@ -81,7 +83,7 @@ namespace Project_Maver.View
             else
             {
                 toDate = DateTime.Today.ToShortDateString();
-                fromDate= DateTime.Today.AddDays(-3).ToShortDateString();
+                fromDate = DateTime.Today.AddDays(-3).ToShortDateString();
             }
             param.Add("fromDate", fromDate);
             param.Add("toDate", toDate);
@@ -154,6 +156,26 @@ namespace Project_Maver.View
             //    mainCal.focusSearchEvents(targetDate); // 메인 폼에 만든 메서드 호출
             //}
 
+        }
+
+        private void SearchEventForm_Load(object sender, EventArgs e)
+        {
+            string fontPath = Path.Combine(Application.StartupPath, "Fonts", "BMJUA_ttf.ttf");
+
+            if (File.Exists(fontPath))
+            {
+                fonts.AddFontFile(fontPath);
+                Font jua1 = new Font(fonts.Families[0], 16, FontStyle.Regular);
+                Font jua2 = new Font(fonts.Families[0], 12, FontStyle.Regular);
+
+
+                btnSearch.Font = jua2;
+                btnClose.Font = jua2;
+                BorderHelper.SetRoundRegion(btnSearch, 18);
+                BorderHelper.ApplyDotBorder(btnSearch); 
+                BorderHelper.SetRoundRegion(btnClose, 18);
+                BorderHelper.ApplyDotBorder(btnClose);
+            }
         }
     }
 }
