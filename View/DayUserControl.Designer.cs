@@ -31,6 +31,7 @@
             lbDay = new Label();
             lbHolidayName = new Label();
             flpEvent = new FlowLayoutPanel();
+            lbToday = new Label();
             SuspendLayout();
             // 
             // lbDay
@@ -61,12 +62,22 @@
             flpEvent.TabIndex = 2;
             flpEvent.WrapContents = false;
             // 
+            // lbToday
+            // 
+            lbToday.AutoSize = true;
+            lbToday.Font = new Font("Noto Sans KR", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            lbToday.Location = new Point(134, 0);
+            lbToday.Name = "lbToday";
+            lbToday.Size = new Size(0, 17);
+            lbToday.TabIndex = 3;
+            // 
             // DayUserControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.MistyRose;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(lbToday);
             Controls.Add(flpEvent);
             Controls.Add(lbHolidayName);
             Controls.Add(lbDay);
@@ -82,5 +93,6 @@
         private Label lbDay;
         private Label lbHolidayName;
         private FlowLayoutPanel flpEvent;
+        private Label lbToday;
     }
 }

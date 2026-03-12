@@ -121,10 +121,10 @@ namespace Maver_켈린더
             }
 
         }
-
+        
 
         //둥근 테두리 함수 만들기용
-        
+
         private void CreateDefaultCalendar()
         {
             // 로그인 정보가 없으면 캘린더 데이터 생성 X
@@ -285,7 +285,7 @@ namespace Maver_켈린더
             if (!string.IsNullOrEmpty(UserSession.UserId))
             {
                 TreeNode privateNode = new TreeNode("개인 캘린더");
-                privateNode.ForeColor = Color.WhiteSmoke;
+                privateNode.ForeColor = Color.Linen;
                 privateNode.Tag = "FIXED_PRIVATE" + UserSession.UserId; //고정 노드임을 식별 위한 태그
                 privateRoot.Nodes.Add(privateNode);
             }
@@ -352,15 +352,19 @@ namespace Maver_켈린더
         {
             return System.Text.RegularExpressions.Regex.IsMatch(str, @"\A\b[0-9a-fA-F]+\b\Z");
         }
-
+        private Font nodeFont = new Font("Noto Sans KR", 15, FontStyle.Bold);
         private void treeView1_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
             if (e.Node == null || e.Bounds.IsEmpty) return;
+            Color backColor = Color.Linen;
+            Color textColor = Color.DimGray;
+           
 
-            Color textColor = Color.Black;
+            // 텍스트 그리기
+            e.Graphics.DrawString(e.Node.Text, nodeFont, Brushes.Black, e.Bounds.Left, e.Bounds.Top);
 
             // 리스트에 포함되어 있는지 확인
-            Color backColor = Color.WhiteSmoke;
+            
             bool isCustomBrush = false;
 
             if (SelectedCalendars.Contains(e.Node) && e.Node.Level == 2)
@@ -395,7 +399,7 @@ namespace Maver_켈린더
 
             Rectangle textBounds = e.Bounds;
             textBounds.Offset(2, 0);
-            TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.NodeFont ?? treeView1.Font, e.Bounds, textColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+            TextRenderer.DrawText(e.Graphics, e.Node.Text, nodeFont ?? treeView1.Font, e.Bounds, textColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
         }
         private void cmsCalendar_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {

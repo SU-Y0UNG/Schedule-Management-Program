@@ -57,8 +57,12 @@ namespace Project_Maver.View
             if (_date.Date == DateTime.Today)
             {
                 this.BackColor = Color.Pink;
-                             
+                lbToday.Text = "TODAY 🐻";
+                
+
             }
+            
+
         }
         public event Action<string> TitleLabelClicked;
 

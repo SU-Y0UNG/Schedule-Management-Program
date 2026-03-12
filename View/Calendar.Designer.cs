@@ -36,8 +36,8 @@
             TreeNode treeNode4 = new TreeNode("캘린더", new TreeNode[] { treeNode2, treeNode3 });
             imageList1 = new ImageList(components);
             pnlMain = new Panel();
+            pictureBox1 = new PictureBox();
             btnGoToday = new Button();
-            btnUpdatepw = new Button();
             pictureBox2 = new PictureBox();
             pnlCategori = new Panel();
             CalenderPlus = new PictureBox();
@@ -61,8 +61,10 @@
             btnAfterDate = new Button();
             lbThisDate = new Label();
             flpMain = new FlowLayoutPanel();
+            btnUpdatepw = new Button();
             btnLogInOut = new Button();
             pnlMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             pnlCategori.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CalenderPlus).BeginInit();
@@ -83,19 +85,31 @@
             // 
             // pnlMain
             // 
+            pnlMain.Controls.Add(pictureBox1);
             pnlMain.Controls.Add(btnGoToday);
-            pnlMain.Controls.Add(btnUpdatepw);
             pnlMain.Controls.Add(pictureBox2);
             pnlMain.Controls.Add(pnlCategori);
             pnlMain.Controls.Add(tableLayoutPanel1);
             pnlMain.Controls.Add(pnlHead);
             pnlMain.Controls.Add(flpMain);
+            pnlMain.Controls.Add(btnUpdatepw);
             pnlMain.Controls.Add(btnLogInOut);
             pnlMain.Dock = DockStyle.Fill;
             pnlMain.Location = new Point(0, 0);
             pnlMain.Name = "pnlMain";
             pnlMain.Size = new Size(1584, 1061);
             pnlMain.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.FloralWhite;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(130, 218);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(65, 59);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 3;
+            pictureBox1.TabStop = false;
             // 
             // btnGoToday
             // 
@@ -112,20 +126,6 @@
             btnGoToday.Text = "📆 오늘";
             btnGoToday.UseVisualStyleBackColor = false;
             btnGoToday.Click += btnGoToday_Click_1;
-            // 
-            // btnUpdatepw
-            // 
-            btnUpdatepw.BackColor = Color.FloralWhite;
-            btnUpdatepw.FlatAppearance.BorderSize = 0;
-            btnUpdatepw.FlatStyle = FlatStyle.Flat;
-            btnUpdatepw.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnUpdatepw.Location = new Point(50, 807);
-            btnUpdatepw.Name = "btnUpdatepw";
-            btnUpdatepw.Size = new Size(127, 42);
-            btnUpdatepw.TabIndex = 12;
-            btnUpdatepw.Text = "회원정보수정";
-            btnUpdatepw.UseVisualStyleBackColor = false;
-            btnUpdatepw.Click += btnUpdatepw_Click;
             // 
             // pictureBox2
             // 
@@ -162,10 +162,11 @@
             // 
             // treeView1
             // 
-            treeView1.BackColor = Color.WhiteSmoke;
+            treeView1.BackColor = Color.Linen;
             treeView1.ContextMenuStrip = cmsCalendar;
             treeView1.Dock = DockStyle.Fill;
             treeView1.DrawMode = TreeViewDrawMode.OwnerDrawText;
+            treeView1.Font = new Font("Noto Sans KR", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
             treeView1.Location = new Point(0, 0);
             treeView1.Name = "treeView1";
             treeNode1.Checked = true;
@@ -427,6 +428,20 @@
             flpMain.Size = new Size(1278, 681);
             flpMain.TabIndex = 0;
             // 
+            // btnUpdatepw
+            // 
+            btnUpdatepw.BackColor = Color.FloralWhite;
+            btnUpdatepw.FlatAppearance.BorderSize = 0;
+            btnUpdatepw.FlatStyle = FlatStyle.Flat;
+            btnUpdatepw.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnUpdatepw.Location = new Point(50, 807);
+            btnUpdatepw.Name = "btnUpdatepw";
+            btnUpdatepw.Size = new Size(127, 42);
+            btnUpdatepw.TabIndex = 12;
+            btnUpdatepw.Text = "회원정보수정";
+            btnUpdatepw.UseVisualStyleBackColor = false;
+            btnUpdatepw.Click += btnUpdatepw_Click;
+            // 
             // btnLogInOut
             // 
             btnLogInOut.FlatAppearance.BorderColor = Color.Gray;
@@ -453,6 +468,7 @@
             WindowState = FormWindowState.Maximized;
             Load += Calendar_Load;
             pnlMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             pnlCategori.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)CalenderPlus).EndInit();
@@ -496,5 +512,6 @@
         private Button btnUpdatepw;
         private PictureBox pbSearch;
         private Button btnGoToday;
+        private PictureBox pictureBox1;
     }
 }
