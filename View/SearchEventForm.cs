@@ -24,12 +24,6 @@ namespace Project_Maver.View
             init();
         }
 
-        public SearchEventForm(string titleText)
-        {
-            init();
-            searchData(titleText);
-        }
-
         private void init()
         {
             InitializeComponent();
@@ -46,8 +40,8 @@ namespace Project_Maver.View
 
         private void searchData(string titleParam=null)
         {
-            string title = string.IsNullOrEmpty(titleParam) ? txtSearchTitle.Text : titleParam; // 매개변수 titleParam에 값이 있으면 title에 넣어주고 null이면 txtSearch에 있는거 가져오고
-            string paramTitle = "";
+
+            string title = "";
             string fromDate = dtpFromDate.Text;
             string toDate = dtpToDate.Text;
 
@@ -57,17 +51,17 @@ namespace Project_Maver.View
                        + " from events a left join share_group b on a.share_id = b.share_id"
                        + " where 1=1 and user_id = @userId";
 
-            param.Add("userId", "0000");
-            //param.Add("userId", UserSession.UserId);
+            //param.Add("userId", "0000");
+            param.Add("userId", UserSession.UserId);
 
 
             // 일정명 입력했을경우 
-            if (title != null || !(title.Equals("")))
+            if (txtSearchTitle.Text != null && !(txtSearchTitle.Text.Equals("")))
             {
-                paramTitle = "%" + title + "%";
+                title = "%" + txtSearchTitle.Text + "%";
                 sql += " and title like @title";
 
-                param.Add("title", paramTitle);
+                param.Add("title", title);
 
             }
 
@@ -91,6 +85,7 @@ namespace Project_Maver.View
             }
             param.Add("fromDate", fromDate);
             param.Add("toDate", toDate);
+
 
             DataTable dt = DbManager.select_Query(sql, param);
 

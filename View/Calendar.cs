@@ -51,6 +51,7 @@ namespace Maver_켈린더
             if (UserSession.UserId != null)
             {
                 lbID.Text = UserSession.UserId + "님 접속 중";
+               
             }
 
             //영현
@@ -563,12 +564,14 @@ namespace Maver_켈린더
                 lbID.Visible = true;
                 btnUpdatepw.Visible = true;
                 userEvents = select_events(UserSession.UserId);
+                pbSearch.Visible = true;
             }
             else
             {
                 pbProfile.Visible = false;
                 lbID.Visible = false;
                 btnUpdatepw.Visible = false;
+                pbSearch.Visible = false;
             }
             // 1. 달력 시작 전 빈칸 추가
             for (int i = 0; i < startDayOfWeek; i++)
