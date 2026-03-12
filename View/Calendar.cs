@@ -625,7 +625,7 @@ namespace Maver_켈린더
 
             string type = row["repeat_type"].ToString();
 
-            DateTime start = Convert.ToDateTime(row["repeat_start_date"]);
+            DateTime start = Convert.ToDateTime(row["start_date"]);
 
             DateTime end = DateTime.MaxValue;
             if (row["repeat_end_date"] != DBNull.Value)
@@ -637,20 +637,24 @@ namespace Maver_켈린더
             // 매주 반복
             if (type == "매주")
             {
+
                 int repeatDays = Convert.ToInt32(row["repeat_days"]);
-                int dayBit = 1 << (int)currDate.DayOfWeek;
-
-
-                if ((repeatDays & dayBit) == 0)
-                    return false;
-
-                return currDate >= start;
+                return (repeatDays & (1 << (int)currDate.DayOfWeek)) != 0;
             }
 
             // 매월 반복
             if (type == "매월")
             {
-                return currDate.Day == start.Day;
+                int interval = row["repeat_interval"] == DBNull.Value ? 1 : Convert.ToInt32(row["repeat_interval"]);
+
+                if (currDate < start) return false;
+
+                bool isSameDay = currDate.Day == start.Day;
+
+                int monthsDiff = ((currDate.Year - start.Year) * 12) + currDate.Month - start.Month;
+                bool isCorrectInterval = (monthsDiff % interval == 0);
+
+                return isSameDay && isCorrectInterval;
             }
 
             // 매년 반복
@@ -720,28 +724,80 @@ namespace Maver_켈린더
         private DataTable GetScheduleDetail(string title, DateTime date)
         {
             // MySQL의 DATE() 함수를 사용하여 컬럼의 시간 부분을 제외하고 '날짜'만 비교합니다.
-            string sql = @"SELECT event_id, title, memo, start_date, end_date, start_time, end_time 
+            string sql = @"SELECT event_id, title, memo, start_date, end_date, start_time, end_time, 
+                          repeat_type, repeat_start_date, repeat_end_date, repeat_days, repeat_interval,color
                    FROM events 
-                   WHERE title = @title 
-                   AND DATE(start_date) = @date
+                   WHERE title = @title                    
                     ORDER By event_id DESC";
 
             var param = new Dictionary<string, object>
             {
                 { "@title", title },
-                { "@date", date.ToString("yyyy-MM-dd") } // '2026-03-10' 형식으로 전달
+                //{ "@date", date.ToString("yyyy-MM-dd") } // '2026-03-10' 형식으로 전달
             };
 
             DataTable dt = DbManager.select_Query(sql, param);
 
-            // 디버깅용: 데이터가 왜 안 나오는지 확실히 알기 위해 메시지를 구체화합니다.
-            if (dt == null || dt.Rows.Count == 0)
+            if (dt != null && dt.Rows.Count > 0)
             {
-                MessageBox.Show($"DB 조회 실패!\n찾는 제목: {title}\n찾는 날짜: {date.ToString("yyyy-MM-dd")}\n\nDB에 이 제목과 날짜가 정확히 있는지 확인하세요.");
+                // 2. 검색된 데이터들 중 현재 클릭한 날짜(date)에 해당하는 놈을 찾습니다.
+                foreach (DataRow row in dt.Rows)
+                {
+                    string rType = row["repeat_type"]?.ToString();
+                    DateTime dbStartDate = Convert.ToDateTime(row["start_date"]);
+
+                    // 일반 일정인 경우: DB의 날짜와 클릭한 날짜가 같아야 함
+                    if (string.IsNullOrEmpty(rType) || rType == "none")
+                    {
+                        if (dbStartDate.Date == date.Date) 
+                            return CreateSingleRowTable(row);
+                    }
+                    // 반복 일정인 경우: IsRepeatEvent 로직을 통과하면 클릭한 날짜로 날짜를 바꿔서 반환
+                    else
+                    {
+                        if (IsRepeatEvent(row, date))
+                        {
+                            DataRow newRow = row.Table.NewRow();
+                            newRow.ItemArray = row.ItemArray.Clone() as object[];
+
+                            newRow["start_date"] = date.Date;
+                            newRow["end_date"] = date.Date;
+                            // [핵심] DB 날짜가 아닌 사용자가 '클릭한 날짜'로 데이터를 변조해서 넘겨줌
+                            newRow["start_date"] = date.Date;
+                            newRow["end_date"] = date.Date;
+                            return CreateSingleRowTable(row);
+                        }
+                    }
+                }
             }
 
-            return dt;
+            // 디버깅용: 데이터가 왜 안 나오는지 확실히 알기 위해 메시지를 구체화합니다.
+            //if (dt == null || dt.Rows.Count == 0)
+            //{
+            //    MessageBox.Show($"DB 조회 실패!\n찾는 제목: {title}\n찾는 날짜: {date.ToString("yyyy-MM-dd")}\n\nDB에 이 제목과 날짜가 정확히 있는지 확인하세요.");
+            //}
+            //
+            //return dt;
+            MessageBox.Show(
+                $"DB 조회 실패!\n찾는 제목: {title}\n찾는 날짜: {date:yyyy-MM-dd}\n\nDB에 이 제목과 날짜가 정확히 있는지 확인하세요.",
+                "조회 오류",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+                );
+
+            return null;
         }
+
+        //수영_______________________________________________________
+        // 찾은 Row 하나만 담은 DataTable을 반환하는 헬퍼 함수
+        private DataTable CreateSingleRowTable(DataRow row)
+        {
+            DataTable copyDt = row.Table.Clone();
+            copyDt.ImportRow(row);
+            return copyDt;
+        }
+        //--------------------------------------------------------------]
+
 
         // 전 달로 가는버튼 <
         private void btnBeforeDate_Click(object sender, EventArgs e)

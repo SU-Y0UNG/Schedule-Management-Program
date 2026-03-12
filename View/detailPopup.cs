@@ -81,6 +81,26 @@ namespace maverCalender
             //수영
             GetWeather();
             worldTime();
+
+
+            if (selectedDate == DateTime.MinValue)
+            {
+                selectedDate = DateTime.Today;
+            }
+
+            // DateTimePicker 범위 체크
+            if (selectedDate < dtpStartDate.MinDate)
+            {
+                selectedDate = dtpStartDate.MinDate;
+            }
+
+            dtpStartTime.Format = DateTimePickerFormat.Custom;
+            dtpStartTime.CustomFormat = "HH:mm";
+            dtpStartDate.Value = selectedDate;
+
+            dtpEndTime.Format = DateTimePickerFormat.Custom;
+            dtpEndTime.CustomFormat = "HH:mm";
+            dtpEndDate.Value = selectedDate;
         }
 
         public void textContent()

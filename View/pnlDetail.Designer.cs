@@ -86,9 +86,10 @@
             // lbDetailEndDate
             // 
             lbDetailEndDate.AutoSize = true;
-            lbDetailEndDate.Location = new Point(176, 44);
+            lbDetailEndDate.Font = new Font("맑은 고딕", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lbDetailEndDate.Location = new Point(179, 44);
             lbDetailEndDate.Name = "lbDetailEndDate";
-            lbDetailEndDate.Size = new Size(0, 15);
+            lbDetailEndDate.Size = new Size(0, 20);
             lbDetailEndDate.TabIndex = 3;
             // 
             // lbDetailMemo
@@ -103,7 +104,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("맑은 고딕", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(150, 44);
+            label1.Location = new Point(153, 44);
             label1.Name = "label1";
             label1.Size = new Size(20, 20);
             label1.TabIndex = 5;
@@ -126,13 +127,13 @@
             BackColor = Color.White;
             BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(label2);
-            Controls.Add(label1);
             Controls.Add(lbDetailMemo);
             Controls.Add(lbDetailEndDate);
             Controls.Add(lbDetailStartDate);
             Controls.Add(lbDetailTitle);
             Controls.Add(btnClose);
             Controls.Add(btnSang);
+            Controls.Add(label1);
             Location = new Point(14, 10);
             Name = "pnlDetail";
             Size = new Size(298, 140);

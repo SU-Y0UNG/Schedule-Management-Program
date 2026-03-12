@@ -567,7 +567,7 @@ namespace maverCalender
             // 
             cbWorldTime.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cbWorldTime.FormattingEnabled = true;
-            cbWorldTime.Location = new Point(115, 239);
+            cbWorldTime.Location = new Point(115, 237);
             cbWorldTime.Name = "cbWorldTime";
             cbWorldTime.Size = new Size(179, 23);
             cbWorldTime.TabIndex = 15;
@@ -624,7 +624,7 @@ namespace maverCalender
             btnColor.FlatStyle = FlatStyle.Flat;
             btnColor.Location = new Point(60, 103);
             btnColor.Name = "btnColor";
-            btnColor.Size = new Size(17, 0);
+            btnColor.Size = new Size(18, 19);
             btnColor.TabIndex = 21;
             btnColor.UseVisualStyleBackColor = false;
             btnColor.Click += btnColor_Click;
