@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace Maver_켈린더
 {
@@ -225,16 +226,82 @@ namespace Maver_켈린더
                 e.SuppressKeyPress = true;
             }
         }
-        
+
         // 생년월일과 개인정보 체크박스는 사용자가 직접 눌러도 무방함
 
         private void txtPhone_KeyDown(object sender, KeyEventArgs e) // 생년월일과 폰 번호까지 입력 다하고 엔터를 누르면 자동으로 버튼 클릭 이벤트가 실행된다. 
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 btnJoin_Click(sender, e); // 가입하기 버튼 이벤트
-               e.SuppressKeyPress = true;
+                e.SuppressKeyPress = true;
             }
         }
+
+        // 폼 디자인
+        private void pnlInputGroup_Paint(object sender, PaintEventArgs e)
+        {
+            Panel pnl = sender as Panel;
+            if (pnl == null) return;
+
+            int borderRadius = 20;
+            Color borderColor = Color.FromArgb(200, 200, 200);
+            float borderWidth = 1.5f;
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            // 2. 핵심 수정: 하단과 오른쪽이 잘리지 않도록 -4 정도로 여유를 줍니다.
+            // 0.5f 대신 1f에서 시작하는 게 테두리가 더 선명합니다.
+            RectangleF rect = new RectangleF(1f, 1f, pnl.Width - 4, pnl.Height - 4);
+
+            using (GraphicsPath path = GetRoundedRectanglePath(rect, borderRadius))
+            {
+                // 3. Region은 선보다 1픽셀 더 크게 잡아야 선이 안 깎입니다.
+                pnl.Region = new Region(new Rectangle(0, 0, pnl.Width, pnl.Height));
+
+                using (Pen pen = new Pen(borderColor, borderWidth))
+                {
+                    e.Graphics.DrawPath(pen, path);
+                }
+            }
+        }
+        private void pnlInputName_Paint(object sender, PaintEventArgs e)
+        {
+            Panel pnl = sender as Panel;
+            if (pnl == null) return;
+
+            int borderRadius = 15;
+            Color borderColor = Color.FromArgb(200, 200, 200);
+            float borderWidth = 1.0f;
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            // pnlInputGroup.Width라고 되어있던 부분을 pnl.Width로 수정했습니다.
+            RectangleF rect = new RectangleF(1f, 1f, pnl.Width - 4, pnl.Height - 4);
+
+            using (GraphicsPath path = GetRoundedRectanglePath(rect, borderRadius))
+            {
+                pnl.Region = new Region(new Rectangle(0, 0, pnl.Width, pnl.Height));
+
+                using (Pen pen = new Pen(borderColor, borderWidth))
+                {
+                    e.Graphics.DrawPath(pen, path);
+                }
+            }
+        }
+
+        private GraphicsPath GetRoundedRectanglePath(RectangleF rect, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+            float r = radius;
+            path.AddArc(rect.X, rect.Y, r, r, 180, 90);
+            path.AddArc(rect.Right - r, rect.Y, r, r, 270, 90);
+            path.AddArc(rect.Right - r, rect.Bottom - r, r, r, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - r, r, r, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
+
+        
     }
 }
