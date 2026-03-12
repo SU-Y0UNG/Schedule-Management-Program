@@ -70,7 +70,8 @@ namespace Maver_켈린더
             }
 
             // 은비 - 캘린더 그리기
-            DisplayDays(currentYear, currentMonth);
+            lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
+            //DisplayDays(currentYear, currentMonth);
 
             //수영 폰트 디wkdls
             string fontPath = Path.Combine(Application.StartupPath, "Fonts", "BMJUA_ttf.ttf");
@@ -92,11 +93,28 @@ namespace Maver_켈린더
                     lbl.Padding = new Padding(10, 5, 10, 5);
                     lbl.TextAlign = ContentAlignment.MiddleCenter;
                 }
+                
+               
+
                 btnLogInOut.Font = jua2;
-                SetRoundRegion(btnLogInOut, 10);
+                SetRoundRegion(btnLogInOut, 18);
                 ApplyDotBorder(btnLogInOut);
-                btnLogInOut.TextAlign = ContentAlignment.MiddleCenter;
+                //btnLogInOut.Tag = Color.Silver;
+
                 lbID.Font = jua2;
+
+                btnUpdatepw.Font = jua2;
+                SetRoundRegion(btnUpdatepw, 18);
+                ApplyDotBorder(btnUpdatepw);
+                //btnUpdatepw.Tag = Color.Silver;
+
+                btnGoToday.Font = jua2;
+                SetRoundRegion (btnGoToday, 18);
+                ApplyDotBorder (btnGoToday);
+                btnGoToday.Tag = new Tuple<Color, Color>(Color.Purple, Color.White);
+               
+                
+
             }
 
         }
@@ -126,31 +144,39 @@ namespace Maver_켈린더
             ctrl.Paint += Ctrl_Paint;
         }
 
-        private void Ctrl_Paint(object sender, PaintEventArgs e)
+
+        public void Ctrl_Paint(object sender, PaintEventArgs e)
         {
             Control ctrl = sender as Control;
+            Color borderColor = Color.Silver;
+            Color dotColor = Color.DarkGray;
 
+            if (ctrl.Tag is Tuple<Color, Color> colors)
+            {
+                borderColor = colors.Item1;
+                dotColor = colors.Item2;
+            }
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
             // 바깥 둥근 테두리
-            using (Pen border = new Pen(Color.Silver, 2))
+            using (Pen border = new Pen(borderColor, 2))
             {
-                GraphicsPath path = GetRoundRect(new Rectangle(1, 1, ctrl.Width - 3, ctrl.Height - 3), 15);
+                GraphicsPath path = GetRoundRect(new Rectangle(1, 1, ctrl.Width - 3, ctrl.Height - 3), 18);
                 e.Graphics.DrawPath(border, path);
             }
 
             // 안쪽 둥근 점선
-            using (Pen pen = new Pen(Color.DarkGray, 1))
+            using (Pen pen = new Pen(dotColor, 1))
             {
                 pen.DashStyle = DashStyle.Custom;
-                pen.DashPattern = new float[] { 1, 3 };
+                pen.DashPattern = new float[] { 1, 2 };
 
                 pen.StartCap = LineCap.Round;
                 pen.EndCap = LineCap.Round;
 
                 GraphicsPath path = GetRoundRect(
-                    new Rectangle(5, 5, ctrl.Width - 11, ctrl.Height - 11), 14);
+                    new Rectangle(5, 5, ctrl.Width - 11, ctrl.Height - 11), 13);
 
                 e.Graphics.DrawPath(pen, path);
             }
@@ -687,7 +713,7 @@ namespace Maver_켈린더
                     }
                 }
 
-                if (UserSession.UserId != null)
+
                 {
                     // 클릭 이벤트 연결
                     duc.Click += (s, e) =>
@@ -904,7 +930,18 @@ namespace Maver_켈린더
             return copyDt;
         }
         //--------------------------------------------------------------]
+        // 은비 - 추가
+        // 오늘 날짜로 찾아가는 버튼
+        private void btnGoToday_Click_1(object sender, EventArgs e)
+        {
+            int todayYear = DateTime.Today.Year;
+            int todayMonth = DateTime.Today.Month;
 
+            currentYear = todayYear;
+            currentMonth = todayMonth;
+
+            DisplayDays(currentYear, currentMonth);
+        }
 
         // 전 달로 가는버튼 <
         private void btnBeforeDate_Click(object sender, EventArgs e)
@@ -915,8 +952,8 @@ namespace Maver_켈린더
                 currentMonth = 12;
                 currentYear--;
             }
-            //lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
-            DisplayDays(currentYear, currentMonth);
+            lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
+            //DisplayDays(currentYear, currentMonth);
         }
 
         // 다음 달로 가는버튼 >
@@ -928,21 +965,8 @@ namespace Maver_켈린더
                 currentMonth = 1;
                 currentYear++;
             }
-            //lbThisDate.Text = currentYear.ToString() + "." + currentMonth.ToString();
-            DisplayDays(currentYear, currentMonth);
-        }
-
-        // 은비 - 추가
-        // 오늘 날짜로 찾아가는 버튼
-        private void btnGoToday_Click(object sender, EventArgs e)
-        {
-            int todayYear = DateTime.Today.Year;
-            int todayMonth = DateTime.Today.Month;
-
-            currentYear = todayYear;
-            currentMonth = todayMonth;
-
-            DisplayDays(currentYear, currentMonth);
+            lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
+            //DisplayDays(currentYear, currentMonth);
         }
 
 
@@ -975,9 +999,10 @@ namespace Maver_켈린더
 
             currentYear = todayYear;
             currentMonth = todayMonth;
-
-            DisplayDays(currentYear, currentMonth);
+            lbThisDate.Text = "🌼" + currentYear.ToString() + "." + currentMonth.ToString() + "🌼";
+            // DisplayDays(currentYear, currentMonth);
         }
+
 
         //시작하고 로그인 버튼 누를 시 발생하는 이벤트, 로그인 화면 이동
         private void btnLogInOut_Click(object sender, EventArgs e)
@@ -1048,7 +1073,8 @@ namespace Maver_켈린더
             currentMonth = targetDate.Month;
 
             // 2. 화면 다시 그리기
-            DisplayDays(currentYear, currentMonth);
+            lbThisDate.Text = "🌼" + currentYear.ToString() + "." + currentMonth.ToString() + "🌼";
+            //DisplayDays(currentYear, currentMonth);
 
             // 3. 생성된 날짜 칸(DayUserControl)들 중에서 해당 날짜 찾아서 포커스
             foreach (Control control in flpMain.Controls)
@@ -1091,7 +1117,7 @@ namespace Maver_켈린더
             public DateTime endTime { get; set; }
             public DateTime ScheduleDate { get; set; }
         }
-
-        
+ 
     }
+    
 }

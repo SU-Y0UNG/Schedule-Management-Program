@@ -36,8 +36,8 @@
             TreeNode treeNode4 = new TreeNode("캘린더", new TreeNode[] { treeNode2, treeNode3 });
             imageList1 = new ImageList(components);
             pnlMain = new Panel();
+            btnGoToday = new Button();
             btnUpdatepw = new Button();
-            btnGoToday = new Project_Maver.Common.RoundButton();
             pictureBox2 = new PictureBox();
             pnlCategori = new Panel();
             CalenderPlus = new PictureBox();
@@ -57,11 +57,11 @@
             pbSearch = new PictureBox();
             pbProfile = new PictureBox();
             lbID = new Label();
-            btnLogInOut = new Button();
             btnBeforeDate = new Button();
             btnAfterDate = new Button();
             lbThisDate = new Label();
             flpMain = new FlowLayoutPanel();
+            btnLogInOut = new Button();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             pnlCategori.SuspendLayout();
@@ -83,18 +83,35 @@
             // 
             // pnlMain
             // 
-            pnlMain.Controls.Add(btnUpdatepw);
             pnlMain.Controls.Add(btnGoToday);
+            pnlMain.Controls.Add(btnUpdatepw);
             pnlMain.Controls.Add(pictureBox2);
             pnlMain.Controls.Add(pnlCategori);
             pnlMain.Controls.Add(tableLayoutPanel1);
             pnlMain.Controls.Add(pnlHead);
             pnlMain.Controls.Add(flpMain);
+            pnlMain.Controls.Add(btnLogInOut);
             pnlMain.Dock = DockStyle.Fill;
             pnlMain.Location = new Point(0, 0);
             pnlMain.Name = "pnlMain";
             pnlMain.Size = new Size(1584, 1061);
             pnlMain.TabIndex = 0;
+            // 
+            // btnGoToday
+            // 
+            btnGoToday.BackColor = Color.Plum;
+            btnGoToday.FlatAppearance.BorderColor = SystemColors.Control;
+            btnGoToday.FlatAppearance.BorderSize = 0;
+            btnGoToday.FlatStyle = FlatStyle.Flat;
+            btnGoToday.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnGoToday.ForeColor = Color.Black;
+            btnGoToday.Location = new Point(831, 921);
+            btnGoToday.Name = "btnGoToday";
+            btnGoToday.Size = new Size(115, 44);
+            btnGoToday.TabIndex = 13;
+            btnGoToday.Text = "📆 오늘";
+            btnGoToday.UseVisualStyleBackColor = false;
+            btnGoToday.Click += btnGoToday_Click_1;
             // 
             // btnUpdatepw
             // 
@@ -102,27 +119,13 @@
             btnUpdatepw.FlatAppearance.BorderSize = 0;
             btnUpdatepw.FlatStyle = FlatStyle.Flat;
             btnUpdatepw.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnUpdatepw.Location = new Point(32, 893);
+            btnUpdatepw.Location = new Point(50, 807);
             btnUpdatepw.Name = "btnUpdatepw";
             btnUpdatepw.Size = new Size(127, 42);
             btnUpdatepw.TabIndex = 12;
-            btnUpdatepw.Text = "비밀번호 변경";
+            btnUpdatepw.Text = "회원정보수정";
             btnUpdatepw.UseVisualStyleBackColor = false;
             btnUpdatepw.Click += btnUpdatepw_Click;
-            // 
-            // btnGoToday
-            // 
-            btnGoToday.BackColor = SystemColors.ActiveCaption;
-            btnGoToday.FlatAppearance.BorderSize = 0;
-            btnGoToday.FlatStyle = FlatStyle.Flat;
-            btnGoToday.Font = new Font("맑은 고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnGoToday.Location = new Point(907, 941);
-            btnGoToday.Name = "btnGoToday";
-            btnGoToday.Size = new Size(97, 47);
-            btnGoToday.TabIndex = 9;
-            btnGoToday.Text = "오늘 >";
-            btnGoToday.UseVisualStyleBackColor = false;
-            btnGoToday.Click += btnGoToday_Click;
             // 
             // pictureBox2
             // 
@@ -334,7 +337,6 @@
             pnlHead.Controls.Add(pbSearch);
             pnlHead.Controls.Add(pbProfile);
             pnlHead.Controls.Add(lbID);
-            pnlHead.Controls.Add(btnLogInOut);
             pnlHead.Controls.Add(btnBeforeDate);
             pnlHead.Controls.Add(btnAfterDate);
             pnlHead.Controls.Add(lbThisDate);
@@ -357,7 +359,7 @@
             // pbProfile
             // 
             pbProfile.Image = (Image)resources.GetObject("pbProfile.Image");
-            pbProfile.Location = new Point(1233, 13);
+            pbProfile.Location = new Point(1297, 20);
             pbProfile.Name = "pbProfile";
             pbProfile.Size = new Size(44, 36);
             pbProfile.SizeMode = PictureBoxSizeMode.Zoom;
@@ -368,25 +370,11 @@
             // 
             lbID.AutoSize = true;
             lbID.Font = new Font("맑은 고딕", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbID.Location = new Point(1283, 21);
+            lbID.Location = new Point(1347, 28);
             lbID.Name = "lbID";
             lbID.Size = new Size(94, 21);
             lbID.TabIndex = 5;
             lbID.Text = "환영합니다.";
-            // 
-            // btnLogInOut
-            // 
-            btnLogInOut.FlatAppearance.BorderColor = Color.Gray;
-            btnLogInOut.FlatAppearance.BorderSize = 0;
-            btnLogInOut.FlatStyle = FlatStyle.Flat;
-            btnLogInOut.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnLogInOut.Location = new Point(1358, 12);
-            btnLogInOut.Name = "btnLogInOut";
-            btnLogInOut.Size = new Size(97, 46);
-            btnLogInOut.TabIndex = 3;
-            btnLogInOut.Text = "로그인";
-            btnLogInOut.UseVisualStyleBackColor = true;
-            btnLogInOut.Click += btnLogInOut_Click;
             // 
             // btnBeforeDate
             // 
@@ -395,7 +383,7 @@
             btnBeforeDate.FlatAppearance.BorderSize = 0;
             btnBeforeDate.FlatStyle = FlatStyle.Flat;
             btnBeforeDate.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point);
-            btnBeforeDate.Location = new Point(586, 45);
+            btnBeforeDate.Location = new Point(508, 45);
             btnBeforeDate.Name = "btnBeforeDate";
             btnBeforeDate.Size = new Size(37, 59);
             btnBeforeDate.TabIndex = 1;
@@ -410,7 +398,7 @@
             btnAfterDate.FlatAppearance.BorderSize = 0;
             btnAfterDate.FlatStyle = FlatStyle.Flat;
             btnAfterDate.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAfterDate.Location = new Point(853, 45);
+            btnAfterDate.Location = new Point(936, 45);
             btnAfterDate.Name = "btnAfterDate";
             btnAfterDate.Size = new Size(37, 59);
             btnAfterDate.TabIndex = 1;
@@ -423,7 +411,7 @@
             lbThisDate.Anchor = AnchorStyles.Top;
             lbThisDate.AutoSize = true;
             lbThisDate.Font = new Font("Comic Sans MS", 36F, FontStyle.Bold, GraphicsUnit.Point);
-            lbThisDate.Location = new Point(638, 37);
+            lbThisDate.Location = new Point(563, 45);
             lbThisDate.Name = "lbThisDate";
             lbThisDate.Size = new Size(195, 67);
             lbThisDate.TabIndex = 0;
@@ -436,8 +424,22 @@
             flpMain.BackColor = Color.FloralWhite;
             flpMain.Location = new Point(201, 218);
             flpMain.Name = "flpMain";
-            flpMain.Size = new Size(1278, 717);
+            flpMain.Size = new Size(1278, 681);
             flpMain.TabIndex = 0;
+            // 
+            // btnLogInOut
+            // 
+            btnLogInOut.FlatAppearance.BorderColor = Color.Gray;
+            btnLogInOut.FlatAppearance.BorderSize = 0;
+            btnLogInOut.FlatStyle = FlatStyle.Flat;
+            btnLogInOut.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnLogInOut.Location = new Point(62, 834);
+            btnLogInOut.Name = "btnLogInOut";
+            btnLogInOut.Size = new Size(97, 43);
+            btnLogInOut.TabIndex = 3;
+            btnLogInOut.Text = "로그인";
+            btnLogInOut.UseVisualStyleBackColor = true;
+            btnLogInOut.Click += btnLogInOut_Click;
             // 
             // Calendar
             // 
@@ -488,11 +490,11 @@
         private PictureBox pbProfile;
         private TreeView treeView1;
         private PictureBox CalenderPlus;
-        private Project_Maver.Common.RoundButton btnGoToday;
         private ContextMenuStrip cmsCalendar;
         private ToolStripMenuItem tsmDelete;
         private ToolStripMenuItem tsmExit;
         private Button btnUpdatepw;
         private PictureBox pbSearch;
+        private Button btnGoToday;
     }
 }
