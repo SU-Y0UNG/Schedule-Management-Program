@@ -55,10 +55,6 @@ namespace maverCalender
 
         public DateTime selectedDate;
 
-        // 승환(3월10)
-        //public string title {  get; set; }
-        //public event Action<detailPopup> ScheduleSaved;
-
         pnlRepeat repeat = new pnlRepeat();
         public detailPopup()
         {
@@ -78,7 +74,7 @@ namespace maverCalender
 
         private void detailPopup_Load(object sender, EventArgs e)
         {
-            //수영
+            // 수영
             this.BackColor = ThemeColor;
             worldTime();
 
@@ -87,9 +83,7 @@ namespace maverCalender
             if (File.Exists(fontPath))
             {
                 fonts.AddFontFile(fontPath);
-                Font jua1 = new Font(fonts.Families[0], 16, FontStyle.Regular);
                 Font jua2 = new Font(fonts.Families[0], 14, FontStyle.Regular);
-
 
                 btnDelete.Font = jua2;
                 BorderHelper.SetRoundRegion(btnDelete, 18);
@@ -102,28 +96,35 @@ namespace maverCalender
                 btnUpdate.Font = jua2;
                 BorderHelper.SetRoundRegion(btnUpdate, 18);
                 BorderHelper.ApplyDotBorder(btnUpdate);
-
             }
 
-
-            if (selectedDate == DateTime.MinValue)
+            // [해결 방법: 조건문 추가]
+            // event_id가 0 이하일 때만(즉, 새 일정을 추가할 때만) 날짜를 초기화함
+            if (this.event_id <= 0)
             {
-                selectedDate = DateTime.Today;
+                // 새 일정 추가 시: 캘린더에서 선택했던 날짜(selectedDate)를 기본값으로 세팅
+                if (selectedDate == DateTime.MinValue)
+                {
+                    selectedDate = DateTime.Today;
+                }
+
+                // DateTimePicker 범위 체크
+                if (selectedDate < dtpStartDate.MinDate)
+                {
+                    selectedDate = dtpStartDate.MinDate;
+                }
+
+                // 새 일정일 때만 클릭한 날짜를 기본값으로 넣어줌
+                dtpStartDate.Value = selectedDate;
+                dtpEndDate.Value = selectedDate;
             }
 
-            // DateTimePicker 범위 체크
-            if (selectedDate < dtpStartDate.MinDate)
-            {
-                selectedDate = dtpStartDate.MinDate;
-            }
-
+            // 시간 포맷 설정 (수정 모드에서도 포맷은 지정해야 하므로 바깥으로 뺌)
             dtpStartTime.Format = DateTimePickerFormat.Custom;
             dtpStartTime.CustomFormat = "HH:mm";
-            dtpStartDate.Value = selectedDate;
 
             dtpEndTime.Format = DateTimePickerFormat.Custom;
             dtpEndTime.CustomFormat = "HH:mm";
-            dtpEndDate.Value = selectedDate;
 
             // 개인인지 그룹으로 만들지 지정하는 콤보박스 세팅
             setShareCombobox();
@@ -323,7 +324,6 @@ namespace maverCalender
             this.Close();
 
             //수영
-            MessageBox.Show(selectedColor.ToString());
             this.DialogResult = DialogResult.OK; // 저장 후 창 닫기
             this.Close();
 
@@ -415,149 +415,10 @@ namespace maverCalender
                 this.dtpEndDate.Value = endDate;
         }
 
-        // 승환,수영(반복부분 추가)
-        private void LoadDetailData(string userid)
-        {
-            string connstr = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
-            conn = new MySqlConnection(connstr);
-            try
-            {
-                conn.Open();
-
-                // 2. 쿼리 작성 (필요한 컬럼만 지정)
-                string sql = @"SELECT user_id, title, start_time, end_time, start_date, end_date, memo,  repeat_type, repeat_interval, repeat_start_date, repeat_end_date, repeat_days, color
-                           FROM events 
-                           WHERE user_id = @userid"; // id는 이 폼을 열 때 넘겨받은 변수여야 합니다.
-
-                cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@userid", userid); // 예시로 1번 데이터를 가져옵니다.
-
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                // 3. 데이터를 UI 칸에 채우기
-                if (reader.Read())
-                {
-                    // 문자열 데이터 (텍스트박스)
-                    //txtUserid.Text = reader["user_id"].ToString();
-                    txtTitle.Text = reader["title"].ToString();
-                    txtMemo.Text = reader["memo"]?.ToString() ?? ""; // 메모가 비어있을 경우 대비
-
-                    // 날짜 데이터 (DateTimePicker)
-                    // DB 타입이 Date나 DateTime일 경우입니다.
-                    dtpStartDate.Value = Convert.ToDateTime(reader["start_date"]);
-                    dtpEndDate.Value = Convert.ToDateTime(reader["end_date"]);
-
-                    // 시간 데이터 (DateTimePicker의 Format을 Time으로 설정했을 경우)
-                    // DB 타입이 Time일 경우 TimeSpan으로 읽어와 처리할 수 있습니다.
-                    if (reader["start_time"] != DBNull.Value)
-                    {
-                        TimeSpan startTime = (TimeSpan)reader["start_time"];
-                        dtpStartTime.Value = DateTime.Today.Add(startTime);
-                    }
-
-                    if (reader["end_time"] != DBNull.Value)
-                    {
-                        TimeSpan endTime = (TimeSpan)reader["end_time"];
-                        dtpEndTime.Value = DateTime.Today.Add(endTime);
-                    }
-                    if (reader["repeat_type"] != DBNull.Value)
-                    {
-                        repeat.RepeatType = reader["repeat_type"].ToString();
-                    }
-                    if (reader["repeat_Interval"] != DBNull.Value)
-                    {
-                        repeat.RepeatInterval = Convert.ToInt32(reader["repeat_Interval"]);
-                    }
-                    if (reader["repeat_start_date"] != DBNull.Value)
-                    {
-                        repeat.RepeatStartDate = Convert.ToDateTime(reader["repeat_start_date"]);
-                    }
-                    if (reader["repeat_end_date"] != DBNull.Value)
-                    {
-                        repeat.RepeatEndDate = Convert.ToDateTime(reader["repeat_end_date"]);
-                    }
-                    if (reader["repeat_days"] != DBNull.Value)
-                    {
-                        repeat.RepeatDays = Convert.ToInt32(reader["repeat_days"]);
-                    }
-                    if (reader["color"] != DBNull.Value)
-                    {
-                        string colorName = reader["color"].ToString();
-                        btnColor.BackColor = Color.FromName(colorName);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"에러 이유: {ex.Message}\n\n위치: {ex.StackTrace}");
-            }
-        }
+        
         // 승환
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            //            string connStr = "Server=192.168.0.96;Port=3306; Database=MaverDB;Uid=maver_admin;Pwd=moble1234;";
-            //            conn = new MySqlConnection(connStr);
-            //            try
-            //            {
-            //                conn.Open();
-
-            //                // 2. UPDATE 쿼리 (화면의 입력값을 DB에 반영)
-            //                // 주의: WHERE 절에는 'user_id'가 아닌 고유 키인 'event_id'를 쓰는 것이 안전합니다.
-            //                string sql = @"UPDATE events 
-            //                           SET title = @title, 
-            //                               start_date = @start_date, 
-            //                               end_date = @end_date, 
-            //                               start_time = @start_time, 
-            //                               end_time = @end_time,
-            //                               memo = @memo,
-            //                               repeat_type = @rtype, 
-            //                               repeat_interval = @rinter, 
-            //                               repeat_days = @rdays, 
-            //                               repeat_end_date = @rend,
-            //                               repeat_start_date=@rstart,
-            //                               color=@color
-            //                           WHERE user_id = @user_id and event_id = @event_id"; // 여기서는 일단 기존처럼 user_id를 기준으로 합니다.
-            ////************************************************************************** 이벤트 아이디 추가
-
-            //                MySqlCommand cmd = new MySqlCommand(sql, conn);
-            //                cmd.Parameters.Clear(); // 파라미터 중복 방지
-
-            //                // 3. 파라미터 매핑 (화면의 컨트롤 값을 DB로 전달)
-            //                cmd.Parameters.AddWithValue("@title", txtTitle.Text);
-            //                cmd.Parameters.AddWithValue("@start_date", dtpStartDate.Value.ToString("yyyy-MM-dd"));
-            //                cmd.Parameters.AddWithValue("@end_date", dtpEndDate.Value.ToString("yyyy-MM-dd"));
-            //                cmd.Parameters.AddWithValue("@start_time", dtpStartTime.Value.ToString("HH:mm:ss"));
-            //                cmd.Parameters.AddWithValue("@end_time", dtpEndTime.Value.ToString("HH:mm:ss"));
-            //                cmd.Parameters.AddWithValue("@user_id", UserSession.UserId); // 기준이 되는 ID
-            //                cmd.Parameters.AddWithValue("@memo", txtMemo.Text);
-            //                cmd.Parameters.AddWithValue("@rtype", repeat.RepeatType);
-            //                cmd.Parameters.AddWithValue("@rinter", repeat.RepeatInterval);
-            //                cmd.Parameters.AddWithValue("@rdays", repeat.RepeatDays);
-            //                cmd.Parameters.AddWithValue("@rstart", repeat.RepeatStartDate);
-            //                cmd.Parameters.AddWithValue("@rend", repeat.RepeatEndDate);
-            //                cmd.Parameters.AddWithValue("@color", btnColor.BackColor.Name);
-            //                cmd.Parameters.AddWithValue("@event_id", event_id);
-
-
-            //                // 4. 실행
-            //                int result = cmd.ExecuteNonQuery();
-
-            //                if (result > 0)
-            //                {
-            //                    MessageBox.Show("일정이 성공적으로 수정되었습니다!");
-            //                    this.DialogResult = DialogResult.OK;
-            //                    this.Close(); // 저장 후 팝업 닫기
-            //                }
-            //                else
-            //                {
-            //                    // 💡 아무 반응이 없었던 이유는 아마 이 조건문에서 0이 나왔기 때문일 것입니다.
-            //                    MessageBox.Show("수정된 내용이 없습니다. 입력 데이터(ID, 제목)를 확인하세요.");
-            //                }
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                MessageBox.Show("저장 중 오류 발생: " + ex.Message);
-            //            }
             // event_id가 비어있는지 먼저 체크 (사진 3의 '수정 내용 없음' 방지)
             if (this.event_id <= 0)
             {
