@@ -1,19 +1,18 @@
-﻿using Project_Maver.Common;
+﻿using MySql.Data.MySqlClient; // DB연결을 위해 필요하다
+using Project_Maver.Common;
+using Project_Maver.Common;  // DbManager, 전역변수 UserSession사용
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Mail; // 메일 발송에 필요한 문구
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using System.Net;
-using System.Net.Mail; // 메일 발송에 필요한 문구
-
-using MySql.Data.MySqlClient; // DB연결을 위해 필요하다
-using Project_Maver.Common;  // DbManager, 전역변수 UserSession사용
+using System.Drawing.Drawing2D;
 
 namespace Project_Maver.View
 {
@@ -162,6 +161,47 @@ namespace Project_Maver.View
                 btnFindPW_Click(sender, e);
                 e.SuppressKeyPress = true;
             }
+        }
+
+
+        /// 폼 디자인 부분
+        private void pnlFindpw_Paint(object sender, PaintEventArgs e)
+        {
+            Panel pnl = sender as Panel;
+            if (pnl == null) return;
+
+            int borderRadius = 20;
+            Color borderColor = Color.FromArgb(200, 200, 200);
+            float borderWidth = 1.5f;
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            // 2. 핵심 수정: 하단과 오른쪽이 잘리지 않도록 -4 정도로 여유를 줍니다.
+            // 0.5f 대신 1f에서 시작하는 게 테두리가 더 선명합니다.
+            RectangleF rect = new RectangleF(1f, 1f, pnl.Width - 4, pnl.Height - 4);
+
+            using (GraphicsPath path = GetRoundedRectanglePath(rect, borderRadius))
+            {
+                // 3. Region은 선보다 1픽셀 더 크게 잡아야 선이 안 깎입니다.
+                pnl.Region = new Region(new Rectangle(0, 0, pnl.Width, pnl.Height));
+
+                using (Pen pen = new Pen(borderColor, borderWidth))
+                {
+                    e.Graphics.DrawPath(pen, path);
+                }
+            }
+
+        }
+        private GraphicsPath GetRoundedRectanglePath(RectangleF rect, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+            float r = radius;
+            path.AddArc(rect.X, rect.Y, r, r, 180, 90);
+            path.AddArc(rect.Right - r, rect.Y, r, r, 270, 90);
+            path.AddArc(rect.Right - r, rect.Bottom - r, r, r, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - r, r, r, 90, 90);
+            path.CloseFigure();
+            return path;
         }
     }
 }

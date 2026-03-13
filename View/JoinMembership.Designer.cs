@@ -71,7 +71,7 @@
             // txtName
             // 
             txtName.BorderStyle = BorderStyle.None;
-            txtName.Font = new Font("Noto Sans KR", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            txtName.Font = new Font("Noto Sans KR", 13F, FontStyle.Regular, GraphicsUnit.Point);
             txtName.Location = new Point(5, 3);
             txtName.Multiline = true;
             txtName.Name = "txtName";
@@ -83,7 +83,7 @@
             // txtPassWord
             // 
             txtPassWord.BorderStyle = BorderStyle.None;
-            txtPassWord.Font = new Font("Noto Sans KR", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            txtPassWord.Font = new Font("Noto Sans KR", 13F, FontStyle.Regular, GraphicsUnit.Point);
             txtPassWord.Location = new Point(4, 45);
             txtPassWord.Multiline = true;
             txtPassWord.Name = "txtPassWord";
@@ -96,7 +96,7 @@
             // txtPwCheck
             // 
             txtPwCheck.BorderStyle = BorderStyle.None;
-            txtPwCheck.Font = new Font("Noto Sans KR", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            txtPwCheck.Font = new Font("Noto Sans KR", 13F, FontStyle.Regular, GraphicsUnit.Point);
             txtPwCheck.Location = new Point(4, 86);
             txtPwCheck.Multiline = true;
             txtPwCheck.Name = "txtPwCheck";
@@ -120,6 +120,7 @@
             // btnJoin
             // 
             btnJoin.BackColor = Color.MediumSeaGreen;
+            btnJoin.FlatAppearance.BorderSize = 0;
             btnJoin.FlatStyle = FlatStyle.Flat;
             btnJoin.Font = new Font("Noto Sans KR Medium", 12F, FontStyle.Bold, GraphicsUnit.Point);
             btnJoin.ForeColor = Color.White;
@@ -144,7 +145,7 @@
             // txtId
             // 
             txtId.BorderStyle = BorderStyle.None;
-            txtId.Font = new Font("Noto Sans KR", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            txtId.Font = new Font("Noto Sans KR", 13F, FontStyle.Regular, GraphicsUnit.Point);
             txtId.Location = new Point(4, 4);
             txtId.Multiline = true;
             txtId.Name = "txtId";
@@ -192,7 +193,7 @@
             // txtEmail
             // 
             txtEmail.BorderStyle = BorderStyle.None;
-            txtEmail.Font = new Font("Noto Sans KR", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            txtEmail.Font = new Font("Noto Sans KR", 13F, FontStyle.Regular, GraphicsUnit.Point);
             txtEmail.Location = new Point(4, 127);
             txtEmail.Multiline = true;
             txtEmail.Name = "txtEmail";
@@ -204,7 +205,7 @@
             // txtPhone
             // 
             txtPhone.BorderStyle = BorderStyle.None;
-            txtPhone.Font = new Font("Noto Sans KR", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            txtPhone.Font = new Font("Noto Sans KR", 13F, FontStyle.Regular, GraphicsUnit.Point);
             txtPhone.Location = new Point(5, 44);
             txtPhone.Multiline = true;
             txtPhone.Name = "txtPhone";
