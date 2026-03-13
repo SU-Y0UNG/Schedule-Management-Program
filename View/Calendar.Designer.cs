@@ -416,7 +416,7 @@
             // pbProfile
             // 
             pbProfile.Image = (Image)resources.GetObject("pbProfile.Image");
-            pbProfile.Location = new Point(1298, 29);
+            pbProfile.Location = new Point(1276, 29);
             pbProfile.Name = "pbProfile";
             pbProfile.Size = new Size(44, 36);
             pbProfile.SizeMode = PictureBoxSizeMode.Zoom;
@@ -427,7 +427,7 @@
             // 
             lbID.AutoSize = true;
             lbID.Font = new Font("맑은 고딕", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbID.Location = new Point(1348, 39);
+            lbID.Location = new Point(1326, 39);
             lbID.Name = "lbID";
             lbID.Size = new Size(94, 21);
             lbID.TabIndex = 5;

@@ -85,10 +85,10 @@
             txtPassWord.BorderStyle = BorderStyle.None;
             txtPassWord.Font = new Font("Noto Sans KR", 13F, FontStyle.Regular, GraphicsUnit.Point);
             txtPassWord.Location = new Point(4, 45);
-            txtPassWord.Multiline = true;
             txtPassWord.Name = "txtPassWord";
+            txtPassWord.PasswordChar = '*';
             txtPassWord.PlaceholderText = "비밀번호";
-            txtPassWord.Size = new Size(390, 40);
+            txtPassWord.Size = new Size(390, 26);
             txtPassWord.TabIndex = 3;
             txtPassWord.UseSystemPasswordChar = true;
             txtPassWord.KeyDown += txtPassWord_KeyDown;
@@ -98,11 +98,10 @@
             txtPwCheck.BorderStyle = BorderStyle.None;
             txtPwCheck.Font = new Font("Noto Sans KR", 13F, FontStyle.Regular, GraphicsUnit.Point);
             txtPwCheck.Location = new Point(4, 86);
-            txtPwCheck.Multiline = true;
             txtPwCheck.Name = "txtPwCheck";
             txtPwCheck.PasswordChar = '*';
             txtPwCheck.PlaceholderText = "비밀번호 확인";
-            txtPwCheck.Size = new Size(390, 40);
+            txtPwCheck.Size = new Size(390, 26);
             txtPwCheck.TabIndex = 3;
             txtPwCheck.UseSystemPasswordChar = true;
             txtPwCheck.KeyDown += txtPwCheck_KeyDown;
