@@ -43,7 +43,7 @@
             // 
             // btnFindPW
             // 
-            btnFindPW.BackColor = Color.MediumSeaGreen;
+            btnFindPW.BackColor = Color.DarkGray;
             btnFindPW.FlatAppearance.BorderSize = 0;
             btnFindPW.FlatStyle = FlatStyle.Flat;
             btnFindPW.Font = new Font("Noto Sans KR Medium", 12F, FontStyle.Regular, GraphicsUnit.Point);
