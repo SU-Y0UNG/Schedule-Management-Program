@@ -13,7 +13,8 @@ using System.Windows.Forms;
 
 namespace Project_Maver.View
 {
-    //수영
+    //
+    //
     public partial class pnlRepeat : UserControl
     {
 

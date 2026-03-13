@@ -63,12 +63,7 @@ namespace maverCalender
             cbAlert = new ComboBox();
             btnPlus = new Button();
             pbOn = new PictureBox();
-            btnLogin = new Button();
             dtpStartDate = new DateTimePicker();
-            lblDesc = new Label();
-            lblTemp = new Label();
-            lblCity = new Label();
-            pbWeather = new PictureBox();
             dtpEndDate = new DateTimePicker();
             dtpStartTime = new DateTimePicker();
             dtpEndTime = new DateTimePicker();
@@ -94,7 +89,6 @@ namespace maverCalender
             ((System.ComponentModel.ISupportInitialize)pbInvite).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbAlert).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbOn).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pbWeather).BeginInit();
             SuspendLayout();
             // 
             // btnClose
@@ -468,17 +462,6 @@ namespace maverCalender
             pbOn.TabStop = false;
             pbOn.Click += pbOn_Click;
             // 
-            // btnLogin
-            // 
-            btnLogin.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnLogin.Location = new Point(12, 624);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(53, 31);
-            btnLogin.TabIndex = 8;
-            btnLogin.Text = "Google";
-            btnLogin.UseVisualStyleBackColor = true;
-            btnLogin.Click += btnLogin_Click;
-            // 
             // dtpStartDate
             // 
             dtpStartDate.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -486,46 +469,6 @@ namespace maverCalender
             dtpStartDate.Name = "dtpStartDate";
             dtpStartDate.Size = new Size(179, 23);
             dtpStartDate.TabIndex = 9;
-            // 
-            // lblDesc
-            // 
-            lblDesc.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblDesc.AutoSize = true;
-            lblDesc.Location = new Point(121, 669);
-            lblDesc.Name = "lblDesc";
-            lblDesc.Size = new Size(31, 15);
-            lblDesc.TabIndex = 10;
-            lblDesc.Text = "desc";
-            // 
-            // lblTemp
-            // 
-            lblTemp.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblTemp.AutoSize = true;
-            lblTemp.Location = new Point(57, 669);
-            lblTemp.Name = "lblTemp";
-            lblTemp.Size = new Size(35, 15);
-            lblTemp.TabIndex = 10;
-            lblTemp.Text = "temp";
-            // 
-            // lblCity
-            // 
-            lblCity.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblCity.AutoSize = true;
-            lblCity.Location = new Point(16, 669);
-            lblCity.Name = "lblCity";
-            lblCity.Size = new Size(26, 15);
-            lblCity.TabIndex = 10;
-            lblCity.Text = "city";
-            // 
-            // pbWeather
-            // 
-            pbWeather.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pbWeather.Location = new Point(291, 650);
-            pbWeather.Name = "pbWeather";
-            pbWeather.Size = new Size(37, 34);
-            pbWeather.SizeMode = PictureBoxSizeMode.StretchImage;
-            pbWeather.TabIndex = 11;
-            pbWeather.TabStop = false;
             // 
             // dtpEndDate
             // 
@@ -707,15 +650,10 @@ namespace maverCalender
             Controls.Add(btnDelete);
             Controls.Add(txtMemo);
             Controls.Add(cbWorldTime);
-            Controls.Add(pbWeather);
-            Controls.Add(lblCity);
-            Controls.Add(lblTemp);
             Controls.Add(dtpEndTime);
             Controls.Add(dtpEndDate);
             Controls.Add(dtpStartTime);
-            Controls.Add(lblDesc);
             Controls.Add(dtpStartDate);
-            Controls.Add(btnLogin);
             Controls.Add(cbAlert);
             Controls.Add(pbOff);
             Controls.Add(pbAlert);
@@ -765,7 +703,6 @@ namespace maverCalender
             ((System.ComponentModel.ISupportInitialize)pbInvite).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbAlert).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbOn).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pbWeather).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -805,12 +742,7 @@ namespace maverCalender
         private ComboBox cbAlert;
         private Button btnPlus;
         private PictureBox pbOn;
-        private Button btnLogin;
         private DateTimePicker dtpStartDate;
-        private Label lblDesc;
-        private Label lblTemp;
-        private Label lblCity;
-        private PictureBox pbWeather;
         private DateTimePicker dtpEndDate;
         private DateTimePicker dtpStartTime;
         private DateTimePicker dtpEndTime;

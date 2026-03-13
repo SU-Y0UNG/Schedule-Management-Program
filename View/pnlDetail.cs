@@ -1,4 +1,6 @@
 ﻿using maverCalender;
+using Newtonsoft.Json;
+using Project_Maver.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,8 +30,14 @@ namespace Project_Maver.View
 
         private void pnlDetail_Load(object sender, EventArgs e)
         {
-
+            
         }
+
+
+
+        //날씨(수영)       
+
+
         // 승환(3/10)
         public void setData(int event_id, string title, string memo, string startDate, string endDate, string startTime, string endTime)
         {

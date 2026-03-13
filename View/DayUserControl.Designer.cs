@@ -54,6 +54,7 @@
             // flpEvent
             // 
             flpEvent.AutoScroll = true;
+            flpEvent.BackColor = Color.MistyRose;
             flpEvent.FlowDirection = FlowDirection.TopDown;
             flpEvent.Location = new Point(1, 28);
             flpEvent.Margin = new Padding(0);

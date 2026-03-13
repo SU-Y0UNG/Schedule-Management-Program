@@ -53,17 +53,26 @@ namespace Project_Maver.View
             this.Padding = new Padding(8);
             _date = thisDate;
             lbDay.Text = day.ToString();
-            this.BorderStyle = BorderStyle.None;
-            if (_date.Date == DateTime.Today)
-            {
-                this.BackColor = Color.Pink;
-                lbToday.Text = "TODAY 🐻";
-                
-
-            }
-            
+            this.BorderStyle = BorderStyle.None;                     
 
         }
+
+
+        public void ColorChange(Color backgroundColor, Color todayColor)
+        {
+            flpEvent.BackColor= backgroundColor;
+            this.BackColor = backgroundColor;
+
+            if (_date.Date == DateTime.Today)
+            {
+                this.BackColor =todayColor;
+                flpEvent.BackColor = todayColor;
+                lbToday.Text = "TODAY 🐻";
+
+            }
+        }
+
+
         public event Action<string> TitleLabelClicked;
 
         protected override void OnPaint(PaintEventArgs e)

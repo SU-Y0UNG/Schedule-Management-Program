@@ -169,7 +169,7 @@ namespace Project_Maver.View
                 Font jua2 = new Font(fonts.Families[0], 12, FontStyle.Regular);
 
 
-                btnSearch.Font = jua2;
+                //btnSearch.Font = jua2;
                 btnClose.Font = jua2;
                 BorderHelper.SetRoundRegion(btnSearch, 18);
                 BorderHelper.ApplyDotBorder(btnSearch); 

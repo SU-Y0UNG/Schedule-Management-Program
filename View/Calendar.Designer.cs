@@ -54,6 +54,10 @@
             label7 = new Label();
             label8 = new Label();
             pnlHead = new Panel();
+            lblDesc = new Label();
+            pbWeather1 = new PictureBox();
+            lbWeather = new Label();
+            lblTemp = new Label();
             pbSearch = new PictureBox();
             pbProfile = new PictureBox();
             lbID = new Label();
@@ -71,6 +75,7 @@
             cmsCalendar.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             pnlHead.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbWeather1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbSearch).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbProfile).BeginInit();
             SuspendLayout();
@@ -102,7 +107,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.BackColor = Color.FloralWhite;
+            pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(130, 218);
             pictureBox1.Name = "pictureBox1";
@@ -117,7 +122,7 @@
             btnGoToday.FlatAppearance.BorderColor = SystemColors.Control;
             btnGoToday.FlatAppearance.BorderSize = 0;
             btnGoToday.FlatStyle = FlatStyle.Flat;
-            btnGoToday.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnGoToday.Font = new Font("맑은 고딕", 11F, FontStyle.Bold, GraphicsUnit.Point);
             btnGoToday.ForeColor = Color.Black;
             btnGoToday.Location = new Point(909, 910);
             btnGoToday.Name = "btnGoToday";
@@ -129,9 +134,9 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.BackColor = Color.White;
+            pictureBox2.BackColor = Color.Transparent;
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(0, 12);
+            pictureBox2.Location = new Point(0, 28);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(40, 37);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -150,7 +155,7 @@
             // 
             // CalenderPlus
             // 
-            CalenderPlus.BackColor = Color.WhiteSmoke;
+            CalenderPlus.BackColor = Color.Transparent;
             CalenderPlus.Image = (Image)resources.GetObject("CalenderPlus.Image");
             CalenderPlus.Location = new Point(264, 13);
             CalenderPlus.Name = "CalenderPlus";
@@ -231,6 +236,7 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(1511, 36);
             tableLayoutPanel1.TabIndex = 3;
             // 
@@ -268,7 +274,7 @@
             label4.BackColor = Color.Linen;
             label4.Dock = DockStyle.Fill;
             label4.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.ForeColor = Color.DarkOrange;
+            label4.ForeColor = Color.OrangeRed;
             label4.Location = new Point(433, 0);
             label4.Name = "label4";
             label4.Size = new Size(209, 36);
@@ -335,6 +341,10 @@
             // pnlHead
             // 
             pnlHead.Anchor = AnchorStyles.Top;
+            pnlHead.Controls.Add(lblDesc);
+            pnlHead.Controls.Add(pbWeather1);
+            pnlHead.Controls.Add(lbWeather);
+            pnlHead.Controls.Add(lblTemp);
             pnlHead.Controls.Add(pbSearch);
             pnlHead.Controls.Add(pbProfile);
             pnlHead.Controls.Add(lbID);
@@ -345,6 +355,52 @@
             pnlHead.Name = "pnlHead";
             pnlHead.Size = new Size(1488, 138);
             pnlHead.TabIndex = 2;
+            // 
+            // lblDesc
+            // 
+            lblDesc.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblDesc.AutoSize = true;
+            lblDesc.Font = new Font("Noto Sans KR Medium", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            lblDesc.ForeColor = Color.Gray;
+            lblDesc.Location = new Point(128, 101);
+            lblDesc.Name = "lblDesc";
+            lblDesc.Size = new Size(42, 21);
+            lblDesc.TabIndex = 16;
+            lblDesc.Text = "desc";
+            // 
+            // pbWeather1
+            // 
+            pbWeather1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pbWeather1.Location = new Point(130, 64);
+            pbWeather1.Name = "pbWeather1";
+            pbWeather1.Size = new Size(36, 34);
+            pbWeather1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbWeather1.TabIndex = 17;
+            pbWeather1.TabStop = false;
+            // 
+            // lbWeather
+            // 
+            lbWeather.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lbWeather.AutoSize = true;
+            lbWeather.Font = new Font("Noto Sans KR Black", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lbWeather.ForeColor = Color.DimGray;
+            lbWeather.Location = new Point(12, 69);
+            lbWeather.Name = "lbWeather";
+            lbWeather.Size = new Size(112, 24);
+            lbWeather.TabIndex = 14;
+            lbWeather.Text = "✔️오늘의 날씨";
+            // 
+            // lblTemp
+            // 
+            lblTemp.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblTemp.AutoSize = true;
+            lblTemp.Font = new Font("Noto Sans KR Medium", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTemp.ForeColor = Color.Gray;
+            lblTemp.Location = new Point(51, 101);
+            lblTemp.Name = "lblTemp";
+            lblTemp.Size = new Size(47, 21);
+            lblTemp.TabIndex = 14;
+            lblTemp.Text = "temp";
             // 
             // pbSearch
             // 
@@ -360,7 +416,7 @@
             // pbProfile
             // 
             pbProfile.Image = (Image)resources.GetObject("pbProfile.Image");
-            pbProfile.Location = new Point(1297, 20);
+            pbProfile.Location = new Point(1298, 29);
             pbProfile.Name = "pbProfile";
             pbProfile.Size = new Size(44, 36);
             pbProfile.SizeMode = PictureBoxSizeMode.Zoom;
@@ -371,7 +427,7 @@
             // 
             lbID.AutoSize = true;
             lbID.Font = new Font("맑은 고딕", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbID.Location = new Point(1347, 28);
+            lbID.Location = new Point(1348, 39);
             lbID.Name = "lbID";
             lbID.Size = new Size(94, 21);
             lbID.TabIndex = 5;
@@ -384,6 +440,7 @@
             btnBeforeDate.FlatAppearance.BorderSize = 0;
             btnBeforeDate.FlatStyle = FlatStyle.Flat;
             btnBeforeDate.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            btnBeforeDate.ForeColor = Color.FromArgb(64, 64, 64);
             btnBeforeDate.Location = new Point(581, 48);
             btnBeforeDate.Name = "btnBeforeDate";
             btnBeforeDate.Size = new Size(37, 59);
@@ -399,6 +456,7 @@
             btnAfterDate.FlatAppearance.BorderSize = 0;
             btnAfterDate.FlatStyle = FlatStyle.Flat;
             btnAfterDate.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            btnAfterDate.ForeColor = Color.FromArgb(64, 64, 64);
             btnAfterDate.Location = new Point(870, 48);
             btnAfterDate.Name = "btnAfterDate";
             btnAfterDate.Size = new Size(37, 59);
@@ -412,6 +470,7 @@
             lbThisDate.Anchor = AnchorStyles.Top;
             lbThisDate.AutoSize = true;
             lbThisDate.Font = new Font("Comic Sans MS", 36F, FontStyle.Bold, GraphicsUnit.Point);
+            lbThisDate.ForeColor = Color.FromArgb(64, 64, 64);
             lbThisDate.Location = new Point(652, 43);
             lbThisDate.Name = "lbThisDate";
             lbThisDate.Size = new Size(195, 67);
@@ -422,7 +481,7 @@
             // 
             flpMain.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flpMain.AutoScroll = true;
-            flpMain.BackColor = Color.FloralWhite;
+            flpMain.BackColor = Color.Transparent;
             flpMain.Location = new Point(201, 218);
             flpMain.Name = "flpMain";
             flpMain.Size = new Size(1278, 681);
@@ -434,7 +493,7 @@
             btnUpdatepw.FlatAppearance.BorderSize = 0;
             btnUpdatepw.FlatStyle = FlatStyle.Flat;
             btnUpdatepw.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnUpdatepw.Location = new Point(50, 807);
+            btnUpdatepw.Location = new Point(1470, 910);
             btnUpdatepw.Name = "btnUpdatepw";
             btnUpdatepw.Size = new Size(127, 42);
             btnUpdatepw.TabIndex = 12;
@@ -448,7 +507,7 @@
             btnLogInOut.FlatAppearance.BorderSize = 0;
             btnLogInOut.FlatStyle = FlatStyle.Flat;
             btnLogInOut.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnLogInOut.Location = new Point(62, 834);
+            btnLogInOut.Location = new Point(1620, 910);
             btnLogInOut.Name = "btnLogInOut";
             btnLogInOut.Size = new Size(97, 43);
             btnLogInOut.TabIndex = 3;
@@ -477,6 +536,7 @@
             tableLayoutPanel1.PerformLayout();
             pnlHead.ResumeLayout(false);
             pnlHead.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbWeather1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbSearch).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbProfile).EndInit();
             ResumeLayout(false);
@@ -513,5 +573,9 @@
         private PictureBox pbSearch;
         private Button btnGoToday;
         private PictureBox pictureBox1;
+        private Label lblTemp;
+        private Label lblDesc;
+        private PictureBox pbWeather1;
+        private Label lbWeather;
     }
 }

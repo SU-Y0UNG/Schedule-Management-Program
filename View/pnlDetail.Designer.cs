@@ -42,7 +42,7 @@
             // 
             btnSang.BackColor = Color.White;
             btnSang.FlatStyle = FlatStyle.Popup;
-            btnSang.Location = new Point(108, 106);
+            btnSang.Location = new Point(98, 108);
             btnSang.Name = "btnSang";
             btnSang.Size = new Size(95, 23);
             btnSang.TabIndex = 1;
@@ -55,12 +55,12 @@
             btnClose.BackColor = Color.Transparent;
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("맑은 고딕", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            btnClose.Location = new Point(254, -8);
+            btnClose.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnClose.Location = new Point(251, 97);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(48, 44);
             btnClose.TabIndex = 2;
-            btnClose.Text = "x";
+            btnClose.Text = "닫기";
             btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += btnClose_Click;
             // 

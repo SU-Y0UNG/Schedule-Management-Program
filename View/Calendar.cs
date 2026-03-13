@@ -1,4 +1,5 @@
 ﻿using maverCalender;
+using Newtonsoft.Json;
 using Project_Maver.Common;
 using Project_Maver.View;
 using System.ComponentModel;
@@ -40,13 +41,17 @@ namespace Maver_켈린더
             }
             pnlDt.OnUpdateParent += () =>
             {
-                DisplayDays(currentYear, currentMonth); // 캘린더 새로고침
+                DisplayDays(currentYear, currentMonth);
+                ApplySeasonColors(currentMonth);// 캘린더 새로고침
             };
         }
 
 
         private void Calendar_Load(object sender, EventArgs e)
         {
+
+             GetWeather();
+                      
             // 전역 변수 UserSession에서 아이디를 가져와 라벨에 표시
             if (UserSession.UserId != null)
             {
@@ -75,8 +80,9 @@ namespace Maver_켈린더
             // 은비 - 캘린더 그리기
             //lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
             DisplayDays(currentYear, currentMonth);
+             ApplySeasonColors(currentMonth);
 
-            //수영 폰트 디wkdls
+            //수영 폰트 디자인
             string fontPath = Path.Combine(Application.StartupPath, "Fonts", "BMJUA_ttf.ttf");
 
             if (File.Exists(fontPath))
@@ -95,9 +101,7 @@ namespace Maver_켈린더
                     lbl.Font = jua1;
                     lbl.Padding = new Padding(10, 5, 10, 5);
                     lbl.TextAlign = ContentAlignment.MiddleCenter;
-                }
-                
-               
+                }                              
 
                 btnLogInOut.Font = jua2;
                 BorderHelper.SetRoundRegion(btnLogInOut, 18);
@@ -114,14 +118,45 @@ namespace Maver_켈린더
                 btnGoToday.Font = jua2;
                 BorderHelper.SetRoundRegion (btnGoToday, 18);
                 BorderHelper.ApplyDotBorder (btnGoToday);
-                btnGoToday.Tag = new Tuple<Color, Color>(Color.Purple, Color.White);
-               
+                btnGoToday.Tag = new Tuple<Color, Color>(Color.Purple, Color.White);             
                 
-
             }
 
         }
-        
+        public async Task GetWeather()
+        {
+            string apiKey = "c7772d91da4472af145add9c179343de";
+            string cityName = "Seoul";
+            string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid={apiKey}&units=metric&lang=kr";
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    // API에 데이터 요청
+                    string response = await client.GetStringAsync(url);
+
+                    // JSON 데이터를 클래스 객체로 변환
+                    WeatherInfo data = JsonConvert.DeserializeObject<WeatherInfo>(response);
+
+                    // 화면에 표시 (레이블 등)
+                    //lblCity.Text = data.Name;
+                    lblTemp.Text = $"{data.Main.Temp} °C";
+                    lblDesc.Text = data.Weather[0].Description;
+
+                    string icon = data.Weather[0].Icon;
+                    // 아이콘 이미지 불러오기 (이미지 URL 활용)
+                    string iconUrl = $"https://openweathermap.org/img/wn/{data.Weather[0].Icon}@2x.png";
+                    var stream = await client.GetStreamAsync(iconUrl);
+                    pbWeather1.Image = Image.FromStream(stream);
+                    pbWeather1.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("날씨 정보를 가져오지 못했습니다: " + ex.Message);
+                }
+            }
+        }
 
         //둥근 테두리 함수 만들기용
 
@@ -260,6 +295,9 @@ namespace Maver_켈린더
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Items.Add("공용 캘린더 추가", null, (s, ev) => openMakeShareForm("공용"));
             menu.Show(CalenderPlus, new Point(0, CalenderPlus.Height));
+            menu.Font = nodeFont;
+            menu.ForeColor = Color.DimGray;
+
         }
         private void openMakeShareForm(string mode)
         {
@@ -738,9 +776,27 @@ namespace Maver_켈린더
             // 매주 반복
             if (type == "매주")
             {
+                // 매주 반복
+                if (type == "매주")
+                {
+                    int interval = row["repeat_interval"] == DBNull.Value ? 1 : Convert.ToInt32(row["repeat_interval"]);
+                    int repeatDays = Convert.ToInt32(row["repeat_days"]);
 
-                int repeatDays = Convert.ToInt32(row["repeat_days"]);
-                return (repeatDays & (1 << (int)currDate.DayOfWeek)) != 0;
+                    // 2. 오늘이 해당 요일인지 확인
+                    bool isCorrectDay = (repeatDays & (1 << (int)currDate.DayOfWeek)) != 0;
+
+                    // 3. start 날짜가 아직 안 되었으면 false
+                    if (currDate < start) return false;
+
+                    // 4. 주(week) 차이 계산
+                    // 두 날짜 사이의 전체 일수를 7로 나누어 몇 주가 지났는지 계산
+                    int weeksDiff = (int)(currDate.Date - start.Date).TotalDays / 7;
+
+                    // 5. 간격(interval) 확인
+                    bool isCorrectInterval = (weeksDiff % interval == 0);
+
+                    return isCorrectDay && isCorrectInterval;
+                }
             }
 
             // 매월 반복
@@ -818,6 +874,7 @@ namespace Maver_켈린더
 
             return Color.Coral;
         }
+
 
         //==========================================================================[
 
@@ -914,6 +971,7 @@ namespace Maver_켈린더
             }
             //lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
             DisplayDays(currentYear, currentMonth);
+            ApplySeasonColors(currentMonth);
         }
 
         // 다음 달로 가는버튼 >
@@ -926,10 +984,73 @@ namespace Maver_켈린더
                 currentYear++;
             }
             //lbThisDate.Text = "🌼 " + currentYear.ToString() + "." + currentMonth.ToString() + " 🌼";
+
             DisplayDays(currentYear, currentMonth);
+            ApplySeasonColors(currentMonth);
         }
+        // 수영 0313 추가
+        private void ApplySeasonColors(int month)
+        {
+            Color bgColor, ducColor1, todayColor,daysColor;
 
+            switch (currentMonth)
+            {
+                case 12: case 1: case 2:
+                    bgColor = Color.White;
+                    ducColor1 = Color.LightGray;
+                    todayColor = Color.DimGray;
+                    daysColor = Color.WhiteSmoke;
+                    break;
+                case 3:
+                case 4:
+                case 5: // 봄
+                    bgColor = Color.FloralWhite;          // 연한 분홍
+                    ducColor1 = Color.MistyRose;
+                    todayColor = Color.Pink;
+                    daysColor = Color.Linen;
+                    break;
+                case 6:
+                case 7:
+                case 8: // 여름
+                    bgColor = Color.White;              // 연한 하늘
+                    ducColor1 = Color.PowderBlue;
+                    todayColor = Color.DeepSkyBlue;
+                    daysColor = Color.Azure; 
+                    break;
+                case 9:
+                case 10:
+                case 11: // 가을
+                    bgColor = Color.OldLace;                // 베이지 계열
+                    ducColor1 = Color.Wheat;
+                    todayColor = Color.Tan;
+                    daysColor = Color.PeachPuff;
+                    break;
+                default:
+                    bgColor = Color.White;
+                    ducColor1 = Color.LightGray;
+                    todayColor= Color.Gray;
+                    daysColor = Color.Silver;
+                    break;
+            }
+            this.BackColor= bgColor;
+            Label[] weekLabels = {
+                     label3, label4, label5, label6, label7
+                };
 
+            foreach (Label lbl in weekLabels)
+            {
+                lbl.BackColor = daysColor;
+            }
+
+            foreach (Control ctrl in flpMain.Controls)
+            {
+                if(ctrl is DayUserControl dayCtrl)
+                {
+                    dayCtrl.ColorChange(ducColor1,todayColor);
+                }
+            }
+
+        }
 
         // 서현 - 로그인, 로그아웃 추가
         // 현재 UserSession에 저장된 아이디가 있는지 확인하여 화면의 글자들을 바꿔주는 역할을 한다.
@@ -961,6 +1082,7 @@ namespace Maver_켈린더
             currentMonth = todayMonth;
            //lbThisDate.Text = "🌼" + currentYear.ToString() + "." + currentMonth.ToString() + "🌼";
             DisplayDays(currentYear, currentMonth);
+            ApplySeasonColors(currentMonth);
         }
 
 
@@ -976,9 +1098,7 @@ namespace Maver_켈린더
                 //로그인 창이 닫히면(성공/실패 여부 상관없이) 새로고침
                 //UI 새로고침
                 UpdateLoginLogout();
-                btnLogInOut.Location = new Point(
-    btnLogInOut.Location.X,
-    btnLogInOut.Location.Y + 20);
+                
             }
 
             else
@@ -1035,6 +1155,7 @@ namespace Maver_켈린더
             // 2. 화면 다시 그리기
             //lbThisDate.Text = "🌼" + currentYear.ToString() + "." + currentMonth.ToString() + "🌼";
             DisplayDays(currentYear, currentMonth);
+            ApplySeasonColors(currentMonth);
 
             // 3. 생성된 날짜 칸(DayUserControl)들 중에서 해당 날짜 찾아서 포커스
             foreach (Control control in flpMain.Controls)

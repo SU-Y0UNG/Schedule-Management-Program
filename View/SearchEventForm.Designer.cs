@@ -85,8 +85,10 @@
             // 
             // btnSearch
             // 
+            btnSearch.FlatAppearance.BorderColor = Color.FloralWhite;
             btnSearch.FlatAppearance.BorderSize = 0;
             btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Noto Sans KR Medium", 12F, FontStyle.Bold, GraphicsUnit.Point);
             btnSearch.Location = new Point(677, 34);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(88, 35);

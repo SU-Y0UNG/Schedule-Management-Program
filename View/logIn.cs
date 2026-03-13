@@ -1,3 +1,6 @@
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Calendar.v3;
+using Google.Apis.Util.Store;
 using Maver_켈린더;
 using Project_Maver.Common;
 using Project_Maver.View;
@@ -34,7 +37,7 @@ namespace maverCalender
                 // 이러면 다른 화면에서도 누가 로그인 했는지 알 수 있다.
                 UserSession.UserId = id;
 
-                if(string.IsNullOrEmpty(UserSession.UserName))
+                if (string.IsNullOrEmpty(UserSession.UserName))
                 {
                     UserSession.UserName = id;
                 }
@@ -91,7 +94,7 @@ namespace maverCalender
         }
 
         //비번 찾기 화면 이동
-         // 비번 찾기 링크버튼을 눌러서 실행한다.
+        // 비번 찾기 링크버튼을 눌러서 실행한다.
         private void lklPW_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // 1.비번 찾기 폼 객체를 생성
@@ -122,6 +125,44 @@ namespace maverCalender
             }
 
         }
-        
+
+        private async void btnGoogle_Click(object sender, EventArgs e)
+        {
+            //구글 로그인(수영)
+            /*토큰이 로컬에 저장되기 때문에 다음에는 자동인증되는걸 방지하기 위해
+            삭제하고 다시 로그인하는 부분 추기*/
+            string tokenDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "token");
+
+            if (Directory.Exists(tokenDir))
+            {
+                Directory.Delete(tokenDir, true);
+            }
+
+            //구글 로그인 발급되는 인증정보를 토큰에 저장하는 객체
+            UserCredential credential;
+            //파일 경로를 합쳐준다(Common안에 있는걸 합쳐주는 함수)
+            string path = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Common",
+                "client_secrets.json");
+
+            // 프로젝트 폴더에 넣어둔 'client_secrets.json' 파일을 읽어옵니다.
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                string[] scopes = { CalendarService.Scope.Calendar };
+
+                // 구글 인증 브라우저를 띄웁니다.
+                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore("token.json", true));
+            }
+
+            MessageBox.Show("로그인 성공!");
+        }
+
     }
 }
+

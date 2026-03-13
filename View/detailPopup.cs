@@ -79,7 +79,7 @@ namespace maverCalender
         private void detailPopup_Load(object sender, EventArgs e)
         {
             //수영
-            GetWeather();
+           
             worldTime();
 
 
@@ -186,76 +186,6 @@ namespace maverCalender
 
         }
 
-
-        //날씨(수영)       
-        public async void GetWeather()
-        {
-            string apiKey = "c7772d91da4472af145add9c179343de";
-            string cityName = "Seoul";
-            string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid={apiKey}&units=metric&lang=kr";
-
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    // API에 데이터 요청
-                    string response = await client.GetStringAsync(url);
-
-                    // JSON 데이터를 클래스 객체로 변환
-                    WeatherInfo data = JsonConvert.DeserializeObject<WeatherInfo>(response);
-
-                    // 화면에 표시 (레이블 등)
-                    lblCity.Text = data.Name;
-                    lblTemp.Text = $"{data.Main.Temp} °C";
-                    lblDesc.Text = data.Weather[0].Description;
-
-                    // 아이콘 이미지 불러오기 (이미지 URL 활용)
-                    string iconUrl = $"http://openweathermap.org/img/wn/{data.Weather[0].Icon}@2x.png";
-                    pbWeather.Load(iconUrl);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("날씨 정보를 가져오지 못했습니다: " + ex.Message);
-                }
-            }
-        }
-
-        //구글 로그인(수영)
-        private async void btnLogin_Click(object sender, EventArgs e)
-        {
-            /*토큰이 로컬에 저장되기 때문에 다음에는 자동인증되는걸 방지하기 위해
-            삭제하고 다시 로그인하는 부분 추기*/
-            string tokenDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "token");
-
-            if (Directory.Exists(tokenDir))
-            {
-                Directory.Delete(tokenDir, true);
-            }
-
-            //구글 로그인 발급되는 인증정보를 토큰에 저장하는 객체
-            UserCredential credential;
-            //파일 경로를 합쳐준다(Common안에 있는걸 합쳐주는 함수)
-            string path = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Common",
-                "client_secrets.json");
-
-            // 프로젝트 폴더에 넣어둔 'client_secrets.json' 파일을 읽어옵니다.
-            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                string[] scopes = { CalendarService.Scope.Calendar };
-
-                // 구글 인증 브라우저를 띄웁니다.
-                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore("token.json", true));
-            }
-
-            MessageBox.Show("로그인 성공!");
-        }
 
 
         public Color btncolor = Color.Pink;

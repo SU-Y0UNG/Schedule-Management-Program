@@ -61,7 +61,7 @@
             // txtCalName
             // 
             txtCalName.BackColor = Color.White;
-            txtCalName.Font = new Font("Noto Sans KR Medium", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            txtCalName.Font = new Font("Noto Sans KR Medium", 16F, FontStyle.Regular, GraphicsUnit.Point);
             txtCalName.Location = new Point(12, 52);
             txtCalName.Multiline = true;
             txtCalName.Name = "txtCalName";
@@ -150,7 +150,7 @@
             rbColor.Font = new Font("Noto Sans KR Medium", 9F, FontStyle.Regular, GraphicsUnit.Point);
             rbColor.Location = new Point(467, 126);
             rbColor.Name = "rbColor";
-            rbColor.Size = new Size(25, 28);
+            rbColor.Size = new Size(25, 25);
             rbColor.TabIndex = 6;
             rbColor.UseVisualStyleBackColor = false;
             rbColor.Click += rbColor_Click;
@@ -162,7 +162,7 @@
             btnSharePlus.FlatStyle = FlatStyle.Flat;
             btnSharePlus.Font = new Font("Noto Sans KR Medium", 12F, FontStyle.Regular, GraphicsUnit.Point);
             btnSharePlus.ForeColor = Color.Snow;
-            btnSharePlus.Location = new Point(207, 652);
+            btnSharePlus.Location = new Point(204, 525);
             btnSharePlus.Name = "btnSharePlus";
             btnSharePlus.Size = new Size(118, 41);
             btnSharePlus.TabIndex = 7;
@@ -193,7 +193,7 @@
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Snow;
-            ClientSize = new Size(534, 862);
+            ClientSize = new Size(534, 711);
             Controls.Add(cbCalendarSelect);
             Controls.Add(btnSharePlus);
             Controls.Add(rbColor);
