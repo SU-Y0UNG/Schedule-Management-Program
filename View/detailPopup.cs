@@ -40,7 +40,7 @@ namespace maverCalender
         public ScheduleData SelectedSchedule { get; set; }
 
         public event Action<detailPopup> ScheduleSaved;
-
+        public Color ThemeColor { get; set; } = Color.White;
 
         public DateTime StartDate
         {
@@ -79,8 +79,31 @@ namespace maverCalender
         private void detailPopup_Load(object sender, EventArgs e)
         {
             //수영
-           
+            this.BackColor = ThemeColor;
             worldTime();
+
+            string fontPath = Path.Combine(Application.StartupPath, "Fonts", "BMJUA_ttf.ttf");
+
+            if (File.Exists(fontPath))
+            {
+                fonts.AddFontFile(fontPath);
+                Font jua1 = new Font(fonts.Families[0], 16, FontStyle.Regular);
+                Font jua2 = new Font(fonts.Families[0], 14, FontStyle.Regular);
+
+
+                btnDelete.Font = jua2;
+                BorderHelper.SetRoundRegion(btnDelete, 18);
+                BorderHelper.ApplyDotBorder(btnDelete);
+
+                btnSave.Font = jua2;
+                BorderHelper.SetRoundRegion(btnSave, 18);
+                BorderHelper.ApplyDotBorder(btnSave);
+
+                btnUpdate.Font = jua2;
+                BorderHelper.SetRoundRegion(btnUpdate, 18);
+                BorderHelper.ApplyDotBorder(btnUpdate);
+
+            }
 
 
             if (selectedDate == DateTime.MinValue)
@@ -149,7 +172,7 @@ namespace maverCalender
                 }
             }
 
-            if(event_id == 0)
+            if (event_id == 0)
             {
                 cbChoice.SelectedIndex = 0;
             }
@@ -766,20 +789,7 @@ namespace maverCalender
             dtpEndTime.Enabled = true;
         }
 
-        private void btnMinus_Click(object sender, EventArgs e)
-        {
-            btnMinus.Visible = false;
-            btnPlus.Visible = true;
-            cbAlert.Visible = false;
-            lbLine9.Visible = false;
-        }
 
-        private void btnPlus_Click(object sender, EventArgs e)
-        {
-            btnPlus.Visible = false;
-            btnMinus.Visible = true;
-            cbAlert.Visible = true;
-        }
         public class ScheduleData
         {
             public string title { get; set; }

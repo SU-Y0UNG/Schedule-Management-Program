@@ -20,7 +20,7 @@ namespace Maver_켈린더
 
         private int currentYear;        // 현재년도
         private int currentMonth;       // 현재 달
-
+        private Color currentBgColor = Color.White;
         public Calendar()
         {
             InitializeComponent();
@@ -141,7 +141,7 @@ namespace Maver_켈린더
 
                     // 화면에 표시 (레이블 등)
                     //lblCity.Text = data.Name;
-                    lblTemp.Text = $"{data.Main.Temp} °C";
+                    lblTemp.Text = $"{Math.Round(data.Main.Temp, 1)} °C";
                     lblDesc.Text = data.Weather[0].Description;
 
                     string icon = data.Weather[0].Icon;
@@ -725,7 +725,9 @@ namespace Maver_켈린더
                     duc.Click += (s, e) =>
                     {
                         detailPopup popup = new detailPopup { selectedDate = currDate };
+                        popup.ThemeColor = currentBgColor;
                         popup.setMode("Add");
+                        
                         if (popup.ShowDialog() == DialogResult.OK) DisplayDays(currentYear, currentMonth);
                     };
 
@@ -958,6 +960,8 @@ namespace Maver_켈린더
             currentMonth = todayMonth;
 
             DisplayDays(currentYear, currentMonth);
+            ApplySeasonColors(currentMonth);
+
         }
 
         // 전 달로 가는버튼 <
@@ -1004,7 +1008,7 @@ namespace Maver_켈린더
                 case 3:
                 case 4:
                 case 5: // 봄
-                    bgColor = Color.FloralWhite;          // 연한 분홍
+                    bgColor = Color.Snow;          // 연한 분홍
                     ducColor1 = Color.MistyRose;
                     todayColor = Color.Pink;
                     daysColor = Color.Linen;
@@ -1012,10 +1016,10 @@ namespace Maver_켈린더
                 case 6:
                 case 7:
                 case 8: // 여름
-                    bgColor = Color.White;              // 연한 하늘
+                    bgColor = Color.Azure;              // 연한 하늘
                     ducColor1 = Color.PowderBlue;
                     todayColor = Color.DeepSkyBlue;
-                    daysColor = Color.Azure; 
+                    daysColor = Color.PaleTurquoise; 
                     break;
                 case 9:
                 case 10:
@@ -1033,6 +1037,8 @@ namespace Maver_켈린더
                     break;
             }
             this.BackColor= bgColor;
+            currentBgColor= bgColor;
+            
             Label[] weekLabels = {
                      label3, label4, label5, label6, label7
                 };

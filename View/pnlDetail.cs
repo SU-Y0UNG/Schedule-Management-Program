@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -16,6 +18,7 @@ namespace Project_Maver.View
 {
     public partial class pnlDetail : UserControl
     {
+        PrivateFontCollection fonts = new PrivateFontCollection();
         public event Action OnUpdateParent;
         private int currentEventId;
         public pnlDetail()
@@ -30,12 +33,62 @@ namespace Project_Maver.View
 
         private void pnlDetail_Load(object sender, EventArgs e)
         {
-            
+            string fontPath = Path.Combine(Application.StartupPath, "Fonts", "BMJUA_ttf.ttf");
+
+            if (File.Exists(fontPath))
+            {
+                fonts.AddFontFile(fontPath);
+               
+                Font jua = new Font(fonts.Families[0], 12, FontStyle.Regular);
+
+                lbDetailTitle.Font = jua;
+                BorderHelper.SetRoundRegion(btnSang, 15);
+                BorderHelper.ApplyDotBorder(btnSang);
+
+            }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            int radius = 20;
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            //e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
+
+            Rectangle rect = new Rectangle(0, 0, this.Width - 1, this.Height - 1);
+
+            GraphicsPath roundPath = GetRoundRect(rect, radius);
+            this.Region = new Region(roundPath);
+
+            // 배경
+            using (SolidBrush brush = new SolidBrush(this.BackColor))
+                e.Graphics.FillPath(brush, roundPath);
+            using (SolidBrush brush = new SolidBrush(this.BackColor))
+            {
+                e.Graphics.FillPath(brush, roundPath);
+            }
+
         }
 
 
+        private static GraphicsPath GetRoundRect(Rectangle rect, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
 
-        //날씨(수영)       
+            int d = radius * 2;
+
+            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
+            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
+            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
+
+            path.CloseFigure();
+
+            return path;
+        }
+     
 
 
         // 승환(3/10)

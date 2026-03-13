@@ -36,15 +36,20 @@
             lbDetailMemo = new Label();
             label1 = new Label();
             label2 = new Label();
+            label3 = new Label();
             SuspendLayout();
             // 
             // btnSang
             // 
-            btnSang.BackColor = Color.White;
-            btnSang.FlatStyle = FlatStyle.Popup;
-            btnSang.Location = new Point(98, 108);
+            btnSang.BackColor = Color.Transparent;
+            btnSang.FlatAppearance.BorderColor = Color.SeaShell;
+            btnSang.FlatAppearance.BorderSize = 0;
+            btnSang.FlatStyle = FlatStyle.Flat;
+            btnSang.Font = new Font("Noto Sans KR Medium", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnSang.ForeColor = SystemColors.ControlText;
+            btnSang.Location = new Point(98, 119);
             btnSang.Name = "btnSang";
-            btnSang.Size = new Size(95, 23);
+            btnSang.Size = new Size(95, 30);
             btnSang.TabIndex = 1;
             btnSang.Text = "상세정보확인";
             btnSang.UseVisualStyleBackColor = false;
@@ -55,30 +60,30 @@
             btnClose.BackColor = Color.Transparent;
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnClose.Location = new Point(251, 97);
+            btnClose.Font = new Font("Noto Sans KR Medium", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnClose.Location = new Point(248, -1);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(48, 44);
+            btnClose.Size = new Size(40, 25);
             btnClose.TabIndex = 2;
-            btnClose.Text = "닫기";
+            btnClose.Text = "x";
             btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += btnClose_Click;
             // 
             // lbDetailTitle
             // 
             lbDetailTitle.AutoSize = true;
-            lbDetailTitle.BorderStyle = BorderStyle.FixedSingle;
-            lbDetailTitle.Font = new Font("맑은 고딕", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            lbDetailTitle.Location = new Point(14, 10);
+            lbDetailTitle.Font = new Font("Noto Sans KR Medium", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lbDetailTitle.Location = new Point(14, 7);
             lbDetailTitle.Name = "lbDetailTitle";
-            lbDetailTitle.Size = new Size(2, 27);
+            lbDetailTitle.Size = new Size(70, 24);
             lbDetailTitle.TabIndex = 3;
+            lbDetailTitle.Text = "제목없음";
             // 
             // lbDetailStartDate
             // 
             lbDetailStartDate.AutoSize = true;
-            lbDetailStartDate.Font = new Font("맑은 고딕", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lbDetailStartDate.Location = new Point(68, 44);
+            lbDetailStartDate.Font = new Font("Noto Sans KR Medium", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            lbDetailStartDate.Location = new Point(68, 49);
             lbDetailStartDate.Name = "lbDetailStartDate";
             lbDetailStartDate.Size = new Size(0, 20);
             lbDetailStartDate.TabIndex = 3;
@@ -86,8 +91,8 @@
             // lbDetailEndDate
             // 
             lbDetailEndDate.AutoSize = true;
-            lbDetailEndDate.Font = new Font("맑은 고딕", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lbDetailEndDate.Location = new Point(179, 44);
+            lbDetailEndDate.Font = new Font("Noto Sans KR Medium", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            lbDetailEndDate.Location = new Point(179, 49);
             lbDetailEndDate.Name = "lbDetailEndDate";
             lbDetailEndDate.Size = new Size(0, 20);
             lbDetailEndDate.TabIndex = 3;
@@ -95,48 +100,62 @@
             // lbDetailMemo
             // 
             lbDetailMemo.AutoSize = true;
-            lbDetailMemo.Location = new Point(39, 73);
+            lbDetailMemo.Font = new Font("Noto Sans KR Medium", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            lbDetailMemo.ForeColor = SystemColors.ControlDarkDark;
+            lbDetailMemo.Location = new Point(13, 81);
             lbDetailMemo.Name = "lbDetailMemo";
-            lbDetailMemo.Size = new Size(0, 15);
+            lbDetailMemo.Size = new Size(35, 20);
             lbDetailMemo.TabIndex = 3;
+            lbDetailMemo.Text = "메모";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("맑은 고딕", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(153, 44);
+            label1.Font = new Font("Noto Sans KR Medium", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(153, 49);
             label1.Name = "label1";
-            label1.Size = new Size(20, 20);
+            label1.Size = new Size(17, 20);
             label1.TabIndex = 5;
             label1.Text = "~";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("맑은 고딕", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(14, 44);
+            label2.Font = new Font("Noto Sans KR Medium", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(14, 49);
             label2.Name = "label2";
-            label2.Size = new Size(48, 20);
+            label2.Size = new Size(43, 20);
             label2.TabIndex = 6;
             label2.Text = "기간 :";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Noto Sans KR Medium", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.ForeColor = SystemColors.ControlDark;
+            label3.Location = new Point(-4, 20);
+            label3.Name = "label3";
+            label3.Size = new Size(321, 20);
+            label3.TabIndex = 3;
+            label3.Text = "_______________________________________";
             // 
             // pnlDetail
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            BorderStyle = BorderStyle.FixedSingle;
+            BackColor = Color.SeaShell;
             Controls.Add(label2);
             Controls.Add(lbDetailMemo);
             Controls.Add(lbDetailEndDate);
             Controls.Add(lbDetailStartDate);
             Controls.Add(lbDetailTitle);
-            Controls.Add(btnClose);
             Controls.Add(btnSang);
             Controls.Add(label1);
+            Controls.Add(label3);
+            Controls.Add(btnClose);
             Location = new Point(14, 10);
             Name = "pnlDetail";
-            Size = new Size(298, 140);
+            Size = new Size(300, 163);
             Load += pnlDetail_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -151,5 +170,6 @@
         private Label lbDetailMemo;
         private Label label1;
         private Label label2;
+        private Label label3;
     }
 }

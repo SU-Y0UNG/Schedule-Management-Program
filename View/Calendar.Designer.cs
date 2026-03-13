@@ -155,7 +155,7 @@
             // 
             // CalenderPlus
             // 
-            CalenderPlus.BackColor = Color.Transparent;
+            CalenderPlus.BackColor = Color.Linen;
             CalenderPlus.Image = (Image)resources.GetObject("CalenderPlus.Image");
             CalenderPlus.Location = new Point(264, 13);
             CalenderPlus.Name = "CalenderPlus";
@@ -386,9 +386,9 @@
             lbWeather.ForeColor = Color.DimGray;
             lbWeather.Location = new Point(12, 69);
             lbWeather.Name = "lbWeather";
-            lbWeather.Size = new Size(112, 24);
+            lbWeather.Size = new Size(116, 24);
             lbWeather.TabIndex = 14;
-            lbWeather.Text = "✔️오늘의 날씨";
+            lbWeather.Text = "✔️ 오늘의 날씨";
             // 
             // lblTemp
             // 
@@ -493,7 +493,7 @@
             btnUpdatepw.FlatAppearance.BorderSize = 0;
             btnUpdatepw.FlatStyle = FlatStyle.Flat;
             btnUpdatepw.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnUpdatepw.Location = new Point(1470, 910);
+            btnUpdatepw.Location = new Point(1477, 916);
             btnUpdatepw.Name = "btnUpdatepw";
             btnUpdatepw.Size = new Size(127, 42);
             btnUpdatepw.TabIndex = 12;
@@ -507,7 +507,7 @@
             btnLogInOut.FlatAppearance.BorderSize = 0;
             btnLogInOut.FlatStyle = FlatStyle.Flat;
             btnLogInOut.Font = new Font("맑은 고딕", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnLogInOut.Location = new Point(1620, 910);
+            btnLogInOut.Location = new Point(1620, 916);
             btnLogInOut.Name = "btnLogInOut";
             btnLogInOut.Size = new Size(97, 43);
             btnLogInOut.TabIndex = 3;
@@ -519,7 +519,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FloralWhite;
+            BackColor = Color.Snow;
             ClientSize = new Size(1584, 1061);
             Controls.Add(pnlMain);
             Name = "Calendar";

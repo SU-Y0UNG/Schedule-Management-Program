@@ -53,8 +53,9 @@ namespace Project_Maver.View
             this.Padding = new Padding(8);
             _date = thisDate;
             lbDay.Text = day.ToString();
-            this.BorderStyle = BorderStyle.None;                     
+            this.BorderStyle = BorderStyle.None;
 
+          
         }
 
 

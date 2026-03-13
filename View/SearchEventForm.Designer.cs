@@ -174,6 +174,7 @@
             Font = new Font("Noto Sans KR Medium", 9F, FontStyle.Bold, GraphicsUnit.Point);
             ForeColor = SystemColors.ControlText;
             Name = "SearchEventForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "SearchEventForm";
             Load += SearchEventForm_Load;
             groupBox1.ResumeLayout(false);
