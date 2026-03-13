@@ -43,14 +43,14 @@
             // 
             // btnFindPW
             // 
-            btnFindPW.BackColor = Color.DarkGray;
+            btnFindPW.BackColor = Color.MediumSeaGreen;
             btnFindPW.FlatAppearance.BorderSize = 0;
             btnFindPW.FlatStyle = FlatStyle.Flat;
             btnFindPW.Font = new Font("Noto Sans KR Medium", 12F, FontStyle.Regular, GraphicsUnit.Point);
             btnFindPW.ForeColor = Color.White;
-            btnFindPW.Location = new Point(254, 300);
+            btnFindPW.Location = new Point(184, 284);
             btnFindPW.Name = "btnFindPW";
-            btnFindPW.Size = new Size(280, 50);
+            btnFindPW.Size = new Size(420, 55);
             btnFindPW.TabIndex = 15;
             btnFindPW.Text = "임시 비밀번호 발급";
             btnFindPW.UseVisualStyleBackColor = false;
@@ -71,18 +71,18 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Noto Sans KR Medium", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(185, 112);
+            label2.Font = new Font("Noto Sans KR Medium", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(195, 118);
             label2.Name = "label2";
-            label2.Size = new Size(421, 17);
+            label2.Size = new Size(228, 24);
             label2.TabIndex = 8;
-            label2.Text = "비밀번호는 회원가입시 입력하신 아이디와 이메일을 입력하시면 찾으실 수 있습니다.";
+            label2.Text = "아이디와 이메일을 입력해주세요";
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Noto Sans KR Medium", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(310, 66);
+            label1.Location = new Point(195, 83);
             label1.Name = "label1";
             label1.Size = new Size(154, 35);
             label1.TabIndex = 7;
@@ -134,7 +134,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(799, 451);
             Controls.Add(pnlFindpw);
             Controls.Add(btnFindPW);
             Controls.Add(label2);

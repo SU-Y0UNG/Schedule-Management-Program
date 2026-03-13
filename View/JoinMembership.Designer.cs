@@ -60,8 +60,8 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Noto Sans KR Black", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.MediumSeaGreen;
+            label1.Font = new Font("Noto Sans KR Medium", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.DimGray;
             label1.Location = new Point(368, 90);
             label1.Name = "label1";
             label1.Size = new Size(85, 27);
