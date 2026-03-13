@@ -87,35 +87,14 @@ namespace Project_Maver.View
 
             Rectangle rect = new Rectangle(0, 0, this.Width - 1, this.Height - 1);
 
-            GraphicsPath roundPath = GetRoundRect(rect, radius);
+            GraphicsPath roundPath = BorderHelper.GetRoundRect(rect, radius);
             this.Region = new Region(roundPath);
 
             // 배경
             using (SolidBrush brush = new SolidBrush(this.BackColor))
-                e.Graphics.FillPath(brush, roundPath);
-            using (SolidBrush brush = new SolidBrush(this.BackColor))
-            {
-                e.Graphics.FillPath(brush, roundPath);
-            }
-
+                e.Graphics.FillPath(brush, roundPath);      
         }
 
-
-        private static GraphicsPath GetRoundRect(Rectangle rect, int radius)
-        {
-            GraphicsPath path = new GraphicsPath();
-
-            int d = radius * 2;
-
-            path.AddArc(rect.X, rect.Y, d, d, 180, 90);
-            path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
-            path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
-            path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
-
-            path.CloseFigure();
-
-            return path;
-        }
 
         public int GetMultiSlotCount() =>
         flpEvent.Controls.Cast<Control>()

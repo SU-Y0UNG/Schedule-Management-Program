@@ -536,12 +536,21 @@ namespace maverCalender
             DateTime current = startDate;
             while (current <= endDate)
             {
-                if (repeatType == "매주")
-                {// 현재 날짜의 요일을 비트 값으로 변환
-                    int dayFlag = 1 << (int)current.DayOfWeek;
-                    if ((repeatDays & dayFlag) != 0)
+                if(repeatType == "매주")
+                {
+
+                    // 1. startDate부터 현재(current)까지 몇 주가 지났는지 계산
+                    int weeksPassed = (int)(current - startDate).TotalDays / 7;
+
+                    // 2. 간격(interval) 단위로 딱 떨어지는 주차인지 확인
+                    if (weeksPassed % interval == 0)
                     {
-                        dates.Add(current);
+                        // 3. 해당 주차라면 요일 체크( 숫자를 왼쪽으로 밀어라 라는 의미)
+                        int dayFlag = 1 << (int)current.DayOfWeek;
+                        if ((repeatDays & dayFlag) != 0)
+                        {
+                            dates.Add(current);
+                        }
                     }
                     current = current.AddDays(1);
                 }

@@ -158,7 +158,6 @@ namespace Maver_켈린더
             }
         }
 
-        //둥근 테두리 함수 만들기용
 
         private void CreateDefaultCalendar()
         {
@@ -218,13 +217,6 @@ namespace Maver_켈린더
             }
         }
 
-
-        private void btnToday_Click(object sender, EventArgs e)
-        {
-            //IDtest id = new IDtest(); // 여긴 임시로 아이디 폼에서 전역변수로 선언한 아이디가 제대로 다음 화면에서도 그 정보를 유지하는지 확인 한 것
-
-            //id.ShowDialog();
-        }
 
 
         //------------------------------------------------------------------------------------
@@ -688,35 +680,6 @@ namespace Maver_켈린더
                     }
                     //-----------------------------------------------------------------
 
-
-
-                    //foreach (var row in todayEvents)
-                    //{
-
-                    //    string title = row["title"].ToString();
-
-                    //    string dbEventColor = row["color"].ToString();
-                    //    Color eventColor = StringToColor(dbEventColor);
-
-                    //    DateTime start = Convert.ToDateTime(row["start_date"]).Date;
-                    //    DateTime end = Convert.ToDateTime(row["end_date"]).Date;
-
-                    //    string repeatType = row["repeat_type"]?.ToString();
-                    //    bool hasRepeat = !string.IsNullOrEmpty(repeatType);
-
-                    //    // 1. 오늘이 실제 데이터상의 시작일(startDate)이거나
-                    //    // 2. 오늘이 반복 일정 규칙에 의해 나타나는 날이라면 제목을 표시한다.
-                    //    bool isStartDay = (currDate.Date == start.Date) || (hasRepeat && IsRepeatEvent(row, currDate)); ;
-
-                    //    string labelText = isStartDay ? title : "";
-
-                    //    // 반복 일정은 보통 하루 단위로 끊기게 표시 (isSingleDay = true)
-                    //    // 일반 일정은 시작/종료일이 같을 때만 true
-                    //    bool isSingleDay = hasRepeat ? true : (start == end);
-
-                    //    duc.addTitleLabel(labelText, eventColor, isSingleDay);
-                    //    //duc.Tag = row
-                    //}
                 }
 
                 if(UserSession.UserId != null)
