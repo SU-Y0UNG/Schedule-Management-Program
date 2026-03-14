@@ -517,7 +517,7 @@ namespace Maver_켈린더
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("삭제 중 오류가 발생했습니다: " + ex.Message);
+                    MessageBox.Show("삭제 중 오류가 발생했습니다: " );
                 }
             }
         }
