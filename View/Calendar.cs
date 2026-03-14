@@ -126,7 +126,7 @@ namespace Maver_켈린더
         public async Task GetWeather()
         {
             string apiKey = "c7772d91da4472af145add9c179343de";
-            string cityName = "Seoul";
+            string cityName = "Cheonan";
             string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid={apiKey}&units=metric&lang=kr";
 
             using (HttpClient client = new HttpClient())
@@ -246,25 +246,6 @@ namespace Maver_켈린더
             isMenuOpen = false;
         }
 
-
-        private void cdMain_DrawNode(object sender, DrawTreeNodeEventArgs e)
-        {
-            // 1. 노드가 선택되었을 때 기본적으로 그려지는 파란색 상자 무시.
-            if ((e.State & TreeNodeStates.Selected) != 0)
-            {
-                // 선택되었을 때 배경색 (예: 흰색이나 아주 연한 회색)
-                e.Graphics.FillRectangle(Brushes.SkyBlue, e.Bounds);
-
-                // 글자색을 검정으로 고정 (파란 배경일 때 흰색으로 변하는 것 방지)
-                TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.NodeFont ?? e.Node.TreeView.Font,
-                                      e.Bounds, Color.Black, TextFormatFlags.VerticalCenter);
-            }
-            else
-            {
-                // 선택되지 않은 일반 상태는 기본 대로 그립니다.
-                e.DrawDefault = true;
-            }
-        }
         private void PictureBox2_Paint(object sender, PaintEventArgs e)
         {
             using (Pen pen = new Pen(Color.FromArgb(215, 217, 219), 2))
