@@ -71,7 +71,7 @@ namespace Project_Maver.Common
             }
         }
 
-        private static GraphicsPath GetRoundRect(Rectangle rect, int radius)
+        public static GraphicsPath GetRoundRect(Rectangle rect, int radius)
         {
             GraphicsPath path = new GraphicsPath();
             int d = radius * 2;
