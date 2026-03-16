@@ -41,12 +41,6 @@ namespace Maver_켈린더
                 cbMonth.Items.Add(month);
             }
 
-            ////3.일 설정 : 1일부터 31일 까지
-            //for (int day = 1; day <= 31; day++)
-            //{
-            //    cbDay.Items.Add(day);
-            //}
-
         }
 
         // 사용자가 선택한 달에 따라 일(day)목록을 동적으로 변경하는 날짜 관리 로직
@@ -88,17 +82,6 @@ namespace Maver_켈린더
             {
                 cbDay.SelectedIndex = 0;
             }
-        }
-
-        // 회원 정보 데이터 구조
-        public class UserUnfo
-        {
-            public string Id { get; set; }
-            public string PassWord { get; set; }
-            public string Name { get; set; }
-            public string Email { get; set; }
-            public string Birth { get; set; }
-            public string Phone { get; set; }
         }
 
         //가입 버튼 이벤트
