@@ -164,7 +164,7 @@ Maver_Calendar/
 ---
 
 ## 🛠️ 기술 스택
-| 구분                | 기술                            |
+| 구분               | 기술                          |
 | ----------------- | ----------------------------- |
 | **Language**      | C#                            |
 | **Framework**     | .NET Framework / WinForms     |
