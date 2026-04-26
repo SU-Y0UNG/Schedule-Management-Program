@@ -155,25 +155,9 @@ Maver_Calendar/
 ├── Maver_Calendar.sln
 ├── Project_Maver/
 │   ├── Program.cs
-│   ├── View/
-│   │   ├── Maver_켈린더.cs
-│   │   ├── DayUserControl.cs
-│   │   ├── detailPopup.cs
-│   │   ├── pnlRepeat.cs
-│   │   ├── Login.cs
-│   │   ├── UpdatePassword.cs
-│   │   ├── ShareForm.cs
-│   │   └── TeamAdd.cs
-│   │
-│   ├── Common/
-│   │   ├── DbManager.cs
-│   │   ├── UserSession.cs
-│   │   ├── Holidays.cs
-│   │   └── WeatherInfo.cs
-│   │
-│   ├── Fonts/
-│   └── Resources/
-│
+│   ├── View/             # UI 및 폼 관리 (캘린더, 로그인, 공유 등)
+│   ├── Common/           # 비즈니스 로직 (DB 관리, 날씨, 세션 등)
+│   └── Resources/        # 리소스 및 에셋
 ├── images/
 └── demo/
 
