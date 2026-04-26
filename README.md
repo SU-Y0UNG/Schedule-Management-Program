@@ -227,6 +227,7 @@ git clone https://github.com/your-username/Maver_Calendar.git
     </td>
   </tr>
 </table>
+
 ---
 
 ## 🔮 향후 개선 사항
@@ -253,6 +254,7 @@ git clone https://github.com/your-username/Maver_Calendar.git
     </td>
   </tr>
 </table>
+
 ---
 
 ## 👥 Team | 이름 | 역할 |
