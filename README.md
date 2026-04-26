@@ -24,6 +24,40 @@
 
 ---
 
+## 🎬 시연 영상
+
+<p align="center">
+  <img src="demo/busticketkiosk_demo.gif" alt="시연 영상" width="400"/>
+</p>
+
+---
+
+## 📸 화면 구성
+
+### 🎫 현장 예매 흐름
+
+| 메인 화면 | 출발지 확인 | 노선 선택 |
+|:---------:|:----------:|:---------:|
+| <img src="screenshot/01_main.png" width="200"/> | <img src="screenshot/02_destination.png" width="200"/> | <img src="screenshot/03_route.png" width="200"/> |
+
+| 시간 선택 | 좌석 선택 | 결제 |
+|:---------:|:---------:|:----:|
+| <img src="screenshot/04_time.png" width="200"/> | <img src="screenshot/05_seat.png" width="200"/> | <img src="screenshot/06_payment.png" width="200"/> |
+
+### 📱 온라인 예매 발권
+
+| 번호 입력 | 조회 결과 |
+|:---------:|:---------:|
+| <img src="screenshot/07_ticket_input.png" width="200"/> | <img src="screenshot/08_ticket_result.png" width="200"/> |
+
+### 💰 환불
+
+| 환불 화면 |
+|:---------:|
+| <img src="screenshot/09_refund.png" width="200"/> |
+
+---
+
 ## 🔄 사용자 흐름 (Flow)
 
 ```
@@ -31,24 +65,24 @@
 │  메인 화면   │  ← 현장 예매 / 온라인 예매 발권 / 환불 선택
 └──────┬──────┘
        │
-       ├─── 🎫 현장 예매 ──────────────────────────────────┐
-       │    ① 출발지 확인 (천안)                            │
-       │    ② 도착지 권역 선택 (서울·인천·강원 등)            │
-       │    ③ 세부 노선 선택                                │
-       │    ④ 좌석 선택 (실시간 잔여 좌석 확인)               │
-       │    ⑤ 결제                                         │
-       │    ⑥ 승차권 발권                                   │
-       │                                                   │
-       ├─── 📱 온라인 예매 발권 ───────────────────────────┐│
-       │    ① 핸드폰 번호 입력 (터치 키패드)                ││
-       │    ② 예매 내역 조회                               ││
-       │    ③ 승차권 선택 및 발권                           ││
-       │                                                   │
-       └─── 💰 환불 ──────────────────────────────────────┘│
-            ① 승차권 투입                                   │
-            ② 환불 규정 확인                                │
-            ③ 환불 처리 완료                                │
-            └───────────────────────────────────────────────┘
+       ├─── 🎫 현장 예매
+       │    ① 출발지 확인 (천안)
+       │    ② 도착지 권역 선택 (서울·인천·강원 등)
+       │    ③ 세부 노선 선택
+       │    ④ 시간 선택
+       │    ⑤ 좌석 선택 (실시간 잔여 좌석 확인)
+       │    ⑥ 결제
+       │    ⑦ 승차권 발권
+       │
+       ├─── 📱 온라인 예매 발권
+       │    ① 핸드폰 번호 입력 (터치 키패드)
+       │    ② 예매 내역 조회
+       │    ③ 승차권 선택 및 발권
+       │
+       └─── 💰 환불
+            ① 승차권 투입
+            ② 환불 규정 확인
+            ③ 환불 처리 완료
 ```
 
 ---
@@ -59,6 +93,7 @@
 | 기능 | 설명 |
 |------|------|
 | **권역별 목적지 선택** | 서울·인천·강원·대전·충북·전북·대구 7개 권역에서 세부 노선 선택 |
+| **시간 선택** | 출발 시간대를 선택하여 예매 |
 | **좌석 선택** | 28석 버스 좌석 배치도에서 원하는 좌석을 터치로 선택 / 해제 |
 | **결제 처리** | 선택 좌석 정보와 금액을 확인 후 결제 진행 |
 
@@ -82,31 +117,37 @@
 ## 🗂️ 프로젝트 구조
 
 ```
-Kiosk/
-├── Program.cs                  # 앱 진입점
-├── Choiceservice.cs            # 메인 화면 (현장예매 / 온라인발권 / 환불)
+Bus_Kiosk/
+├── README.md
+├── Kiosk.slnx
+├── Kiosk/
+│   ├── Program.cs                  # 앱 진입점
+│   ├── Choiceservice.cs            # 메인 화면 (현장예매 / 온라인발권 / 환불)
+│   │
+│   ├── 🎫 현장 예매
+│   │   ├── Destination.cs          # 출발지 확인 화면
+│   │   ├── DesnationChoice.cs      # 도착지 권역 선택 (7개 권역)
+│   │   ├── ChoiceSeoul.cs          # 서울 방면 세부 노선
+│   │   ├── ChoiceIncheon.cs        # 인천 방면 세부 노선
+│   │   ├── ChoiceGangwon.cs        # 강원 방면 세부 노선
+│   │   ├── ChoiceDajeon.cs         # 대전 방면 세부 노선
+│   │   ├── ChoiceChungbuk.cs       # 충북 방면 세부 노선
+│   │   ├── ChoiceJeonbuk.cs        # 전북 방면 세부 노선
+│   │   ├── ChoiceDaegu.cs          # 대구 방면 세부 노선
+│   │   ├── Seat.cs                 # 좌석 선택 화면 (28석)
+│   │   ├── Time.cs                 # 시간 선택
+│   │   └── Payment.cs              # 결제 화면
+│   │
+│   ├── 📱 온라인 예매 발권
+│   │   └── Ticket.cs               # 전화번호 입력 → 예매 조회 → 발권
+│   │
+│   ├── 💰 환불
+│   │   └── Refund.cs               # 환불 규정 안내 및 환불 처리
+│   │
+│   └── *.Designer.cs / *.resx      # WinForms UI 리소스 파일
 │
-├── 🎫 현장 예매
-│   ├── Destination.cs          # 출발지 확인 화면
-│   ├── DesnationChoice.cs      # 도착지 권역 선택 (7개 권역)
-│   ├── ChoiceSeoul.cs          # 서울 방면 세부 노선
-│   ├── ChoiceIncheon.cs        # 인천 방면 세부 노선
-│   ├── ChoiceGangwon.cs        # 강원 방면 세부 노선
-│   ├── ChoiceDajeon.cs         # 대전 방면 세부 노선
-│   ├── ChoiceChungbuk.cs       # 충북 방면 세부 노선
-│   ├── ChoiceJeonbuk.cs        # 전북 방면 세부 노선
-│   ├── ChoiceDaegu.cs          # 대구 방면 세부 노선
-│   ├── Seat.cs                 # 좌석 선택 화면 (28석)
-│   ├── Time.cs                 # 시간 선택
-│   └── Payment.cs              # 결제 화면
-│
-├── 📱 온라인 예매 발권
-│   └── Ticket.cs               # 전화번호 입력 → 예매 조회 → 발권
-│
-├── 💰 환불
-│   └── Refund.cs               # 환불 규정 안내 및 환불 처리
-│
-└── *.Designer.cs / *.resx      # WinForms UI 리소스 파일
+├── screenshot/                     # 화면 캡처 이미지
+└── demo/                           # 시연 영상
 ```
 
 ---
@@ -126,7 +167,7 @@ Kiosk/
 
 ```bash
 # 1. 저장소 클론
-git clone https://github.com/your-username/Kiosk.git
+git clone https://github.com/your-username/Bus_Kiosk.git
 
 # 2. Visual Studio에서 Kiosk.slnx 열기
 
@@ -134,16 +175,6 @@ git clone https://github.com/your-username/Kiosk.git
 ```
 
 > **요구 사항** : .NET 6.0 SDK 이상, Windows OS
-
----
-
-## 📸 화면 구성
-
-| 메인 화면 | 온라인 예매 발권 | 좌석 선택 | 환불 |
-|:---------:|:---------------:|:---------:|:----:|
-| 현장예매 / 온라인발권 / 환불 | 전화번호 입력 → 예매 조회 | 28석 좌석 배치도 | 환불 규정 안내 |
-
-> 💡 *스크린샷을 추가하려면 `/screenshots` 폴더에 이미지를 넣고 위 표에 링크하세요.*
 
 ---
 
@@ -176,5 +207,3 @@ git clone https://github.com/your-username/Kiosk.git
 - [ ] 장애인 접근성 개선 (음성 안내, 고대비 모드)
 
 ---
-
-
