@@ -177,14 +177,4 @@ git clone https://github.com/your-username/Kiosk.git
 
 ---
 
-## 👥 팀 구성
 
-| 역할 | 이름 |
-|------|------|
-| 개발 | - |
-
----
-
-## 📄 라이선스
-
-This project is for educational purposes.
