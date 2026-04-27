@@ -46,7 +46,7 @@
 
 ## 📸 스크린샷
 
-### 🌸🌊🍂❄️ 계절별 캘린더 테마
+### 🌸 계절별 캘린더 테마
 
 | Spring | Summer | Autumn | Winter |
 |:------:|:------:|:------:|:------:|
@@ -310,7 +310,7 @@ Google Calendar 양방향 동기화, 일정 알림 및 푸시 기능, 월간 리
   </tr>
   <tr>
     <td align="center"><b>김영현</b></td>
-    <td align="center">👑 팀장</td>
+    <td align="center">팀장</td>
     <td>캘린더 UI 및 공유 캘린더 관리</td>
   </tr>
   <tr>
