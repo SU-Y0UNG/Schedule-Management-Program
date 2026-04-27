@@ -90,6 +90,17 @@
 
 <br/>
 
+## 🎬 시연 영상
+
+<p align="center">
+  <a href="demo/calendar_demo.mp4">
+    ▶️ 시연 영상 보기 (클릭하여 다운로드)
+  </a>
+</p>
+
+---
+<br/>
+
 ## ⚙️ 주요 기능 상세
 
 <table>
