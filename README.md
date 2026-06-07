@@ -41,17 +41,11 @@ WinForms와 MySQL을 기반으로, 누구나 쉽고 안정적으로 사용할 �
 ### 로그인 흐름
 > 랜딩 화면 → 계정 확인 → 로그인 → 아이디/비밀번호 찾기 → 메인 화면 진입
 
-![로그인 흐름도](images/flowchart_login.svg)
-
 ### 일정 관리 흐름
 > 캘린더 화면 → 날짜 선택 → 일정 등록 → DB 저장 → 화면 반영 → 상세보기·수정·삭제
 
-![일정 관리 흐름도](images/flowchart_schedule.svg)
-
 ### 카테고리 관리 흐름
 > 캘린더 화면 → 카테고리 버튼 → 개인/공용 캘린더 생성 → 멤버 초대 → DB 연동
-
-![카테고리 흐름도](images/flowchart_category.svg)
 
 ---
 
@@ -83,14 +77,14 @@ WinForms와 MySQL을 기반으로, 누구나 쉽고 안정적으로 사용할 �
 
 | 회원가입 | 로그인 | 비밀번호 찾기 |
 |:---:|:---:|:---:|
-| ![회원가입](images/11.회원가입창.png) | ![로그인](images/12.로그인.png) | ![비밀번호찾기](images/13.비밀번호찾기.png) |
+| ![회원가입](images/11.회원가입창.png) | ![로그인](images/12.로그인.png) | ![비밀번호찾기](images/13.비밀번호수정.png) |
 
 ### API 연동
 날씨 API와 Google 소셜 로그인 API를 연동합니다.
 
 | 날씨 API | 날씨 추가 | 구글 API |
 |:---:|:---:|:---:|
-| ![날씨API](images/14.날씨API.png) | ![날씨추가](images/14-1.날씨추가.png) | ![구글API](images/16.구글API.png) |
+| ![날씨API](images/14.날씨API.png) | ![날씨추가](images/14-1.날씨 추가.png) | ![구글API](images/16.구글 API.png) |
 
 ### 기타
 공휴일 표시 및 일정 상세보기 기능을 제공합니다.
