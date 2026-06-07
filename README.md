@@ -106,7 +106,7 @@ WinForms와 MySQL을 기반으로, 누구나 쉽고 안정적으로 사용할 �
 
 ## 🎬 시연 영상
 
-[![시연 영상](images/가을테마.png)](https://youtu.be/22SQ9nsCN1M)
+[![시연 영상](images/4.겨울테마.png)](https://youtu.be/22SQ9nsCN1M)
 
 > 클릭하면 영상으로 이동합니다.
 
